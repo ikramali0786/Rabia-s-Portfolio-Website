@@ -6,7 +6,7 @@ import { site } from '../data/site';
   <div class="grid gap-6 md:grid-cols-2">
     {site.testimonials.map((t) => (
       <figure class="reveal rounded-3xl border border-white/10 bg-[--color-ink-soft] p-8">
-        <blockquote class="text-xl leading-relaxed text-white/85">"{t.quote}"</blockquote>
+        <blockquote class="text-xl leading-relaxed text-white/85 before:content-['\201C'] after:content-['\201D']">{t.quote}</blockquote>
         <figcaption class="mt-6 flex items-center gap-4">
           <img src={t.avatar} alt={t.author} width="56" height="56" loading="lazy" class="h-14 w-14 rounded-full object-cover" />
           <div><div class="font-semibold">{t.author}</div><div class="text-sm text-white/50">{t.role}</div></div>

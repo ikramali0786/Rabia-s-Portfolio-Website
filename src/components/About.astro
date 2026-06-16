@@ -4,7 +4,7 @@ import { site } from '../data/site';
 ---
 <Section id="about" eyebrow="About" title="Hi, I'm Rabia">
   <div class="grid items-center gap-12 md:grid-cols-[2fr_3fr]">
-    <img src={site.about.photo} alt={`${site.name}, ${site.role}`} width="480" height="600" loading="lazy" class="w-full rounded-3xl border border-white/10 object-cover" />
+    <img src={site.about.photo} alt={`${site.name}, ${site.role}`} width="480" height="600" loading="lazy" class="aspect-[4/5] w-full rounded-3xl border border-white/10 object-cover" />
     <div>
       <p class="text-lg text-white/75">{site.about.bio}</p>
       <div class="mt-8 flex flex-wrap gap-3">
