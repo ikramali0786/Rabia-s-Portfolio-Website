@@ -16,10 +16,13 @@ import { site } from '../data/site';
       <input type="hidden" name="access_key" value={site.web3formsKey} />
       <input type="hidden" name="subject" value="New inquiry from portfolio" />
       <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" autocomplete="off" />
-      <input name="name" required placeholder="Your name" class="w-full rounded-xl border border-white/15 bg-transparent px-4 py-3 outline-none focus:border-white/50" />
-      <input name="email" type="email" required placeholder="Email" class="w-full rounded-xl border border-white/15 bg-transparent px-4 py-3 outline-none focus:border-white/50" />
-      <textarea name="message" required rows="5" placeholder="Your message" class="w-full rounded-xl border border-white/15 bg-transparent px-4 py-3 outline-none focus:border-white/50"></textarea>
-      <button type="submit" class="w-full rounded-full bg-white px-6 py-3 font-semibold text-black transition hover:bg-white/80">Send message</button>
+      <label for="field-name" class="sr-only">Your name</label>
+      <input id="field-name" name="name" required placeholder="Your name" autocomplete="name" class="w-full rounded-xl border border-white/15 bg-transparent px-4 py-3 transition focus:border-white/60" />
+      <label for="field-email" class="sr-only">Email address</label>
+      <input id="field-email" name="email" type="email" required placeholder="Email" autocomplete="email" class="w-full rounded-xl border border-white/15 bg-transparent px-4 py-3 transition focus:border-white/60" />
+      <label for="field-message" class="sr-only">Your message</label>
+      <textarea id="field-message" name="message" required rows="5" placeholder="Your message" class="w-full rounded-xl border border-white/15 bg-transparent px-4 py-3 transition focus:border-white/60"></textarea>
+      <button type="submit" class="w-full rounded-full bg-white px-6 py-3 font-semibold text-black transition hover:bg-white/80 disabled:cursor-not-allowed disabled:opacity-60">Send message</button>
       <p id="form-status" class="text-sm text-white/60" role="status" aria-live="polite"></p>
     </form>
   </div>
@@ -27,9 +30,11 @@ import { site } from '../data/site';
 <script>
   const form = document.getElementById('contact-form') as HTMLFormElement | null;
   const status = document.getElementById('form-status');
+  const btn = form?.querySelector('button[type="submit"]') as HTMLButtonElement | null;
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
     if (!form || !status) return;
+    if (btn) btn.disabled = true;
     status.textContent = 'Sending…';
     try {
       const res = await fetch('https://api.web3forms.com/submit', {
@@ -42,6 +47,8 @@ import { site } from '../data/site';
       else { status.textContent = 'Something went wrong. Please email me directly.'; }
     } catch {
       status.textContent = 'Network error. Please email me directly.';
+    } finally {
+      if (btn) btn.disabled = false;
     }
   });
 </script>
