@@ -4,8 +4,12 @@
   --color-ink: #050505;
   --color-ink-soft: #0d0d0f;
   --color-paper: #f5f5f7;
-  --font-display: "Inter", system-ui, sans-serif;
+  --font-display: "Clash Display", "Satoshi", system-ui, sans-serif;
+  --font-sans: "Satoshi", system-ui, sans-serif;
 }
+
+/* ---- Heading font ---- */
+h1, h2, h3, h4 { font-family: var(--font-display); }
 
 :root { color-scheme: dark; }
 html { scroll-behavior: smooth; }
@@ -92,6 +96,24 @@ html { scrollbar-width: thin; scrollbar-color: #2e2e36 transparent; }
 }
 .float-slow { animation: float-slow 9s ease-in-out infinite; }
 .float-slower { animation: float-slow 13s ease-in-out infinite; }
+
+/* ---- Reusable button utilities ---- */
+.btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-full font-semibold transition duration-300 ease-out;
+}
+.btn:active { transform: scale(0.96); }
+.btn-primary { @apply bg-white text-black hover:bg-white/85; }
+.btn-secondary { @apply border border-white/20 text-white hover:border-white/60 hover:bg-white/5; }
+
+/* ---- WhatsApp pulse ring ---- */
+@keyframes whatsapp-pulse {
+  0% { transform: scale(1); opacity: 0.6; }
+  70% { transform: scale(1.7); opacity: 0; }
+  100% { transform: scale(1.7); opacity: 0; }
+}
+.whatsapp-pulse-ring {
+  animation: whatsapp-pulse 2s ease-out infinite;
+}
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

@@ -11,7 +11,7 @@ export const site = {
   socials: [
     { label: 'LinkedIn', href: '#' },
     { label: 'Instagram', href: '#' },
-    { label: 'GitHub', href: '#' },
+    { label: 'WhatsApp', href: 'https://wa.me/923482351478' },
   ],
   nav: [
     { label: 'Work', href: '#work' },
