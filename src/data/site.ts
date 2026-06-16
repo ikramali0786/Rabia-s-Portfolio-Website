@@ -80,11 +80,16 @@ export const site = {
       { name: 'CRO', icon: null },
     ],
   },
+  fiverr: {
+    profileUrl: '#', // replace with Rabia's Fiverr profile URL, e.g. https://www.fiverr.com/rabiagul
+    rating: '5.0',
+    reviews: '100+',
+  },
   testimonialsIntro: 'Trusted by founders to ship stores that perform.',
   testimonials: [
-    { quote: 'Placeholder testimonial — replace with a real client quote that highlights the result Rabia delivered and what it was like to work with her.', author: 'Client Name', role: 'Founder', company: 'Brand One', avatar: '/avatars/client-1.svg', rating: 5, featured: true },
-    { quote: 'Placeholder testimonial — replace with a real client quote.', author: 'Client Name', role: 'CEO', company: 'Brand Two', avatar: '/avatars/client-2.svg', rating: 5, featured: false },
-    { quote: 'Placeholder testimonial — replace with a real client quote.', author: 'Client Name', role: 'Head of Ecommerce', company: 'Brand Three', avatar: '/avatars/client-1.svg', rating: 5, featured: false },
+    { quote: 'Replace with a real Fiverr review. Buyers usually praise communication, delivery speed and the result.', author: 'buyer_username', country: 'United States', rating: 5, avatar: '/avatars/client-1.svg', featured: true },
+    { quote: 'Replace with a real Fiverr review.', author: 'buyer_username', country: 'United Kingdom', rating: 5, avatar: '/avatars/client-2.svg', featured: false },
+    { quote: 'Replace with a real Fiverr review.', author: 'buyer_username', country: 'Australia', rating: 5, avatar: '/avatars/client-1.svg', featured: false },
   ],
   footer: {
     cta: 'Let’s talk about your next project',

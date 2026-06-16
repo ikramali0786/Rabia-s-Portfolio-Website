@@ -38,6 +38,32 @@ path in `src/data/site.ts`):
 | Testimonial avatars | `public/avatars/client-1..2.svg` | Square; update `site.testimonials[].avatar` |
 | Favicon | `public/favicon.svg` | — |
 
+## Adding Fiverr reviews
+
+Paste real reviews by editing `site.testimonials` in [`src/data/site.ts`](src/data/site.ts).
+Each entry takes these fields:
+
+| Field | Description |
+| --- | --- |
+| `quote` | The buyer's review text, copied verbatim from Fiverr |
+| `author` | The Fiverr buyer username (e.g. `johndoe123`) |
+| `country` | Buyer's country shown below the username (e.g. `United States`) |
+| `rating` | Integer 1–5 — renders amber stars |
+| `avatar` | Path to avatar image in `public/` (e.g. `/avatars/client-1.svg`) |
+| `featured` | `true` on exactly one review — it gets the large card treatment |
+
+Also update `site.fiverr` with your real profile URL, current overall rating, and review count:
+
+```ts
+fiverr: {
+  profileUrl: 'https://www.fiverr.com/your_username',
+  rating: '5.0',
+  reviews: '47', // or '100+' etc.
+},
+```
+
+The Fiverr rating chip and "Verified Fiverr review" badges in the testimonials section update automatically.
+
 ## Go-live checklist
 
 - [ ] Set a real **Web3Forms access key** in `site.web3formsKey` (free key from
