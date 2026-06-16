@@ -13,7 +13,7 @@ import { site } from '../data/site';
         {site.about.skills.map((s) => (
           <span class="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm text-white/70">
             {s.icon
-              ? <img src={`https://cdn.simpleicons.org/${s.icon}`} alt="" width="16" height="16" loading="lazy" class="h-4 w-4" />
+              ? <img src={`https://cdn.simpleicons.org/${s.icon}`} alt="" width="16" height="16" loading="lazy" class="h-4 w-4" onerror="this.remove()" />
               : <span class="h-1.5 w-1.5 rounded-full bg-white/40" aria-hidden="true"></span>
             }
             {s.name}

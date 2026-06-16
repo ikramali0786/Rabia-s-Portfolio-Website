@@ -75,7 +75,7 @@ export const site = {
       { name: 'Hydrogen', icon: 'shopify' },
       { name: 'Tailwind', icon: 'tailwindcss' },
       { name: 'JavaScript', icon: 'javascript' },
-      { name: 'Klaviyo', icon: 'klaviyo' },
+      { name: 'Klaviyo', icon: null },
       { name: 'GA4', icon: 'googleanalytics' },
       { name: 'CRO', icon: null },
     ],
