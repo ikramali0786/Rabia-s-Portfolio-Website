@@ -61,9 +61,17 @@ html { scrollbar-width: thin; scrollbar-color: #2e2e36 transparent; }
 }
 
 .iridescent {
-  background: linear-gradient(120deg,#a78bfa,#f0abfc,#67e8f9,#fde68a,#a78bfa);
+  background: linear-gradient(120deg,#8b5cf6,#ec4899,#22d3ee,#f59e0b,#8b5cf6);
   background-size: 200% 200%;
   animation: iridescent-shift 8s ease-in-out infinite;
+}
+
+/* Floating orb variants: run BOTH shimmer + float in one animation property */
+.iridescent-float {
+  animation: iridescent-shift 8s ease-in-out infinite, float-slow 9s ease-in-out infinite;
+}
+.iridescent-float-slower {
+  animation: iridescent-shift 8s ease-in-out infinite, float-slow 13s ease-in-out infinite;
 }
 
 @keyframes iridescent-shift {
@@ -73,12 +81,20 @@ html { scrollbar-width: thin; scrollbar-color: #2e2e36 transparent; }
 
 /* Gradient (iridescent) headline text */
 .iridescent-text {
-  background: linear-gradient(120deg,#c4b5fd,#f0abfc,#67e8f9,#fde68a,#c4b5fd);
+  background: linear-gradient(120deg,#a78bfa,#ec4899,#22d3ee,#f59e0b,#a78bfa);
   background-size: 200% 200%;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   animation: iridescent-shift 8s ease-in-out infinite;
+}
+
+/* Static variant — no animation, for use inside animated marquee tracks */
+.iridescent-text-static {
+  background: linear-gradient(120deg,#a78bfa,#ec4899,#22d3ee,#f59e0b,#a78bfa);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 /* Subtle dotted grid backdrop for the hero */

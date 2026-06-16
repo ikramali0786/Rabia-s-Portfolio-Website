@@ -10,13 +10,13 @@ const row2 = [...items, ...items];
 
   <!-- Row 1 — scrolls LEFT -->
   <div class="group relative mb-6 overflow-hidden">
-    <div class="flex w-max animate-[marquee-ltr_34s_linear_infinite] group-hover:[animation-play-state:paused]">
+    <div class="marquee-track flex w-max animate-[marquee-ltr_34s_linear_infinite] group-hover:[animation-play-state:paused]">
       {row1.map((item, i) => (
         <span class="flex items-center shrink-0">
           <span class={`text-4xl md:text-6xl font-black uppercase tracking-tight leading-none px-6 select-none ${i % 2 === 0 ? 'text-white' : 'text-outline'}`}>
             {item}
           </span>
-          <span class="iridescent-text text-3xl md:text-5xl shrink-0 select-none" aria-hidden="true">✦</span>
+          <span class="iridescent-text-static text-3xl md:text-5xl shrink-0 select-none" aria-hidden="true">✦</span>
         </span>
       ))}
     </div>
@@ -24,13 +24,13 @@ const row2 = [...items, ...items];
 
   <!-- Row 2 — scrolls RIGHT -->
   <div class="group relative overflow-hidden">
-    <div class="flex w-max animate-[marquee-rtl_40s_linear_infinite] group-hover:[animation-play-state:paused]">
+    <div class="marquee-track flex w-max animate-[marquee-rtl_40s_linear_infinite] group-hover:[animation-play-state:paused]">
       {row2.map((item, i) => (
         <span class="flex items-center shrink-0">
           <span class={`text-4xl md:text-6xl font-black uppercase tracking-tight leading-none px-6 select-none ${i % 2 === 0 ? 'text-outline' : 'text-white'}`}>
             {item}
           </span>
-          <span class="iridescent-text text-3xl md:text-5xl shrink-0 select-none" aria-hidden="true">✦</span>
+          <span class="iridescent-text-static text-3xl md:text-5xl shrink-0 select-none" aria-hidden="true">✦</span>
         </span>
       ))}
     </div>
@@ -39,12 +39,17 @@ const row2 = [...items, ...items];
 
 <style>
   @keyframes marquee-ltr {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
+    from { transform: translate3d(0, 0, 0); }
+    to   { transform: translate3d(-50%, 0, 0); }
   }
   @keyframes marquee-rtl {
-    from { transform: translateX(-50%); }
-    to   { transform: translateX(0); }
+    from { transform: translate3d(-50%, 0, 0); }
+    to   { transform: translate3d(0, 0, 0); }
+  }
+  .marquee-track {
+    will-change: transform;
+    backface-visibility: hidden;
+    transform: translateZ(0);
   }
   @media (prefers-reduced-motion: reduce) {
     .animate-\[marquee-ltr_34s_linear_infinite\],
