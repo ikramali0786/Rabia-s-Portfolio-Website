@@ -7,7 +7,7 @@ const trust = site.stats.slice(0, 3);
   <div class="pointer-events-none absolute inset-0 grid-backdrop"></div>
   <div class="pointer-events-none absolute right-[-12%] top-[8%] h-[55vh] w-[55vh] rounded-full opacity-40 blur-3xl iridescent float-slow"></div>
   <div class="pointer-events-none absolute right-[18%] bottom-[6%] h-[28vh] w-[28vh] rounded-full opacity-25 blur-3xl iridescent float-slower"></div>
-  <div class="pointer-events-none absolute left-[-10%] top-[30%] h-[26vh] w-[26vh] rounded-full opacity-15 blur-3xl iridescent float-slower"></div>
+  <div data-parallax="0.18" class="pointer-events-none absolute left-[-10%] top-[30%] h-[26vh] w-[26vh] rounded-full opacity-15 blur-3xl iridescent"></div>
 
   <div class="relative mx-auto w-full max-w-7xl">
     <!-- Availability badge -->
@@ -19,7 +19,7 @@ const trust = site.stats.slice(0, 3);
       {site.hero.badge}
     </div>
 
-    <h1 class="reveal mt-7 max-w-5xl text-5xl font-black leading-[1.04] tracking-tight md:text-7xl">
+    <h1 data-reveal="heading" class="mt-7 max-w-5xl text-5xl font-black leading-[1.04] tracking-tight md:text-7xl">
       {site.hero.titleStart}<span class="iridescent-text">{site.hero.titleHighlight}</span>{site.hero.titleEnd}
     </h1>
 

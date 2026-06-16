@@ -6,14 +6,18 @@
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   gsap.registerPlugin(ScrollTrigger);
 
-  if (!reduce) {
-    // Smooth scrolling driven through GSAP's ticker so ScrollTrigger stays in sync.
+  if (reduce) {
+    document.querySelectorAll('.reveal, [data-reveal]').forEach((el) => {
+      (el as HTMLElement).style.opacity = '1';
+    });
+  } else {
+    // ---- Smooth scrolling through GSAP's ticker so ScrollTrigger stays in sync ----
     const lenis = new Lenis({ duration: 1.1, smoothWheel: true });
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add((time) => lenis.raf(time * 1000));
     gsap.ticker.lagSmoothing(0);
 
-    // Smooth in-page anchor navigation (nav links, footer links, hero CTAs).
+    // ---- Smooth in-page anchor navigation ----
     document.querySelectorAll('a[href^="#"]').forEach((a) => {
       const href = a.getAttribute('href');
       if (!href || href === '#') return;
@@ -25,18 +29,45 @@
       });
     });
 
-    // Scroll-reveal animations.
-    document.querySelectorAll('.reveal').forEach((el) => {
+    // ---- Heading "wipe-up" reveals (cinematic clip + rise) ----
+    document.querySelectorAll<HTMLElement>('[data-reveal="heading"]').forEach((el) => {
       gsap.from(el, {
-        y: 40,
+        clipPath: 'inset(0 0 100% 0)',
+        yPercent: 14,
         opacity: 0,
-        duration: 0.8,
-        ease: 'power3.out',
-        immediateRender: false,
-        scrollTrigger: { trigger: el, start: 'top 85%' },
+        duration: 1.1,
+        ease: 'power4.out',
+        scrollTrigger: { trigger: el, start: 'top 88%' },
       });
     });
-  } else {
-    document.querySelectorAll('.reveal').forEach((el) => ((el as HTMLElement).style.opacity = '1'));
+
+    // ---- Staggered batch reveals with blur-in for everything tagged .reveal ----
+    gsap.set('.reveal', { y: 50, opacity: 0, filter: 'blur(8px)' });
+    ScrollTrigger.batch('.reveal', {
+      start: 'top 88%',
+      onEnter: (batch) =>
+        gsap.to(batch, {
+          y: 0,
+          opacity: 1,
+          filter: 'blur(0px)',
+          duration: 0.9,
+          ease: 'power3.out',
+          stagger: 0.12,
+          overwrite: true,
+        }),
+    });
+
+    // ---- Subtle parallax for elements opting in via data-parallax ----
+    document.querySelectorAll<HTMLElement>('[data-parallax]').forEach((el) => {
+      const depth = parseFloat(el.dataset.parallax || '0.15');
+      gsap.to(el, {
+        yPercent: -depth * 100,
+        ease: 'none',
+        scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true },
+      });
+    });
+
+    // Recalculate positions once lazy images have loaded.
+    window.addEventListener('load', () => ScrollTrigger.refresh());
   }
 </script>
