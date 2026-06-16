@@ -1,0 +1,43 @@
+---
+// Floating "scroll to top" button. Appears after scrolling down; smooth-scrolls
+// to the top via the shared Lenis instance (window.__lenis) when available.
+---
+<button
+  id="scroll-top"
+  type="button"
+  aria-label="Scroll back to top"
+  class="pointer-events-none fixed bottom-6 left-6 z-[60] grid h-12 w-12 translate-y-3 place-items-center rounded-full border border-white/15 bg-white/5 text-white opacity-0 backdrop-blur transition-all duration-300 ease-out hover:scale-110 hover:bg-white/15"
+>
+  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M12 19V5M5 12l7-7 7 7" />
+  </svg>
+</button>
+<script>
+  const btn = document.getElementById('scroll-top');
+  if (btn) {
+    let ticking = false;
+    const update = () => {
+      const show = window.scrollY > 600;
+      btn.classList.toggle('opacity-0', !show);
+      btn.classList.toggle('translate-y-3', !show);
+      btn.classList.toggle('pointer-events-none', !show);
+      ticking = false;
+    };
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(update);
+        }
+      },
+      { passive: true },
+    );
+    update();
+    btn.addEventListener('click', () => {
+      const lenis = (window as any).__lenis;
+      if (lenis) lenis.scrollTo(0);
+      else window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+</script>
