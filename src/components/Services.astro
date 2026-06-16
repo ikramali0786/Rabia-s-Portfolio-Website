@@ -1,0 +1,17 @@
+---
+import Section from './Section.astro';
+import { site } from '../data/site';
+---
+<Section id="services" eyebrow="What I do" title="Services that scale your Shopify store">
+  <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+    {site.services.map((s) => (
+      <article class="reveal group rounded-3xl border border-white/10 bg-[--color-ink-soft] p-8 transition hover:border-white/30">
+        <img src={s.shape} alt="" width="96" height="96" loading="lazy" class="mb-6 h-20 w-20 object-contain" />
+        <h3 class="text-2xl font-bold">{s.title}</h3>
+        <ul class="mt-4 space-y-2 text-white/65">
+          {s.points.map((p) => <li class="flex gap-2"><span class="text-white/40">—</span>{p}</li>)}
+        </ul>
+      </article>
+    ))}
+  </div>
+</Section>
