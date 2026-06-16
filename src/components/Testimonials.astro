@@ -36,7 +36,7 @@ const checkSvg =
 
   <div class="grid gap-6 lg:grid-cols-3">
     <!-- Featured -->
-    <figure class="reveal group relative overflow-hidden rounded-3xl border border-white/10 bg-[--color-ink-soft] p-8 md:p-12 lg:col-span-2">
+    <figure class="reveal group relative overflow-hidden rounded-3xl border border-white/10 bg-ink-soft p-8 md:p-12 lg:col-span-2">
       <div class="pointer-events-none absolute -right-10 -top-16 select-none text-[12rem] leading-none text-white/5 transition-colors group-hover:text-white/10">&ldquo;</div>
       <div class="pointer-events-none absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-0 transition-opacity group-hover:opacity-100"></div>
       <div class="relative">
@@ -62,7 +62,7 @@ const checkSvg =
     <!-- Supporting -->
     <div class="grid gap-6">
       {rest.map((t) => (
-        <figure class="reveal group relative rounded-3xl border border-white/10 bg-[--color-ink-soft] p-8 transition hover:border-white/25">
+        <figure class="reveal group relative rounded-3xl border border-white/10 bg-ink-soft p-8 transition hover:border-white/25">
           <div class="flex gap-1 text-amber-300" aria-label={`${t.rating} out of 5`}>
             {Array.from({ length: t.rating }).map(() => <Fragment set:html={star} />)}
           </div>

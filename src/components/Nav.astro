@@ -17,11 +17,11 @@ const anchor = (href: string) => (href.startsWith('#') && !onHome ? `/${href}` :
       aria-label="Open menu"
       aria-expanded="false"
       aria-controls="mobile-drawer"
-      class="-mr-1.5 grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-white/5 backdrop-blur transition hover:bg-white/10 md:hidden"
+      class="-mr-1.5 flex h-10 w-10 flex-col items-center justify-center gap-[5px] rounded-full border border-white/10 bg-white/5 backdrop-blur transition hover:bg-white/10 md:hidden"
     >
-      <span class="block h-0.5 w-5 bg-white"></span>
-      <span class="mt-1 block h-0.5 w-5 bg-white"></span>
-      <span class="mt-1 block h-0.5 w-5 bg-white"></span>
+      <span class="h-0.5 w-5 rounded-full bg-white"></span>
+      <span class="h-0.5 w-5 rounded-full bg-white"></span>
+      <span class="h-0.5 w-5 rounded-full bg-white"></span>
     </button>
   </nav>
 
@@ -33,7 +33,7 @@ const anchor = (href: string) => (href.startsWith('#') && !onHome ? `/${href}` :
   <aside
     id="mobile-drawer"
     aria-hidden="true"
-    class="fixed right-0 top-0 z-50 flex h-full w-72 max-w-[82vw] translate-x-full flex-col border-l border-white/10 bg-[--color-ink-soft] p-6 shadow-2xl shadow-black/60 transition-transform duration-300 ease-out md:hidden"
+    class="fixed right-0 top-0 z-50 flex h-full w-72 max-w-[82vw] translate-x-full flex-col border-l border-white/10 bg-[#121218] p-6 shadow-2xl shadow-black/70 transition-transform duration-300 ease-out md:hidden"
   >
     <div class="flex items-center justify-between">
       <span class="text-lg font-extrabold tracking-tight">{site.name}<span class="text-white/40">.</span></span>

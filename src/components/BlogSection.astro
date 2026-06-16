@@ -17,7 +17,7 @@ const formatDate = (d: Date) =>
     {posts.map((post) => (
       <a
         href={`/blog/${post.id}`}
-        class="reveal group flex flex-col rounded-3xl border border-white/10 bg-[--color-ink-soft] p-8 transition-all duration-300 hover:border-white/25 hover:bg-white/5"
+        class="reveal group flex flex-col rounded-3xl border border-white/10 bg-ink-soft p-8 transition-all duration-300 hover:border-white/25 hover:bg-white/5"
       >
         <time
           datetime={post.data.date.toISOString()}
