@@ -1,4 +1,6 @@
 ---
+// Brand logos sourced from the Simple Icons CDN (https://cdn.simpleicons.org/).
+// Free & open-source under CC0; no API key required.
 import Section from './Section.astro';
 import { site } from '../data/site';
 ---
@@ -8,7 +10,15 @@ import { site } from '../data/site';
     <div>
       <p class="text-lg text-white/75">{site.about.bio}</p>
       <div class="mt-8 flex flex-wrap gap-3">
-        {site.about.skills.map((s) => <span class="rounded-full border border-white/15 px-4 py-2 text-sm text-white/70">{s}</span>)}
+        {site.about.skills.map((s) => (
+          <span class="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm text-white/70">
+            {s.icon
+              ? <img src={`https://cdn.simpleicons.org/${s.icon}`} alt="" width="16" height="16" loading="lazy" class="h-4 w-4" />
+              : <span class="h-1.5 w-1.5 rounded-full bg-white/40" aria-hidden="true"></span>
+            }
+            {s.name}
+          </span>
+        ))}
       </div>
     </div>
   </div>

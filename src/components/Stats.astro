@@ -5,9 +5,96 @@ import { site } from '../data/site';
   <div class="mx-auto grid max-w-7xl grid-cols-2 gap-px md:grid-cols-4">
     {site.stats.map((s) => (
       <div class="reveal px-6 py-14 text-center">
-        <div class="text-4xl font-black md:text-5xl">{s.value}</div>
+        <div class="text-4xl font-black md:text-5xl"><span class="stat-value" data-value={s.value}>{s.value}</span></div>
         <div class="mt-2 text-sm uppercase tracking-wide text-white/50">{s.label}</div>
       </div>
     ))}
   </div>
 </section>
+
+<script>
+  // Count-up animation for stat values using IntersectionObserver.
+  // Respects prefers-reduced-motion: if set, leaves values as-is.
+  (function () {
+    if (typeof window === 'undefined') return;
+
+    // Bail out entirely if user prefers reduced motion.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    // If IntersectionObserver is not supported, do nothing (final values already rendered).
+    if (!('IntersectionObserver' in window)) return;
+
+    const DURATION = 1600; // ms
+
+    function easeOutCubic(t: number): number {
+      return 1 - Math.pow(1 - t, 3);
+    }
+
+    // Extract the first number (supporting decimals) from a string.
+    // Returns null if no number found.
+    function parseNumber(value: string): number | null {
+      const match = value.match(/(\d+(?:\.\d+)?)/);
+      return match ? parseFloat(match[1]) : null;
+    }
+
+    // Count decimal places in a number string.
+    function decimalPlaces(numStr: string): number {
+      const match = numStr.match(/\.(\d+)/);
+      return match ? match[1].length : 0;
+    }
+
+    function animateElement(el: HTMLElement) {
+      const raw = el.dataset.value ?? '';
+      const target = parseNumber(raw);
+
+      // No number in this value — leave text unchanged.
+      if (target === null) return;
+
+      const numMatch = raw.match(/(\d+(?:\.\d+)?)/);
+      if (!numMatch) return;
+
+      const numStr = numMatch[1];
+      const decimals = decimalPlaces(numStr);
+      const prefix = raw.slice(0, numMatch.index);
+      const suffix = raw.slice((numMatch.index ?? 0) + numMatch[0].length);
+
+      const startTime = performance.now();
+
+      function tick(now: number) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / DURATION, 1);
+        const eased = easeOutCubic(progress);
+        const current = target * eased;
+        el.textContent = prefix + current.toFixed(decimals) + suffix;
+
+        if (progress < 1) {
+          requestAnimationFrame(tick);
+        } else {
+          // Ensure final value matches the original exactly.
+          el.textContent = raw;
+        }
+      }
+
+      // Start from 0.
+      el.textContent = prefix + (0).toFixed(decimals) + suffix;
+      requestAnimationFrame(tick);
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const el = entry.target as HTMLElement;
+            observer.unobserve(el); // animate once only
+            animateElement(el);
+          }
+        });
+      },
+      { threshold: 0.4 }
+    );
+
+    document.querySelectorAll<HTMLElement>('.stat-value').forEach((el) => {
+      observer.observe(el);
+    });
+  })();
+</script>

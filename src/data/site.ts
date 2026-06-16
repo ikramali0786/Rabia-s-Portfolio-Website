@@ -57,7 +57,16 @@ export const site = {
   about: {
     photo: '/avatars/rabia.svg',
     bio: "Placeholder bio — replace with Rabia’s story: years of Shopify experience, specialties, the kinds of brands she works with, and what makes her approach different.",
-    skills: ['Shopify Plus', 'Liquid', 'Hydrogen', 'Tailwind', 'JavaScript', 'Klaviyo', 'GA4', 'CRO'],
+    skills: [
+      { name: 'Shopify Plus', icon: 'shopify' },
+      { name: 'Liquid', icon: null },
+      { name: 'Hydrogen', icon: 'shopify' },
+      { name: 'Tailwind', icon: 'tailwindcss' },
+      { name: 'JavaScript', icon: 'javascript' },
+      { name: 'Klaviyo', icon: 'klaviyo' },
+      { name: 'GA4', icon: 'googleanalytics' },
+      { name: 'CRO', icon: null },
+    ],
   },
   testimonialsIntro: 'Trusted by founders to ship stores that perform.',
   testimonials: [
