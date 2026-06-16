@@ -80,10 +80,12 @@ Web3Forms access key). Content stored in a single editable data file
 - Multi-page routing, blog/CMS, real-time 3D shapes, i18n/language switching,
   analytics dashboards. (Can be added later.)
 
-## Configuration Constants (to be supplied by Rabia)
+## Configuration Constants
 
-- WhatsApp number
-- Web3Forms access key
-- Calendly / booking link
-- Social profile URLs
-- Email address
+- **WhatsApp number:** `03482351478` → `wa.me/923482351478` (intl. format, PK +92)
+- **Email:** `contact@rabia-gul.com`
+- **Web3Forms access key:** placeholder (`YOUR_WEB3FORMS_ACCESS_KEY`) until supplied
+- **Calendly / booking link:** placeholder `#` until supplied
+- **Social profile URLs:** `#` placeholders for now
+- **Case studies, client logos, profile photo, testimonials:** placeholder assets/copy
+  until supplied
