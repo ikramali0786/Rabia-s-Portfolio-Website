@@ -1,0 +1,39 @@
+---
+import { site } from '../data/site';
+---
+<header id="site-nav" class="fixed inset-x-0 top-0 z-50 transition-colors duration-300">
+  <nav class="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
+    <a href="#top" class="text-lg font-extrabold tracking-tight">{site.name}<span class="text-white/40">.</span></a>
+    <div class="hidden items-center gap-8 md:flex">
+      {site.nav.map((n) => <a href={n.href} class="text-sm text-white/70 transition hover:text-white">{n.label}</a>)}
+      <a href={site.bookingUrl} class="rounded-full bg-white px-5 py-2 text-sm font-semibold text-black transition hover:bg-white/80">Book a call</a>
+    </div>
+    <button id="nav-toggle" aria-label="Open menu" aria-expanded="false" class="md:hidden">
+      <span class="block h-0.5 w-6 bg-white"></span>
+      <span class="mt-1.5 block h-0.5 w-6 bg-white"></span>
+      <span class="mt-1.5 block h-0.5 w-6 bg-white"></span>
+    </button>
+  </nav>
+  <div id="mobile-menu" class="hidden border-t border-white/10 bg-black/95 px-6 py-6 md:hidden">
+    {site.nav.map((n) => <a href={n.href} class="mobile-link block py-3 text-lg">{n.label}</a>)}
+    <a href={site.bookingUrl} class="mobile-link mt-2 block rounded-full bg-white px-5 py-3 text-center font-semibold text-black">Book a call</a>
+  </div>
+</header>
+<script>
+  const nav = document.getElementById('site-nav');
+  const toggle = document.getElementById('nav-toggle');
+  const menu = document.getElementById('mobile-menu');
+  const onScroll = () => {
+    const solid = window.scrollY > 24;
+    nav?.classList.toggle('bg-black/80', solid);
+    nav?.classList.toggle('backdrop-blur', solid);
+  };
+  window.addEventListener('scroll', onScroll);
+  toggle?.addEventListener('click', () => {
+    const open = menu?.classList.toggle('hidden') === false;
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+  document.querySelectorAll('.mobile-link').forEach((l) =>
+    l.addEventListener('click', () => menu?.classList.add('hidden')),
+  );
+</script>
