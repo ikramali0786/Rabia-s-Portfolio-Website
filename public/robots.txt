@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://rabia-gul.com/sitemap-index.xml
