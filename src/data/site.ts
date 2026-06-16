@@ -17,6 +17,7 @@ export const site = {
     { label: 'Work', href: '#work' },
     { label: 'Services', href: '#services' },
     { label: 'About', href: '#about' },
+    { label: 'Pricing', href: '#pricing' },
     { label: 'Contact', href: '#contact' },
   ],
   hero: {
@@ -91,6 +92,39 @@ export const site = {
     { quote: 'Replace with a real Fiverr review.', author: 'buyer_username', country: 'United Kingdom', rating: 5, avatar: '/avatars/client-2.svg', featured: false },
     { quote: 'Replace with a real Fiverr review.', author: 'buyer_username', country: 'Australia', rating: 5, avatar: '/avatars/client-1.svg', featured: false },
   ],
+  pricing: {
+    intro: 'Simple, transparent pricing',
+    note: 'Demo pricing — final quotes are tailored to scope. Every project starts with a free discovery call.',
+    tiers: [
+      {
+        name: 'Starter',
+        price: '$299',
+        cadence: 'per task',
+        description: 'Quick fixes and focused improvements for an existing store.',
+        features: ['Bug fixes & small customizations', 'Speed / Core Web Vitals tune-up', 'Theme tweaks & sections', '3-day turnaround', '1 round of revisions'],
+        cta: 'Get started',
+        featured: false,
+      },
+      {
+        name: 'Growth',
+        price: '$1,499',
+        cadence: 'per project',
+        description: 'A complete store build or conversion-focused redesign.',
+        features: ['Custom theme / redesign', 'Conversion-led UX (CRO)', 'App & payment integrations', 'Klaviyo & email setup', 'Speed optimization', '2 rounds of revisions'],
+        cta: 'Book a project',
+        featured: true,
+      },
+      {
+        name: 'Retainer',
+        price: '$2,000',
+        cadence: 'per month',
+        description: 'Ongoing partnership for brands that ship continuously.',
+        features: ['Dedicated monthly hours', 'Priority support', 'Continuous CRO & A/B testing', 'Monthly performance report', 'Slack/WhatsApp access'],
+        cta: 'Talk to me',
+        featured: false,
+      },
+    ],
+  },
   footer: {
     cta: 'Let’s talk about your next project',
     availability: 'Available for freelance projects',

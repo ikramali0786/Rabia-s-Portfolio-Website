@@ -11,6 +11,7 @@ const checks = [
   ['stats', 'Stores launched'],
   ['about', 'id="about"'],
   ['testimonials', 'id="testimonials"'],
+  ['pricing', 'id="pricing"'],
   ['testimonial card', '<figure'],
   ['testimonial quote', '<blockquote'],
   ['contact form', 'id="contact-form"'],
