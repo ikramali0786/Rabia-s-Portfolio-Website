@@ -13,10 +13,10 @@ const row2 = [...items, ...items];
     <div class="marquee-track flex w-max animate-[marquee-ltr_34s_linear_infinite] group-hover:[animation-play-state:paused]">
       {row1.map((item, i) => (
         <span class="flex items-center shrink-0">
-          <span class={`text-4xl md:text-6xl font-black uppercase tracking-tight leading-none px-6 select-none ${i % 2 === 0 ? 'text-white' : 'text-outline'}`}>
+          <span class={`text-3xl sm:text-4xl md:text-6xl font-black uppercase tracking-tight leading-none px-4 sm:px-6 select-none ${i % 2 === 0 ? 'text-white' : 'text-outline'}`}>
             {item}
           </span>
-          <span class="iridescent-text-static text-3xl md:text-5xl shrink-0 select-none" aria-hidden="true">✦</span>
+          <span class="iridescent-text-static text-2xl sm:text-3xl md:text-5xl shrink-0 select-none" aria-hidden="true">✦</span>
         </span>
       ))}
     </div>
@@ -30,7 +30,7 @@ const row2 = [...items, ...items];
           <span class={`text-4xl md:text-6xl font-black uppercase tracking-tight leading-none px-6 select-none ${i % 2 === 0 ? 'text-outline' : 'text-white'}`}>
             {item}
           </span>
-          <span class="iridescent-text-static text-3xl md:text-5xl shrink-0 select-none" aria-hidden="true">✦</span>
+          <span class="iridescent-text-static text-2xl sm:text-3xl md:text-5xl shrink-0 select-none" aria-hidden="true">✦</span>
         </span>
       ))}
     </div>

@@ -19,7 +19,7 @@ const trust = site.stats.slice(0, 3);
       {site.hero.badge}
     </div>
 
-    <h1 data-reveal="heading" class="mt-7 max-w-5xl text-5xl font-black leading-[1.04] tracking-tight md:text-7xl">
+    <h1 data-reveal="heading" class="mt-7 max-w-5xl text-[2.5rem] font-black leading-[1.04] tracking-tight sm:text-5xl md:text-7xl">
       {site.hero.titleStart}<span class="iridescent-text">{site.hero.titleHighlight}</span>{site.hero.titleEnd}
     </h1>
 
@@ -36,7 +36,7 @@ const trust = site.stats.slice(0, 3);
     <dl class="reveal mt-14 flex flex-wrap gap-x-10 gap-y-6 border-t border-white/10 pt-8">
       {trust.map((s) => (
         <div>
-          <dt class="text-3xl font-black tracking-tight md:text-4xl">{s.value}</dt>
+          <dt class="text-2xl font-black tracking-tight sm:text-3xl md:text-4xl">{s.value}</dt>
           <dd class="mt-1 text-sm text-white/50">{s.label}</dd>
         </div>
       ))}

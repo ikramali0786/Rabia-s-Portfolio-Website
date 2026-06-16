@@ -7,7 +7,7 @@ const year = new Date().getFullYear();
   <div class="mx-auto max-w-7xl px-6 pb-16 pt-20 md:pb-24 md:pt-28">
     <a href="#contact" class="group block">
       <p class="reveal text-sm uppercase tracking-[0.25em] text-white/40">{site.footer.availability}</p>
-      <h2 data-reveal="heading" class="mt-5 max-w-4xl text-4xl font-black leading-[1.05] tracking-tight md:text-7xl">
+      <h2 data-reveal="heading" class="mt-5 max-w-4xl text-3xl font-black leading-[1.05] tracking-tight sm:text-4xl md:text-7xl">
         {site.footer.cta}
         <span class="inline-block transition-transform duration-300 group-hover:translate-x-2">→</span>
       </h2>
@@ -44,7 +44,7 @@ const year = new Date().getFullYear();
     <div class="text-sm">
       <h3 class="mb-4 text-xs uppercase tracking-[0.2em] text-white/40">Get in touch</h3>
       <ul class="space-y-3 text-white/65">
-        <li><a href={`mailto:${site.email}`} class="transition hover:text-white">{site.email}</a></li>
+        <li><a href={`mailto:${site.email}`} class="break-all transition hover:text-white">{site.email}</a></li>
         <li><a href={`https://wa.me/${site.whatsapp}`} target="_blank" rel="noopener noreferrer" class="transition hover:text-white">WhatsApp →</a></li>
         <li><a href={site.bookingUrl} class="transition hover:text-white">Book a call →</a></li>
         <li class="pt-2 text-white/40">{site.footer.hours}</li>

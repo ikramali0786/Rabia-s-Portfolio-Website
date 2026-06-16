@@ -12,8 +12,8 @@
 h1, h2, h3, h4 { font-family: var(--font-display); }
 
 :root { color-scheme: dark; }
-html { scroll-behavior: smooth; }
-body { background: var(--color-ink); color: var(--color-paper); }
+html { scroll-behavior: smooth; overflow-x: hidden; max-width: 100%; }
+body { background: var(--color-ink); color: var(--color-paper); overflow-x: hidden; max-width: 100%; }
 
 /* ---- Lenis smooth scroll (required) ---- */
 html.lenis, html.lenis body { height: auto; }

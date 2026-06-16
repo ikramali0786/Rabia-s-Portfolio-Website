@@ -43,7 +43,7 @@ const checkSvg =
         <div class="flex gap-1 text-amber-300" aria-label={`${featured.rating} out of 5`}>
           {Array.from({ length: featured.rating }).map(() => <Fragment set:html={star} />)}
         </div>
-        <blockquote class="mt-6 text-2xl font-medium leading-relaxed text-white/90 md:text-3xl">{featured.quote}</blockquote>
+        <blockquote class="mt-6 text-xl font-medium leading-relaxed text-white/90 sm:text-2xl md:text-3xl">{featured.quote}</blockquote>
         <figcaption class="mt-8 flex items-center gap-4">
           <img src={featured.avatar} alt={featured.author} width="56" height="56" loading="lazy" class="h-14 w-14 rounded-full object-cover ring-1 ring-white/15" />
           <div>
