@@ -12,15 +12,31 @@ const {
   description = site.description,
   canonicalUrl = site.url,
 } = Astro.props;
+const sameAs = site.socials.map((s) => s.href).filter((h) => h !== '#');
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'Person',
-  name: site.name,
-  jobTitle: site.role,
-  email: `mailto:${site.email}`,
-  url: site.url,
-  description: site.description,
-  sameAs: site.socials.map((s) => s.href).filter((h) => h !== '#'),
+  '@graph': [
+    {
+      '@type': 'Person',
+      name: site.name,
+      jobTitle: site.role,
+      email: `mailto:${site.email}`,
+      url: site.url,
+      description: site.description,
+      sameAs,
+    },
+    {
+      '@type': 'ProfessionalService',
+      name: `${site.name} — ${site.role}`,
+      url: site.url,
+      email: `mailto:${site.email}`,
+      description: site.description,
+      areaServed: 'Worldwide',
+      serviceType: site.services.map((s) => s.title),
+      provider: { '@type': 'Person', name: site.name },
+      sameAs,
+    },
+  ],
 };
 ---
 <!doctype html>

@@ -6,7 +6,7 @@ const row = [...site.logos, ...site.logos];
   <p class="mb-8 text-center text-xs uppercase tracking-[0.25em] text-white/40">Trusted by brands</p>
   <div class="group relative overflow-hidden">
     <div class="flex w-max animate-[brand-marquee_30s_linear_infinite] gap-16 group-hover:[animation-play-state:paused]">
-      {row.map((l) => <img src={l.src} alt={l.name} width="160" height="48" class="h-8 w-auto opacity-60 transition hover:opacity-100" />)}
+      {row.map((l) => <img src={l.src} alt={l.name} width="160" height="48" loading="lazy" class="h-8 w-auto opacity-60 transition hover:opacity-100" />)}
     </div>
   </div>
 </section>

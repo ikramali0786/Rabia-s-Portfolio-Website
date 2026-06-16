@@ -11,6 +11,8 @@ const checks = [
   ['stats', 'Stores launched'],
   ['about', 'id="about"'],
   ['testimonials', 'id="testimonials"'],
+  ['testimonial card', '<figure'],
+  ['testimonial quote', '<blockquote'],
   ['contact form', 'id="contact-form"'],
   ['web3forms', 'api.web3forms.com'],
   ['form labels', 'for="field-email"'],
