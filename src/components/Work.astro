@@ -3,9 +3,9 @@ import Section from './Section.astro';
 import { site } from '../data/site';
 ---
 <Section id="work" eyebrow="Selected work" title={site.workIntro}>
-  <div class="mt-6 space-y-24 md:space-y-32">
+  <div class="mt-6 space-y-14 sm:space-y-20 md:space-y-28">
     {site.work.map((w, i) => (
-      <article id={w.slug} class="reveal grid items-center gap-10 md:grid-cols-2 md:gap-16">
+      <article id={w.slug} class="reveal grid items-center gap-8 md:grid-cols-2 md:gap-16">
         <div class={`group relative overflow-hidden rounded-3xl border border-white/10 ${i % 2 === 1 ? 'md:order-2' : ''}`}>
           <img
             src={w.image}
@@ -19,22 +19,24 @@ import { site } from '../data/site';
         </div>
 
         <div class={i % 2 === 1 ? 'md:order-1' : ''}>
-          <img src={w.logo} alt={w.client} width="120" height="36" loading="lazy" class="mb-6 h-7 w-auto opacity-70" />
-          <h3 class="text-3xl font-bold tracking-tight md:text-4xl">{w.title}</h3>
-          <p class="mt-4 max-w-xl text-white/65">{w.summary}</p>
+          <img src={w.logo} alt={w.client} width="120" height="36" loading="lazy" class="mb-5 h-6 w-auto opacity-70 sm:mb-6 sm:h-7" />
+          <h3 class="text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl">{w.title}</h3>
+          <p class="mt-3 max-w-xl text-white/65 sm:mt-4">{w.summary}</p>
 
-          <div class="mt-6 flex flex-wrap gap-2">
+          <div class="mt-5 flex flex-wrap gap-2 sm:mt-6">
             {w.services.map((s) => (
               <span class="rounded-full border border-white/15 px-3 py-1 text-xs uppercase tracking-wide text-white/60">{s}</span>
             ))}
           </div>
 
-          <div class="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-white/10 pt-6 text-sm">
-            <div><span class="block text-white/40">Industry</span><span class="font-medium">{w.industry}</span></div>
-            <div><span class="block text-white/40">Year</span><span class="font-medium">{w.year}</span></div>
-            <div><span class="block text-white/40">Result</span><span class="font-medium">{w.stat}</span></div>
-            <a href="#contact" class="ml-auto inline-flex items-center gap-2 font-semibold transition hover:gap-3">
-              Case study <span aria-hidden="true">→</span>
+          <div class="mt-6 border-t border-white/10 pt-5 sm:mt-8 sm:pt-6">
+            <div class="flex flex-wrap gap-x-8 gap-y-3 text-sm">
+              <div><span class="block text-white/40">Industry</span><span class="font-medium">{w.industry}</span></div>
+              <div><span class="block text-white/40">Year</span><span class="font-medium">{w.year}</span></div>
+              <div><span class="block text-white/40">Result</span><span class="font-medium">{w.stat}</span></div>
+            </div>
+            <a href="#contact" class="btn btn-secondary mt-5 w-full px-5 py-2.5 text-sm sm:mt-4 sm:w-auto">
+              View case study <span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">→</span>
             </a>
           </div>
         </div>

@@ -33,11 +33,11 @@ const trust = site.stats.slice(0, 3);
     </div>
 
     <!-- Inline trust stats -->
-    <dl class="reveal mt-14 flex flex-wrap gap-x-10 gap-y-6 border-t border-white/10 pt-8">
+    <dl class="reveal mt-10 grid grid-cols-3 gap-3 border-t border-white/10 pt-7 sm:mt-12 sm:flex sm:flex-wrap sm:gap-x-10 sm:gap-y-6 sm:pt-8">
       {trust.map((s) => (
         <div>
           <dt class="text-2xl font-black tracking-tight sm:text-3xl md:text-4xl">{s.value}</dt>
-          <dd class="mt-1 text-sm text-white/50">{s.label}</dd>
+          <dd class="mt-1 text-[11px] leading-tight text-white/50 sm:text-sm">{s.label}</dd>
         </div>
       ))}
     </dl>
