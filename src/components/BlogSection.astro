@@ -1,0 +1,40 @@
+---
+import { getCollection } from 'astro:content';
+import Section from './Section.astro';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 3);
+
+const formatDate = (d: Date) =>
+  d.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: 'numeric' });
+---
+<Section id="blog" eyebrow="Blog" title="Latest insights">
+  <div class="mb-8 flex items-center justify-end">
+    <a href="/blog" class="btn btn-secondary px-5 py-2 text-sm">View all posts →</a>
+  </div>
+  <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+    {posts.map((post) => (
+      <a
+        href={`/blog/${post.id}`}
+        class="reveal group flex flex-col rounded-3xl border border-white/10 bg-[--color-ink-soft] p-8 transition-all duration-300 hover:border-white/25 hover:bg-white/5"
+      >
+        <time
+          datetime={post.data.date.toISOString()}
+          class="mb-3 text-xs uppercase tracking-widest text-white/40"
+        >
+          {formatDate(post.data.date)}
+        </time>
+        <h3 class="mb-3 text-lg font-bold leading-snug tracking-tight transition-colors group-hover:text-white/90">
+          {post.data.title}
+        </h3>
+        <p class="flex-1 text-sm leading-relaxed text-white/55">
+          {post.data.description}
+        </p>
+        <span class="mt-5 text-sm font-semibold text-white/60 transition group-hover:text-white">
+          Read →
+        </span>
+      </a>
+    ))}
+  </div>
+</Section>

@@ -1,0 +1,101 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { site } from '../../data/site';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const formatDate = (d: Date) =>
+  d.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' });
+
+const blogPostingLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: post.data.date.toISOString(),
+  author: { '@type': 'Person', name: site.name },
+  url: `${site.url}/blog/${post.id}`,
+};
+
+const breadcrumbLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: site.url },
+    { '@type': 'ListItem', position: 2, name: 'Blog', item: `${site.url}/blog` },
+    { '@type': 'ListItem', position: 3, name: post.data.title, item: `${site.url}/blog/${post.id}` },
+  ],
+};
+---
+<BaseLayout
+  title={`${post.data.title} — ${site.name}`}
+  description={post.data.description}
+  canonicalUrl={`${site.url}/blog/${post.id}`}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(blogPostingLd)} />
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
+  </Fragment>
+
+  <main id="main-content" class="pt-32 pb-24 md:pb-32">
+    <div class="mx-auto max-w-3xl px-6">
+      <!-- Back link -->
+      <a
+        href="/blog"
+        class="reveal mb-10 inline-flex items-center gap-2 text-sm text-white/50 transition hover:text-white"
+      >
+        ← All posts
+      </a>
+
+      <!-- Meta -->
+      <div class="reveal mb-4 flex flex-wrap items-center gap-3">
+        <time
+          datetime={post.data.date.toISOString()}
+          class="text-xs uppercase tracking-widest text-white/40"
+        >
+          {formatDate(post.data.date)}
+        </time>
+        {post.data.tags.map((tag) => (
+          <span class="rounded-full border border-white/10 px-3 py-1 text-xs text-white/50">
+            {tag}
+          </span>
+        ))}
+      </div>
+
+      <!-- Title -->
+      <h1 data-reveal="heading" class="mb-10 text-4xl font-black leading-tight tracking-tight md:text-5xl">
+        {post.data.title}
+      </h1>
+
+      <!-- Content -->
+      <div class="reveal [&_a:hover]:opacity-100 [&_a]:text-white/70 [&_a]:underline [&_a]:underline-offset-4 [&_a]:transition [&_blockquote]:my-8 [&_blockquote]:border-l-4 [&_blockquote]:border-white/20 [&_blockquote]:pl-6 [&_blockquote]:italic [&_blockquote]:text-white/60 [&_code]:rounded [&_code]:bg-white/5 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:font-mono [&_code]:text-sm [&_h2]:mb-4 [&_h2]:mt-12 [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:tracking-tight [&_h3]:mb-3 [&_h3]:mt-8 [&_h3]:text-xl [&_h3]:font-semibold [&_hr]:my-10 [&_hr]:border-white/10 [&_li]:mb-1 [&_li]:text-white/70 [&_ol]:my-6 [&_ol]:list-decimal [&_ol]:pl-6 [&_p]:mb-6 [&_p]:leading-relaxed [&_p]:text-white/70 [&_pre]:my-8 [&_pre]:overflow-x-auto [&_pre]:rounded-2xl [&_pre]:border [&_pre]:border-white/10 [&_pre]:bg-white/5 [&_pre]:p-6 [&_pre]:font-mono [&_pre]:text-sm [&_table]:my-8 [&_table]:w-full [&_table]:text-sm [&_td]:border [&_td]:border-white/10 [&_td]:px-4 [&_td]:py-3 [&_td]:text-white/65 [&_th]:border [&_th]:border-white/10 [&_th]:px-4 [&_th]:py-3 [&_th]:text-left [&_th]:font-semibold [&_ul]:my-6 [&_ul]:list-disc [&_ul]:pl-6">
+        <Content />
+      </div>
+
+      <!-- Footer CTA -->
+      <div class="reveal mt-16 rounded-3xl border border-white/10 bg-[--color-ink-soft] p-8 text-center">
+        <p class="mb-2 text-sm uppercase tracking-[0.2em] text-white/40">Ready to work together?</p>
+        <a href="/#contact" class="btn btn-primary mt-4 inline-block px-8 py-3">
+          Get in touch →
+        </a>
+      </div>
+
+      <!-- Back to blog -->
+      <div class="mt-12 text-center">
+        <a href="/blog" class="text-sm text-white/50 transition hover:text-white">
+          ← Back to all posts
+        </a>
+      </div>
+    </div>
+  </main>
+</BaseLayout>

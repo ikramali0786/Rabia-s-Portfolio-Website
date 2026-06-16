@@ -20,6 +20,7 @@ const checks = [
   ['whatsapp', 'wa.me/923482351478'],
   ['footer', '©'],
   ['og image', 'og:image'],
+  ['blog section', 'id="blog"'],
 ];
 let failed = 0;
 for (const [name, needle] of checks) {

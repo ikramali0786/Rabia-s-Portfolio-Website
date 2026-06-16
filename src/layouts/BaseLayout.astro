@@ -1,6 +1,11 @@
 ---
 import '../styles/global.css';
 import { site } from '../data/site';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+import CustomCursor from '../components/CustomCursor.astro';
+import ScrollFX from '../components/ScrollFX.astro';
 
 interface Props {
   title?: string;
@@ -60,9 +65,15 @@ const jsonLd = {
     <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
     <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet" />
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <slot name="head" />
   </head>
   <body class="font-sans antialiased">
     <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded focus:bg-white focus:px-4 focus:py-2 focus:font-semibold focus:text-black">Skip to content</a>
+    <Nav />
     <slot />
+    <Footer />
+    <WhatsAppButton />
+    <CustomCursor />
+    <ScrollFX />
   </body>
 </html>

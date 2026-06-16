@@ -1,11 +1,15 @@
 ---
 import { site } from '../data/site';
+
+const path = Astro.url.pathname;
+const onHome = path === '/';
+const anchor = (href: string) => (href.startsWith('#') && !onHome ? `/${href}` : href);
 ---
 <header id="site-nav" class="fixed inset-x-0 top-0 z-50 transition-colors duration-300">
   <nav class="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
-    <a href="#top" class="text-lg font-extrabold tracking-tight">{site.name}<span class="text-white/40">.</span></a>
+    <a href={onHome ? '#top' : '/'} class="text-lg font-extrabold tracking-tight">{site.name}<span class="text-white/40">.</span></a>
     <div class="hidden items-center gap-8 md:flex">
-      {site.nav.map((n) => <a href={n.href} class="text-sm text-white/70 transition hover:text-white">{n.label}</a>)}
+      {site.nav.map((n) => <a href={anchor(n.href)} class="text-sm text-white/70 transition hover:text-white">{n.label}</a>)}
       <a href={site.bookingUrl} class="btn btn-primary px-5 py-2 text-sm">Book a call</a>
     </div>
     <button id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu" class="md:hidden">
@@ -15,7 +19,7 @@ import { site } from '../data/site';
     </button>
   </nav>
   <div id="mobile-menu" class="hidden border-t border-white/10 bg-black/95 px-6 py-6 md:hidden">
-    {site.nav.map((n) => <a href={n.href} class="mobile-link block py-3 text-lg">{n.label}</a>)}
+    {site.nav.map((n) => <a href={anchor(n.href)} class="mobile-link block py-3 text-lg">{n.label}</a>)}
     <a href={site.bookingUrl} class="mobile-link btn btn-primary mt-2 w-full px-5 py-3 text-center text-base">Book a call</a>
   </div>
 </header>
