@@ -66,5 +66,13 @@ Both build automatically on push once the repo is connected.
 
 - Animations: GSAP + ScrollTrigger, isolated to one island ([`ScrollFX.astro`](src/components/ScrollFX.astro)).
   Respects `prefers-reduced-motion`; content is fully visible without JS.
+- Smooth scrolling via **Lenis**, driven through the GSAP ticker so ScrollTrigger stays in
+  sync. In-page anchor links scroll smoothly. Disabled under `prefers-reduced-motion`.
+- **Custom cursor** ([`CustomCursor.astro`](src/components/CustomCursor.astro)) — desktop only
+  (fine pointer), hidden on touch and reduced-motion. Native cursor is only hidden once the
+  script runs, so it degrades gracefully if JS fails.
+- **Custom scrollbar** themed in `global.css` (WebKit + Firefox).
+- Case studies use large alternating blocks; the Footer is a full agency-style footer with a
+  CTA, link columns, and contact block — all driven from `site.work` / `site.footer`.
 - SEO: per-page meta/OG/Twitter tags + JSON-LD `Person` in
   [`BaseLayout.astro`](src/layouts/BaseLayout.astro), plus `sitemap-index.xml` and `robots.txt`.

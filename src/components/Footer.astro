@@ -2,13 +2,61 @@
 import { site } from '../data/site';
 const year = new Date().getFullYear();
 ---
-<footer class="border-t border-white/10 px-6 py-14">
-  <div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 md:flex-row">
-    <div class="text-lg font-extrabold">{site.name}<span class="text-white/40">.</span></div>
-    <nav aria-label="Footer" class="flex flex-wrap items-center gap-6 text-sm text-white/60">
-      {site.nav.map((n) => <a href={n.href} class="hover:text-white">{n.label}</a>)}
-      {site.socials.map((s) => <a href={s.href} target="_blank" rel="noopener noreferrer" class="hover:text-white">{s.label}</a>)}
+<footer class="border-t border-white/10">
+  <!-- Big CTA -->
+  <div class="mx-auto max-w-7xl px-6 pb-16 pt-20 md:pb-24 md:pt-28">
+    <a href="#contact" class="group block">
+      <p class="text-sm uppercase tracking-[0.25em] text-white/40">{site.footer.availability}</p>
+      <h2 class="reveal mt-5 max-w-4xl text-4xl font-black leading-[1.05] tracking-tight md:text-7xl">
+        {site.footer.cta}
+        <span class="inline-block transition-transform duration-300 group-hover:translate-x-2">→</span>
+      </h2>
+    </a>
+  </div>
+
+  <!-- Columns -->
+  <div class="mx-auto grid max-w-7xl gap-10 border-t border-white/10 px-6 py-14 sm:grid-cols-2 lg:grid-cols-4">
+    <div>
+      <div class="text-xl font-extrabold">{site.name}<span class="text-white/40">.</span></div>
+      <p class="mt-3 max-w-xs text-sm text-white/55">{site.description}</p>
+    </div>
+
+    <nav aria-label="Services" class="text-sm">
+      <h3 class="mb-4 text-xs uppercase tracking-[0.2em] text-white/40">Services</h3>
+      <ul class="space-y-3 text-white/65">
+        {site.footer.serviceLinks.map((s) => (
+          <li><a href="#services" class="transition hover:text-white">{s}</a></li>
+        ))}
+      </ul>
     </nav>
-    <p class="text-sm text-white/40">© {year} {site.name}</p>
+
+    <nav aria-label="Navigation" class="text-sm">
+      <h3 class="mb-4 text-xs uppercase tracking-[0.2em] text-white/40">Navigation</h3>
+      <ul class="space-y-3 text-white/65">
+        {site.nav.map((n) => <li><a href={n.href} class="transition hover:text-white">{n.label}</a></li>)}
+        <li class="pt-2 text-white/40">Social</li>
+        {site.socials.map((s) => (
+          <li><a href={s.href} target="_blank" rel="noopener noreferrer" class="transition hover:text-white">{s.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="text-sm">
+      <h3 class="mb-4 text-xs uppercase tracking-[0.2em] text-white/40">Get in touch</h3>
+      <ul class="space-y-3 text-white/65">
+        <li><a href={`mailto:${site.email}`} class="transition hover:text-white">{site.email}</a></li>
+        <li><a href={`https://wa.me/${site.whatsapp}`} target="_blank" rel="noopener noreferrer" class="transition hover:text-white">WhatsApp →</a></li>
+        <li><a href={site.bookingUrl} class="transition hover:text-white">Book a call →</a></li>
+        <li class="pt-2 text-white/40">{site.footer.hours}</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Bottom row -->
+  <div class="border-t border-white/10">
+    <div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-6 py-6 text-xs text-white/40 sm:flex-row">
+      <p>© {year} {site.name}. All rights reserved.</p>
+      <p>Shopify Expert · Built with Astro</p>
+    </div>
   </div>
 </footer>

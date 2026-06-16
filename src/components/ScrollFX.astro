@@ -1,10 +1,31 @@
 <script>
+  import Lenis from 'lenis';
   import { gsap } from 'gsap';
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  gsap.registerPlugin(ScrollTrigger);
+
   if (!reduce) {
-    gsap.registerPlugin(ScrollTrigger);
+    // Smooth scrolling driven through GSAP's ticker so ScrollTrigger stays in sync.
+    const lenis = new Lenis({ duration: 1.1, smoothWheel: true });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => lenis.raf(time * 1000));
+    gsap.ticker.lagSmoothing(0);
+
+    // Smooth in-page anchor navigation (nav links, footer links, hero CTAs).
+    document.querySelectorAll('a[href^="#"]').forEach((a) => {
+      const href = a.getAttribute('href');
+      if (!href || href === '#') return;
+      a.addEventListener('click', (e) => {
+        const target = document.querySelector(href);
+        if (!target) return;
+        e.preventDefault();
+        lenis.scrollTo(target as HTMLElement, { offset: -72 });
+      });
+    });
+
+    // Scroll-reveal animations.
     document.querySelectorAll('.reveal').forEach((el) => {
       gsap.from(el, {
         y: 40,

@@ -1,0 +1,56 @@
+<script>
+  const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (fine && !reduce) {
+    const root = document.documentElement;
+    root.classList.add('has-custom-cursor');
+
+    const dot = document.createElement('div');
+    dot.className = 'cursor-dot is-hidden';
+    const ring = document.createElement('div');
+    ring.className = 'cursor-ring is-hidden';
+    document.body.append(ring, dot);
+
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let ringX = mouseX;
+    let ringY = mouseY;
+    let visible = false;
+
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+      if (!visible) {
+        visible = true;
+        dot.classList.remove('is-hidden');
+        ring.classList.remove('is-hidden');
+      }
+    });
+
+    window.addEventListener('mouseleave', () => {
+      visible = false;
+      dot.classList.add('is-hidden');
+      ring.classList.add('is-hidden');
+    });
+
+    // Ring trails the dot with smoothing.
+    const render = () => {
+      ringX += (mouseX - ringX) * 0.18;
+      ringY += (mouseY - ringY) * 0.18;
+      ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
+      requestAnimationFrame(render);
+    };
+    requestAnimationFrame(render);
+
+    // Grow the ring over interactive targets.
+    const interactive = 'a, button, input, textarea, summary, label, [data-cursor="hover"]';
+    document.addEventListener('mouseover', (e) => {
+      if ((e.target as Element).closest?.(interactive)) ring.classList.add('is-hover');
+    });
+    document.addEventListener('mouseout', (e) => {
+      if ((e.target as Element).closest?.(interactive)) ring.classList.remove('is-hover');
+    });
+  }
+</script>

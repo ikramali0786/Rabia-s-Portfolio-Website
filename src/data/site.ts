@@ -39,10 +39,11 @@ export const site = {
     { title: 'Integrations', shape: '/shapes/shape-4.svg', points: ['ERP / PIM / CRM', 'Payments & shipping', 'Marketplaces'] },
     { title: 'Growth / CRO', shape: '/shapes/shape-5.svg', points: ['Conversion optimization', 'Email & SEO', 'Analytics & consulting'] },
   ],
+  workIntro: 'Real stories, real results — see what I’ve made possible.',
   work: [
-    { slug: 'case-1', title: 'Placeholder Case Study One', industry: 'Fashion', stat: '+38% conversion', image: '/work/work-1.svg', summary: 'Replace with a real case study: the problem, what Rabia built, and the measurable result.' },
-    { slug: 'case-2', title: 'Placeholder Case Study Two', industry: 'Beauty', stat: '2.1s → 0.9s LCP', image: '/work/work-2.svg', summary: 'Replace with a real case study: the problem, what Rabia built, and the measurable result.' },
-    { slug: 'case-3', title: 'Placeholder Case Study Three', industry: 'Home & Decor', stat: '+24% AOV', image: '/work/work-3.svg', summary: 'Replace with a real case study: the problem, what Rabia built, and the measurable result.' },
+    { slug: 'case-1', client: 'Brand One', logo: '/logos/logo-1.svg', title: 'Placeholder Case Study One', industry: 'Fashion', year: '2025', stat: '+38% conversion', image: '/work/work-1.svg', services: ['Development', 'Design', 'CRO'], summary: 'Replace with a real case study: the problem, what Rabia built, and the measurable result.' },
+    { slug: 'case-2', client: 'Brand Two', logo: '/logos/logo-2.svg', title: 'Placeholder Case Study Two', industry: 'Beauty', year: '2025', stat: '2.1s → 0.9s LCP', image: '/work/work-2.svg', services: ['Migration', 'Speed', 'Integrations'], summary: 'Replace with a real case study: the problem, what Rabia built, and the measurable result.' },
+    { slug: 'case-3', client: 'Brand Three', logo: '/logos/logo-3.svg', title: 'Placeholder Case Study Three', industry: 'Home & Decor', year: '2024', stat: '+24% AOV', image: '/work/work-3.svg', services: ['Theme', 'Klaviyo', 'Growth'], summary: 'Replace with a real case study: the problem, what Rabia built, and the measurable result.' },
   ],
   stats: [
     { value: '50+', label: 'Stores launched' },
@@ -59,6 +60,12 @@ export const site = {
     { quote: 'Placeholder testimonial — replace with a real client quote.', author: 'Client Name', role: 'Founder, Brand', avatar: '/avatars/client-1.svg' },
     { quote: 'Placeholder testimonial — replace with a real client quote.', author: 'Client Name', role: 'CEO, Brand', avatar: '/avatars/client-2.svg' },
   ],
+  footer: {
+    cta: 'Let’s talk about your next project',
+    availability: 'Available for freelance projects',
+    hours: 'Mon–Fri · 9am–6pm (PKT, GMT+5)',
+    serviceLinks: ['Development', 'Design', 'Migration', 'Integrations', 'Growth / CRO'],
+  },
 } as const;
 
 export type Site = typeof site;

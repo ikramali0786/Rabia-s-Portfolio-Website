@@ -11,6 +11,44 @@
 html { scroll-behavior: smooth; }
 body { background: var(--color-ink); color: var(--color-paper); }
 
+/* ---- Lenis smooth scroll (required) ---- */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+/* ---- Custom themed scrollbar ---- */
+html { scrollbar-width: thin; scrollbar-color: #2e2e36 transparent; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #3a3a44, #23232b);
+  border: 2px solid var(--color-ink);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #50505c, #34343e); }
+
+/* ---- Custom cursor (desktop, fine pointer only) ---- */
+@media (hover: hover) and (pointer: fine) {
+  .has-custom-cursor, .has-custom-cursor * { cursor: none !important; }
+  .cursor-dot, .cursor-ring {
+    position: fixed; top: 0; left: 0; z-index: 9999;
+    pointer-events: none; border-radius: 999px;
+    transform: translate3d(-50%, -50%, 0);
+    will-change: transform;
+  }
+  .cursor-dot { width: 7px; height: 7px; background: var(--color-paper); }
+  .cursor-ring {
+    width: 38px; height: 38px; border: 1px solid rgba(245,245,247,0.5);
+    transition: width .25s ease, height .25s ease, background-color .25s ease, border-color .25s ease, opacity .25s ease;
+  }
+  .cursor-ring.is-hover {
+    width: 64px; height: 64px;
+    background: rgba(245,245,247,0.12); border-color: transparent;
+  }
+  .cursor-ring.is-hidden, .cursor-dot.is-hidden { opacity: 0; }
+}
+
 /* Visible keyboard focus on the dark theme for all interactive elements */
 :focus-visible {
   outline: 2px solid var(--color-paper);
