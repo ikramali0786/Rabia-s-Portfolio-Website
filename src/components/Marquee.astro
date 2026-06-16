@@ -1,0 +1,16 @@
+---
+import { site } from '../data/site';
+const row = [...site.logos, ...site.logos];
+---
+<section class="border-y border-white/10 py-10">
+  <p class="mb-8 text-center text-xs uppercase tracking-[0.25em] text-white/40">Trusted by brands</p>
+  <div class="group relative overflow-hidden">
+    <div class="flex w-max animate-[marquee_30s_linear_infinite] gap-16 group-hover:[animation-play-state:paused]">
+      {row.map((l) => <img src={l.src} alt={l.name} width="160" height="48" loading="lazy" class="h-8 w-auto opacity-60 transition hover:opacity-100" />)}
+    </div>
+  </div>
+</section>
+<style>
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) { .animate-\[marquee_30s_linear_infinite\] { animation: none; } }
+</style>
