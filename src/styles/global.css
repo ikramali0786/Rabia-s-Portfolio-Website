@@ -14,6 +14,12 @@ body { background: var(--color-ink); color: var(--color-paper); }
 .iridescent {
   background: linear-gradient(120deg,#a78bfa,#f0abfc,#67e8f9,#fde68a,#a78bfa);
   background-size: 200% 200%;
+  animation: iridescent-shift 8s ease-in-out infinite;
+}
+
+@keyframes iridescent-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
 @media (prefers-reduced-motion: reduce) {
