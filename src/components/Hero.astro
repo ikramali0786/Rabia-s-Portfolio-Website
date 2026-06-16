@@ -1,15 +1,53 @@
 ---
 import { site } from '../data/site';
+const trust = site.stats.slice(0, 3);
 ---
 <section aria-label="Introduction" class="relative flex min-h-screen items-center overflow-hidden px-6 pt-28">
-  <div class="pointer-events-none absolute right-[-10%] top-1/4 h-[60vh] w-[60vh] rounded-full blur-3xl opacity-40 iridescent"></div>
+  <!-- Backdrop: dotted grid + layered iridescent orbs -->
+  <div class="pointer-events-none absolute inset-0 grid-backdrop"></div>
+  <div class="pointer-events-none absolute right-[-12%] top-[8%] h-[55vh] w-[55vh] rounded-full opacity-40 blur-3xl iridescent float-slow"></div>
+  <div class="pointer-events-none absolute right-[18%] bottom-[6%] h-[28vh] w-[28vh] rounded-full opacity-25 blur-3xl iridescent float-slower"></div>
+  <div class="pointer-events-none absolute left-[-10%] top-[30%] h-[26vh] w-[26vh] rounded-full opacity-15 blur-3xl iridescent float-slower"></div>
+
   <div class="relative mx-auto w-full max-w-7xl">
-    <p class="reveal mb-5 text-sm font-medium uppercase tracking-[0.25em] text-white/50">{site.role}</p>
-    <h1 class="reveal max-w-4xl text-5xl font-black leading-[1.05] tracking-tight md:text-7xl">{site.hero.title}</h1>
-    <p class="reveal mt-6 max-w-2xl text-lg text-white/70 md:text-xl">{site.hero.subtitle}</p>
-    <div class="reveal mt-10 flex flex-wrap gap-4">
-      <a href="#work" class="rounded-full bg-white px-7 py-3 font-semibold text-black transition hover:bg-white/80">View work</a>
-      <a href="#contact" class="rounded-full border border-white/20 px-7 py-3 font-semibold transition hover:border-white/60">Get in touch</a>
+    <!-- Availability badge -->
+    <div class="reveal inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-sm text-white/75 backdrop-blur">
+      <span class="relative flex h-2 w-2">
+        <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
+        <span class="relative inline-flex h-2 w-2 rounded-full bg-emerald-400"></span>
+      </span>
+      {site.hero.badge}
     </div>
+
+    <h1 class="reveal mt-7 max-w-5xl text-5xl font-black leading-[1.04] tracking-tight md:text-7xl">
+      {site.hero.titleStart}<span class="iridescent-text">{site.hero.titleHighlight}</span>{site.hero.titleEnd}
+    </h1>
+
+    <p class="reveal mt-7 max-w-2xl text-lg text-white/65 md:text-xl">{site.hero.subtitle}</p>
+
+    <div class="reveal mt-10 flex flex-wrap items-center gap-4">
+      <a href="#work" class="group inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 font-semibold text-black transition hover:bg-white/85">
+        View work <span class="transition-transform group-hover:translate-x-0.5" aria-hidden="true">→</span>
+      </a>
+      <a href="#contact" class="rounded-full border border-white/20 px-7 py-3.5 font-semibold transition hover:border-white/60 hover:bg-white/5">Get in touch</a>
+    </div>
+
+    <!-- Inline trust stats -->
+    <dl class="reveal mt-14 flex flex-wrap gap-x-10 gap-y-6 border-t border-white/10 pt-8">
+      {trust.map((s) => (
+        <div>
+          <dt class="text-3xl font-black tracking-tight md:text-4xl">{s.value}</dt>
+          <dd class="mt-1 text-sm text-white/50">{s.label}</dd>
+        </div>
+      ))}
+    </dl>
   </div>
+
+  <!-- Scroll cue -->
+  <a href="#services" aria-label="Scroll to content" class="absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-white/40 transition hover:text-white/80 md:flex">
+    <span class="text-[10px] uppercase tracking-[0.3em]">Scroll</span>
+    <span class="flex h-9 w-5 items-start justify-center rounded-full border border-white/25 p-1">
+      <span class="h-2 w-1 animate-bounce rounded-full bg-white/60"></span>
+    </span>
+  </a>
 </section>

@@ -20,7 +20,10 @@ export const site = {
     { label: 'Contact', href: '#contact' },
   ],
   hero: {
-    title: 'Shopify Expert for high-converting, scalable stores',
+    badge: 'Available for freelance projects',
+    titleStart: 'Shopify Expert for ',
+    titleHighlight: 'high-converting',
+    titleEnd: ' & scalable stores',
     subtitle:
       'I design, build and optimize Shopify & Shopify Plus stores that load fast, convert better and scale with your brand.',
   },
@@ -56,9 +59,11 @@ export const site = {
     bio: "Placeholder bio — replace with Rabia’s story: years of Shopify experience, specialties, the kinds of brands she works with, and what makes her approach different.",
     skills: ['Shopify Plus', 'Liquid', 'Hydrogen', 'Tailwind', 'JavaScript', 'Klaviyo', 'GA4', 'CRO'],
   },
+  testimonialsIntro: 'Trusted by founders to ship stores that perform.',
   testimonials: [
-    { quote: 'Placeholder testimonial — replace with a real client quote.', author: 'Client Name', role: 'Founder, Brand', avatar: '/avatars/client-1.svg' },
-    { quote: 'Placeholder testimonial — replace with a real client quote.', author: 'Client Name', role: 'CEO, Brand', avatar: '/avatars/client-2.svg' },
+    { quote: 'Placeholder testimonial — replace with a real client quote that highlights the result Rabia delivered and what it was like to work with her.', author: 'Client Name', role: 'Founder', company: 'Brand One', avatar: '/avatars/client-1.svg', rating: 5, featured: true },
+    { quote: 'Placeholder testimonial — replace with a real client quote.', author: 'Client Name', role: 'CEO', company: 'Brand Two', avatar: '/avatars/client-2.svg', rating: 5, featured: false },
+    { quote: 'Placeholder testimonial — replace with a real client quote.', author: 'Client Name', role: 'Head of Ecommerce', company: 'Brand Three', avatar: '/avatars/client-1.svg', rating: 5, featured: false },
   ],
   footer: {
     cta: 'Let’s talk about your next project',

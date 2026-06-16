@@ -67,6 +67,32 @@ html { scrollbar-width: thin; scrollbar-color: #2e2e36 transparent; }
   50% { background-position: 100% 50%; }
 }
 
+/* Gradient (iridescent) headline text */
+.iridescent-text {
+  background: linear-gradient(120deg,#c4b5fd,#f0abfc,#67e8f9,#fde68a,#c4b5fd);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: iridescent-shift 8s ease-in-out infinite;
+}
+
+/* Subtle dotted grid backdrop for the hero */
+.grid-backdrop {
+  background-image: radial-gradient(rgba(245,245,247,0.06) 1px, transparent 1px);
+  background-size: 28px 28px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 30%, transparent 75%);
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 30%, transparent 75%);
+}
+
+/* Gentle float for hero orbs */
+@keyframes float-slow {
+  0%, 100% { transform: translate3d(0,0,0); }
+  50% { transform: translate3d(0,-26px,0); }
+}
+.float-slow { animation: float-slow 9s ease-in-out infinite; }
+.float-slower { animation: float-slow 13s ease-in-out infinite; }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
