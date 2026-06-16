@@ -23,7 +23,9 @@ const blogPostingLd = {
   headline: post.data.title,
   description: post.data.description,
   datePublished: post.data.date.toISOString(),
-  author: { '@type': 'Person', name: site.name },
+  author: { '@type': 'Person', name: site.name, url: site.url },
+  mainEntityOfPage: { '@type': 'WebPage', '@id': `${site.url}/blog/${post.id}` },
+  image: `${site.url}/og-image.png`,
   url: `${site.url}/blog/${post.id}`,
 };
 
@@ -41,6 +43,7 @@ const breadcrumbLd = {
   title={`${post.data.title} — ${site.name}`}
   description={post.data.description}
   canonicalUrl={`${site.url}/blog/${post.id}`}
+  ogType="article"
 >
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify(blogPostingLd)} />

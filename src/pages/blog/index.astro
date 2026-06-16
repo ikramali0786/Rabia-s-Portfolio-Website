@@ -8,12 +8,23 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
 
 const formatDate = (d: Date) =>
   d.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' });
+
+const blogLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Blog',
+  name: `${site.name} Blog`,
+  url: `${site.url}/blog`,
+  description: 'Practical articles on Shopify development, performance, migration, and conversion — written from the trenches.',
+};
 ---
 <BaseLayout
   title={`Blog — ${site.name}`}
   description="Articles on Shopify development, migration, speed and CRO."
   canonicalUrl={`${site.url}/blog`}
 >
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(blogLd)} />
+  </Fragment>
   <main id="main-content" class="pt-32 pb-24 md:pb-32">
     <div class="mx-auto max-w-7xl px-6">
       <!-- Header -->

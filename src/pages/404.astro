@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site';
+---
+<BaseLayout
+  title={`Page not found — ${site.name}`}
+  description="The page you're looking for doesn't exist."
+  canonicalUrl={site.url}
+>
+  <Fragment slot="head">
+    <meta name="robots" content="noindex" />
+  </Fragment>
+
+  <main id="main-content" class="min-h-screen pt-32 grid place-items-center text-center px-6">
+    <div>
+      <p class="mb-4 text-sm font-medium uppercase tracking-[0.2em] text-white/40">Error 404</p>
+      <h1 class="mb-6 text-7xl font-black tracking-tight md:text-9xl">404</h1>
+      <p class="mb-10 text-lg text-white/60 max-w-md mx-auto">
+        The page you're looking for doesn't exist or has been moved.
+      </p>
+      <a href="/" class="btn btn-primary inline-block px-8 py-3">
+        Back to home →
+      </a>
+    </div>
+  </main>
+</BaseLayout>

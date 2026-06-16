@@ -1,0 +1,12 @@
+{
+  "name": "Rabia Gul — Shopify Expert",
+  "short_name": "Rabia Gul",
+  "description": "Freelance Shopify Expert building high-converting, scalable Shopify & Shopify Plus stores.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050505",
+  "theme_color": "#050505",
+  "icons": [
+    { "src": "/favicon.svg", "type": "image/svg+xml", "sizes": "any" }
+  ]
+}
