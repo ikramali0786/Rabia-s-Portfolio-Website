@@ -12,7 +12,7 @@
     });
   } else {
     // ---- Smooth scrolling through GSAP's ticker so ScrollTrigger stays in sync ----
-    const lenis = new Lenis({ duration: 1.1, smoothWheel: true });
+    const lenis = new Lenis({ duration: 1.05, smoothWheel: true });
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add((time) => lenis.raf(time * 1000));
     gsap.ticker.lagSmoothing(0);
@@ -29,45 +29,50 @@
       });
     });
 
-    // ---- Heading "wipe-up" reveals (cinematic clip + rise) ----
-    document.querySelectorAll<HTMLElement>('[data-reveal="heading"]').forEach((el) => {
-      gsap.from(el, {
-        clipPath: 'inset(0 0 100% 0)',
-        yPercent: 14,
-        opacity: 0,
-        duration: 1.1,
-        ease: 'power4.out',
-        scrollTrigger: { trigger: el, start: 'top 88%' },
-      });
-    });
-
-    // ---- Staggered batch reveals with blur-in for everything tagged .reveal ----
-    gsap.set('.reveal', { y: 50, opacity: 0, filter: 'blur(8px)' });
-    ScrollTrigger.batch('.reveal', {
-      start: 'top 88%',
-      onEnter: (batch) =>
-        gsap.to(batch, {
+    // ---- Reveal helper: smooth fade + rise, plays once, never gets stuck ----
+    // Using fromTo (immediateRender) so elements are hidden only by JS; if JS fails
+    // they stay visible. `once: true` + ScrollTrigger firing on already-passed
+    // elements at load guarantees nothing stays stuck hidden after a mid-page reload.
+    const revealOne = (el: Element, opts: { y?: number; duration?: number; delay?: number } = {}) => {
+      gsap.fromTo(
+        el,
+        { y: opts.y ?? 28, opacity: 0 },
+        {
           y: 0,
           opacity: 1,
-          filter: 'blur(0px)',
-          duration: 0.9,
-          ease: 'power3.out',
-          stagger: 0.12,
-          overwrite: true,
-        }),
+          duration: opts.duration ?? 0.7,
+          ease: 'power2.out',
+          delay: opts.delay ?? 0,
+          scrollTrigger: { trigger: el, start: 'top 90%', once: true },
+        },
+      );
+    };
+
+    // Headings: a touch more travel + duration for emphasis (no clip-path — reliable).
+    document.querySelectorAll<HTMLElement>('[data-reveal="heading"]').forEach((el) => {
+      revealOne(el, { y: 40, duration: 0.9 });
     });
 
-    // ---- Subtle parallax for elements opting in via data-parallax ----
+    // Generic .reveal elements: subtle staggered cascade for siblings that share a parent.
+    const items = gsap.utils.toArray<HTMLElement>('.reveal');
+    items.forEach((el) => {
+      const parent = el.parentElement;
+      const sibs = parent ? Array.from(parent.children).filter((c) => c.classList.contains('reveal')) : [el];
+      const idx = Math.max(0, sibs.indexOf(el));
+      revealOne(el, { delay: Math.min(idx, 5) * 0.08 });
+    });
+
+    // ---- Subtle, smoothed parallax for decorative elements ----
     document.querySelectorAll<HTMLElement>('[data-parallax]').forEach((el) => {
       const depth = parseFloat(el.dataset.parallax || '0.15');
       gsap.to(el, {
         yPercent: -depth * 100,
         ease: 'none',
-        scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true },
+        scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: 0.6 },
       });
     });
 
-    // Recalculate positions once lazy images have loaded.
+    // Recalculate trigger positions after fonts + lazy images settle.
     window.addEventListener('load', () => ScrollTrigger.refresh());
   }
 </script>
