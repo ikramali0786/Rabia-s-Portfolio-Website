@@ -52,7 +52,7 @@ export const site = {
   ],
   about: {
     photo: '/avatars/rabia.jpg',
-    bio: 'Placeholder bio — replace with Rabia's story: years of Shopify experience, specialties, the kinds of brands she works with, and what makes her approach different.',
+    bio: "Placeholder bio — replace with Rabia’s story: years of Shopify experience, specialties, the kinds of brands she works with, and what makes her approach different.",
     skills: ['Shopify Plus', 'Liquid', 'Hydrogen', 'Tailwind', 'JavaScript', 'Klaviyo', 'GA4', 'CRO'],
   },
   testimonials: [
