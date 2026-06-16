@@ -1,15 +1,56 @@
 ---
 import { site } from '../data/site';
-const row = [...site.logos, ...site.logos];
+const items = site.marquee;
+const row1 = [...items, ...items];
+const row2 = [...items, ...items];
 ---
-<section aria-label="Trusted by brands" class="border-y border-white/10 py-10">
-  <p class="mb-8 text-center text-xs uppercase tracking-[0.25em] text-white/40">Trusted by brands</p>
+
+<section aria-label="Expertise" class="border-y border-white/10 py-14 overflow-hidden">
+  <h2 class="sr-only">Expertise</h2>
+
+  <!-- Row 1 — scrolls LEFT -->
+  <div class="group relative mb-6 overflow-hidden">
+    <div class="flex w-max animate-[marquee-ltr_34s_linear_infinite] group-hover:[animation-play-state:paused]">
+      {row1.map((item, i) => (
+        <span class="flex items-center shrink-0">
+          <span class={`text-4xl md:text-6xl font-black uppercase tracking-tight leading-none px-6 select-none ${i % 2 === 0 ? 'text-white' : 'text-outline'}`}>
+            {item}
+          </span>
+          <span class="iridescent-text text-3xl md:text-5xl shrink-0 select-none" aria-hidden="true">✦</span>
+        </span>
+      ))}
+    </div>
+  </div>
+
+  <!-- Row 2 — scrolls RIGHT -->
   <div class="group relative overflow-hidden">
-    <div class="flex w-max animate-[brand-marquee_30s_linear_infinite] gap-16 group-hover:[animation-play-state:paused]">
-      {row.map((l) => <img src={l.src} alt={l.name} width="160" height="48" loading="lazy" class="h-8 w-auto opacity-60 transition hover:opacity-100" />)}
+    <div class="flex w-max animate-[marquee-rtl_40s_linear_infinite] group-hover:[animation-play-state:paused]">
+      {row2.map((item, i) => (
+        <span class="flex items-center shrink-0">
+          <span class={`text-4xl md:text-6xl font-black uppercase tracking-tight leading-none px-6 select-none ${i % 2 === 0 ? 'text-outline' : 'text-white'}`}>
+            {item}
+          </span>
+          <span class="iridescent-text text-3xl md:text-5xl shrink-0 select-none" aria-hidden="true">✦</span>
+        </span>
+      ))}
     </div>
   </div>
 </section>
+
 <style>
-  @keyframes brand-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes marquee-ltr {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  @keyframes marquee-rtl {
+    from { transform: translateX(-50%); }
+    to   { transform: translateX(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .animate-\[marquee-ltr_34s_linear_infinite\],
+    .animate-\[marquee-rtl_40s_linear_infinite\] {
+      animation: none !important;
+      transform: translateX(0) !important;
+    }
+  }
 </style>

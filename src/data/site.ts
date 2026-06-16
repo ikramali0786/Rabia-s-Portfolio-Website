@@ -35,6 +35,18 @@ export const site = {
     { name: 'Brand Five', src: '/logos/logo-5.svg' },
     { name: 'Brand Six', src: '/logos/logo-6.svg' },
   ],
+  marquee: [
+    'Shopify Plus',
+    'Theme Development',
+    'Headless / Hydrogen',
+    'Store Migration',
+    'Speed Optimization',
+    'Conversion (CRO)',
+    'Klaviyo & Email',
+    'App Integrations',
+    'B2B & Wholesale',
+    'UX / UI Design',
+  ],
   services: [
     { title: 'Development', shape: '/shapes/shape-1.svg', points: ['Custom themes', 'Apps & extensions', 'Speed optimization', 'Headless & B2B'] },
     { title: 'Design', shape: '/shapes/shape-2.svg', points: ['UX / UI', 'Conversion-led design', 'Usability audits'] },

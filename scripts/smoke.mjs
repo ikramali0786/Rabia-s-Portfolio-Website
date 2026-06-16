@@ -5,7 +5,7 @@ const checks = [
   ['title', 'Shopify Expert'],
   ['skip link', 'Skip to content'],
   ['hero CTA', 'View work'],
-  ['marquee', 'Trusted by brands'],
+  ['marquee', 'aria-label="Expertise"'],
   ['services', 'id="services"'],
   ['work', 'id="work"'],
   ['stats', 'Stores launched'],
