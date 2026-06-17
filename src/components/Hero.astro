@@ -2,7 +2,7 @@
 import { site } from '../data/site';
 const trust = site.stats.slice(0, 3);
 ---
-<section aria-label="Introduction" class="relative flex min-h-screen items-center overflow-hidden px-6 pt-28">
+<section aria-label="Introduction" class="relative overflow-hidden px-6 pb-16 pt-32 sm:pb-20 sm:pt-36 md:pb-24 md:pt-44">
   <!-- Backdrop: dotted grid + layered iridescent orbs -->
   <div class="pointer-events-none absolute inset-0 grid-backdrop"></div>
   <div class="pointer-events-none absolute right-[-12%] top-[8%] h-[55vh] w-[55vh] rounded-full opacity-40 blur-3xl iridescent iridescent-float"></div>
@@ -19,13 +19,13 @@ const trust = site.stats.slice(0, 3);
       {site.hero.badge}
     </div>
 
-    <h1 data-reveal="heading" class="mt-7 max-w-5xl text-[2.5rem] font-black leading-[1.04] tracking-tight sm:text-5xl md:text-7xl">
+    <h1 data-reveal="heading" class="mt-6 max-w-5xl text-[2.5rem] font-black leading-[1.04] tracking-tight sm:text-5xl md:text-7xl">
       {site.hero.titleStart}<span class="iridescent-text">{site.hero.titleHighlight}</span>{site.hero.titleEnd}
     </h1>
 
-    <p class="reveal mt-7 max-w-2xl text-lg text-white/65 md:text-xl">{site.hero.subtitle}</p>
+    <p class="reveal mt-5 max-w-2xl text-lg text-white/65 md:text-xl">{site.hero.subtitle}</p>
 
-    <div class="reveal mt-10 flex flex-wrap items-center gap-4">
+    <div class="reveal mt-8 flex flex-wrap items-center gap-4">
       <a href="#work" class="group btn btn-primary px-7 py-3.5">
         View work <span class="transition-transform group-hover:translate-x-0.5" aria-hidden="true">→</span>
       </a>
@@ -33,7 +33,7 @@ const trust = site.stats.slice(0, 3);
     </div>
 
     <!-- Inline trust stats -->
-    <dl class="reveal mt-10 grid grid-cols-3 gap-3 border-t border-white/10 pt-7 sm:mt-12 sm:flex sm:flex-wrap sm:gap-x-10 sm:gap-y-6 sm:pt-8">
+    <dl class="reveal mt-8 grid grid-cols-3 gap-3 border-t border-white/10 pt-7 sm:mt-10 sm:flex sm:flex-wrap sm:gap-x-10 sm:gap-y-6 sm:pt-8">
       {trust.map((s) => (
         <div>
           <dt class="text-2xl font-black tracking-tight sm:text-3xl md:text-4xl">{s.value}</dt>
@@ -42,12 +42,4 @@ const trust = site.stats.slice(0, 3);
       ))}
     </dl>
   </div>
-
-  <!-- Scroll cue -->
-  <a href="#services" aria-label="Scroll to content" class="absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-white/40 transition hover:text-white/80 md:flex">
-    <span class="text-[10px] uppercase tracking-[0.3em]">Scroll</span>
-    <span class="flex h-9 w-5 items-start justify-center rounded-full border border-white/25 p-1">
-      <span class="h-2 w-1 animate-bounce rounded-full bg-white/60"></span>
-    </span>
-  </a>
 </section>
