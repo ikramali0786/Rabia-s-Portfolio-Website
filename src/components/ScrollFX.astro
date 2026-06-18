@@ -34,33 +34,47 @@
     // Using fromTo (immediateRender) so elements are hidden only by JS; if JS fails
     // they stay visible. `once: true` + ScrollTrigger firing on already-passed
     // elements at load guarantees nothing stays stuck hidden after a mid-page reload.
-    const revealOne = (el: Element, opts: { y?: number; duration?: number; delay?: number } = {}) => {
+    const revealOne = (
+      el: Element,
+      opts: { y?: number; scale?: number; duration?: number; delay?: number; ease?: string } = {},
+    ) => {
       gsap.fromTo(
         el,
-        { y: opts.y ?? 28, opacity: 0 },
+        { y: opts.y ?? 28, opacity: 0, scale: opts.scale ?? 1 },
         {
           y: 0,
           opacity: 1,
+          scale: 1,
           duration: opts.duration ?? 0.7,
-          ease: 'power2.out',
+          ease: opts.ease ?? 'power3.out',
           delay: opts.delay ?? 0,
-          scrollTrigger: { trigger: el, start: 'top 90%', once: true },
+          // Clear the inline transform once done so hover / md:scale on cards still work.
+          clearProps: 'transform,willChange',
+          scrollTrigger: { trigger: el, start: 'top 88%', once: true },
         },
       );
     };
 
-    // Headings: a touch more travel + duration for emphasis (no clip-path — reliable).
+    // Headings: a touch more travel + duration for emphasis (no scale — keeps type crisp).
     document.querySelectorAll<HTMLElement>('[data-reveal="heading"]').forEach((el) => {
-      revealOne(el, { y: 40, duration: 0.9 });
+      revealOne(el, { y: 42, duration: 0.95 });
     });
 
-    // Generic .reveal elements: subtle staggered cascade for siblings that share a parent.
+    // Generic .reveal elements (incl. cards): refined rise + subtle scale-in, with a
+    // smooth staggered cascade for siblings that share a parent (grids of cards).
     const items = gsap.utils.toArray<HTMLElement>('.reveal');
     items.forEach((el) => {
       const parent = el.parentElement;
       const sibs = parent ? Array.from(parent.children).filter((c) => c.classList.contains('reveal')) : [el];
       const idx = Math.max(0, sibs.indexOf(el));
-      revealOne(el, { delay: Math.min(idx, 5) * 0.08 });
+      const isCard = el.tagName === 'ARTICLE' || el.tagName === 'FIGURE' || el.classList.contains('reveal-card');
+      revealOne(el, {
+        y: isCard ? 44 : 30,
+        scale: isCard ? 0.94 : 0.985,
+        duration: isCard ? 0.9 : 0.75,
+        ease: isCard ? 'expo.out' : 'power3.out',
+        delay: Math.min(idx, 6) * 0.1,
+      });
     });
 
     // ---- Subtle, smoothed parallax for decorative elements ----
