@@ -77,6 +77,31 @@
       });
     });
 
+    // ---- Case-study stacking deck: pinned cards recede (scale down + dim) as the next covers them ----
+    const stackCards = gsap.utils.toArray<HTMLElement>('#work [data-stack]');
+    if (stackCards.length > 1 && window.matchMedia('(min-width: 768px)').matches) {
+      stackCards.forEach((card, i) => {
+        if (i === stackCards.length - 1) return; // last card never gets covered
+        const nextWrap = stackCards[i + 1].parentElement; // the sticky wrapper of the next card
+        if (!nextWrap) return;
+        gsap.fromTo(
+          card,
+          { scale: 1, filter: 'brightness(1)' },
+          {
+            scale: 0.9,
+            filter: 'brightness(0.5)',
+            ease: 'none',
+            scrollTrigger: {
+              trigger: nextWrap,
+              start: 'top bottom',
+              end: 'top center',
+              scrub: true,
+            },
+          },
+        );
+      });
+    }
+
     // ---- Subtle, smoothed parallax for decorative elements ----
     document.querySelectorAll<HTMLElement>('[data-parallax]').forEach((el) => {
       const depth = parseFloat(el.dataset.parallax || '0.15');

@@ -58,9 +58,10 @@ export const site = {
   ],
   workIntro: 'Real stories, real results — see what I’ve made possible.',
   work: [
-    { slug: 'case-1', client: 'Brand One', logo: '/logos/logo-1.svg', title: 'Placeholder Case Study One', industry: 'Fashion', year: '2025', stat: '+38% conversion', image: '/work/work-1.svg', services: ['Development', 'Design', 'CRO'], summary: 'Replace with a real case study: the problem, what Rabia built, and the measurable result.' },
-    { slug: 'case-2', client: 'Brand Two', logo: '/logos/logo-2.svg', title: 'Placeholder Case Study Two', industry: 'Beauty', year: '2025', stat: '2.1s → 0.9s LCP', image: '/work/work-2.svg', services: ['Migration', 'Speed', 'Integrations'], summary: 'Replace with a real case study: the problem, what Rabia built, and the measurable result.' },
-    { slug: 'case-3', client: 'Brand Three', logo: '/logos/logo-3.svg', title: 'Placeholder Case Study Three', industry: 'Home & Decor', year: '2024', stat: '+24% AOV', image: '/work/work-3.svg', services: ['Theme', 'Klaviyo', 'Growth'], summary: 'Replace with a real case study: the problem, what Rabia built, and the measurable result.' },
+    { slug: 'case-1', title: 'Placeholder Case Study One', industry: 'Fashion', year: '2025', stat: '+38% conversion', image: '/work/work-1.svg', services: ['Development', 'Design', 'CRO'], summary: 'Replace with a real case study: the problem, what Rabia built, and the measurable result.' },
+    { slug: 'case-2', title: 'Placeholder Case Study Two', industry: 'Beauty', year: '2025', stat: '2.1s → 0.9s LCP', image: '/work/work-2.svg', services: ['Migration', 'Speed', 'Integrations'], summary: 'Replace with a real case study: the problem, what Rabia built, and the measurable result.' },
+    { slug: 'case-3', title: 'Placeholder Case Study Three', industry: 'Home & Decor', year: '2024', stat: '+24% AOV', image: '/work/work-3.svg', services: ['Theme', 'Klaviyo', 'Growth'], summary: 'Replace with a real case study: the problem, what Rabia built, and the measurable result.' },
+    { slug: 'case-4', title: 'Placeholder Case Study Four', industry: 'B2B / Wholesale', year: '2024', stat: '+52% revenue', image: '/work/work-4.svg', services: ['Headless', 'B2B', 'Performance'], summary: 'Replace with a real case study: the problem, what Rabia built, and the measurable result.' },
   ],
   stats: [
     { value: '50+', label: 'Stores launched' },
