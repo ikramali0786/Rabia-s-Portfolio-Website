@@ -89,6 +89,71 @@ const jsonLd = {
     <slot name="head" />
   </head>
   <body class="font-sans antialiased">
+    <!-- Without JS the preloader can't remove itself, so never show it. -->
+    <noscript><style>#preloader{display:none!important}</style></noscript>
+    <!-- Site preloader: shows once per session, wipes up to reveal the page -->
+    <div id="preloader" aria-hidden="true">
+      <div class="pl-inner">
+        <div class="pl-brand">{site.name}<span>.</span></div>
+        <div class="pl-bar"><span id="pl-fill" class="pl-fill"></span></div>
+        <div class="pl-count"><span id="pl-num">0</span>%</div>
+      </div>
+    </div>
+    <script is:inline>
+      (function () {
+        var pre = document.getElementById('preloader');
+        if (!pre) return;
+        var num = document.getElementById('pl-num');
+        var fill = document.getElementById('pl-fill');
+        var html = document.documentElement;
+
+        function finish() {
+          html.style.overflow = '';
+          pre.classList.add('is-done');
+          setTimeout(function () { if (pre && pre.parentNode) pre.parentNode.removeChild(pre); }, 1000);
+        }
+
+        // Only show the loader on the first page of a session.
+        try {
+          if (sessionStorage.getItem('pl-seen')) { pre.parentNode.removeChild(pre); return; }
+          sessionStorage.setItem('pl-seen', '1');
+        } catch (e) {}
+
+        html.style.overflow = 'hidden';
+
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          if (num) num.textContent = '100';
+          if (fill) fill.style.width = '100%';
+          window.addEventListener('load', finish);
+          setTimeout(finish, 1200);
+          return;
+        }
+
+        var pct = 0;
+        var loaded = false;
+        var t0 = performance.now();
+        var MIN = 1100; // minimum visible time (ms)
+        window.addEventListener('load', function () { loaded = true; });
+
+        function set(v) {
+          pct = v;
+          if (num) num.textContent = String(Math.round(v));
+          if (fill) fill.style.width = v + '%';
+        }
+        function tick() {
+          var elapsed = performance.now() - t0;
+          var cap = loaded && elapsed > MIN ? 100 : Math.min(92, (elapsed / MIN) * 92);
+          pct += (cap - pct) * 0.09;
+          if (cap === 100 && 100 - pct < 0.5) pct = 100;
+          set(pct);
+          if (pct >= 99.6 && loaded) { set(100); finish(); return; }
+          requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+        // Safety: never hang.
+        setTimeout(function () { if (!pre.classList.contains('is-done')) finish(); }, 6000);
+      })();
+    </script>
     <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded focus:bg-white focus:px-4 focus:py-2 focus:font-semibold focus:text-black">Skip to content</a>
     <Nav />
     <slot />
