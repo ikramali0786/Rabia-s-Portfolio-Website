@@ -20,6 +20,14 @@ import { site } from '../data/site';
       <input id="field-name" name="name" required placeholder="Your name" autocomplete="name" class="w-full rounded-xl border border-white/15 bg-transparent px-4 py-3 transition focus:border-white/60" />
       <label for="field-email" class="sr-only">Email address</label>
       <input id="field-email" name="email" type="email" required placeholder="Email" autocomplete="email" class="w-full rounded-xl border border-white/15 bg-transparent px-4 py-3 transition focus:border-white/60" />
+      <label for="field-package" class="sr-only">Which package are you interested in?</label>
+      <select id="field-package" name="package" class="w-full rounded-xl border border-white/15 bg-transparent px-4 py-3 text-white/90 transition focus:border-white/60">
+        <option value="" disabled selected style="background-color:#0d0d0f;color:#f5f5f7;">Which package are you interested in?</option>
+        {site.pricing.tiers.map((tier) => (
+          <option value={`${tier.name} (${tier.price})`} style="background-color:#0d0d0f;color:#f5f5f7;">{tier.name} — {tier.price}</option>
+        ))}
+        <option value="Not sure — need advice" style="background-color:#0d0d0f;color:#f5f5f7;">Not sure — need advice</option>
+      </select>
       <label for="field-message" class="sr-only">Your message</label>
       <textarea id="field-message" name="message" required rows="5" placeholder="Your message" class="w-full rounded-xl border border-white/15 bg-transparent px-4 py-3 transition focus:border-white/60"></textarea>
       <button type="submit" class="btn btn-primary w-full px-6 py-3 disabled:cursor-not-allowed disabled:opacity-60">Send message</button>
