@@ -4,8 +4,9 @@
 import Section from './Section.astro';
 import { site } from '../data/site';
 ---
-<Section id="about" eyebrow="About" title="Hi, I'm Rabia">
-  <div class="reveal grid items-center gap-12 md:grid-cols-[2fr_3fr]">
+<Section id="about" eyebrow="About">
+  <h2 data-reveal="heading" class="max-w-3xl text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl md:text-6xl">Hi, I'm <span class="iridescent-text">Rabia</span></h2>
+  <div class="reveal mt-8 grid items-center gap-12 md:grid-cols-[2fr_3fr]">
     <img src={site.about.photo} alt={`${site.name}, ${site.role}`} width="480" height="600" loading="lazy" class="aspect-[4/5] w-full rounded-3xl border border-white/10 object-cover" />
     <div>
       <p class="text-lg text-white/75">{site.about.bio}</p>

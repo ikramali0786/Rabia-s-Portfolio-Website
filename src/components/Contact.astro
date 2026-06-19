@@ -6,10 +6,12 @@ import { site } from '../data/site';
   <div class="grid gap-12 md:grid-cols-2">
     <div class="reveal">
       <p class="text-lg text-white/70">Tell me about your project and I'll get back to you within 24 hours.</p>
-      <div class="mt-8 space-y-3 text-white/80">
-        <a href={`mailto:${site.email}`} class="block hover:text-white">{site.email}</a>
-        <a href={`https://wa.me/${site.whatsapp}`} class="block hover:text-white">WhatsApp →</a>
-        <a href={site.bookingUrl} class="block hover:text-white">Book a call →</a>
+      <div class="mt-8 space-y-4">
+        <a href={`mailto:${site.email}`} class="block text-white/80 hover:text-white">{site.email}</a>
+        <div class="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <a href={`https://wa.me/${site.whatsapp}`} target="_blank" rel="noopener noreferrer" class="btn w-full px-5 py-2.5 text-center sm:w-auto" style="background-color:#25D366;color:#fff;" onmouseover="this.style.backgroundColor='#1da851'" onmouseout="this.style.backgroundColor='#25D366'">WhatsApp</a>
+          <a href={site.bookingUrl} class="btn btn-secondary w-full px-5 py-2.5 text-center sm:w-auto">Book a call</a>
+        </div>
       </div>
     </div>
     <form id="contact-form" class="reveal space-y-4">
@@ -21,7 +23,7 @@ import { site } from '../data/site';
       <label for="field-email" class="sr-only">Email address</label>
       <input id="field-email" name="email" type="email" required placeholder="Email" autocomplete="email" class="w-full rounded-xl border border-white/15 bg-transparent px-4 py-3 transition focus:border-white/60" />
       <label for="field-package" class="sr-only">Which package are you interested in?</label>
-      <select id="field-package" name="package" class="w-full rounded-xl border border-white/15 bg-transparent px-4 py-3 text-white/90 transition focus:border-white/60">
+      <select id="field-package" name="package" class="w-full rounded-xl border border-white/15 bg-[#0d0d0f] px-4 py-3 text-white transition focus:border-white/60">
         <option value="" disabled selected style="background-color:#0d0d0f;color:#f5f5f7;">Which package are you interested in?</option>
         {site.pricing.tiers.map((tier) => (
           <option value={`${tier.name} (${tier.price})`} style="background-color:#0d0d0f;color:#f5f5f7;">{tier.name} — {tier.price}</option>

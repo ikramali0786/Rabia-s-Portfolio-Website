@@ -28,12 +28,12 @@ const anchor = (href: string) => (href.startsWith('#') && !onHome ? `/${href}` :
   <!-- Mobile drawer -->
   <div
     id="mobile-overlay"
-    class="pointer-events-none fixed inset-0 z-40 bg-black/60 opacity-0 backdrop-blur-sm transition-opacity duration-300 md:hidden"
+    class="pointer-events-none fixed inset-0 z-[80] bg-black/60 opacity-0 backdrop-blur-sm transition-opacity duration-300 md:hidden"
   ></div>
   <aside
     id="mobile-drawer"
     aria-hidden="true"
-    class="fixed right-0 top-0 z-50 flex h-full w-72 max-w-[82vw] translate-x-full flex-col border-l border-white/10 bg-[#121218] p-6 shadow-2xl shadow-black/70 transition-transform duration-300 ease-out md:hidden"
+    class="fixed right-0 top-0 z-[90] flex h-full w-72 max-w-[82vw] translate-x-full flex-col border-l border-white/10 bg-[#121218] p-6 shadow-2xl shadow-black/70 transition-transform duration-300 ease-out md:hidden"
   >
     <div class="flex items-center justify-between">
       <span class="text-lg font-extrabold tracking-tight">{site.name}<span class="text-white/40">.</span></span>
