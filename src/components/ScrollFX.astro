@@ -81,9 +81,21 @@
     const stackCards = gsap.utils.toArray<HTMLElement>('#work [data-stack]');
     if (stackCards.length > 1 && window.matchMedia('(min-width: 768px)').matches) {
       stackCards.forEach((card, i) => {
-        if (i === stackCards.length - 1) return; // last card never gets covered
-        const nextWrap = stackCards[i + 1].parentElement; // the sticky wrapper of the next card
-        if (!nextWrap) return;
+        const isLast = i === stackCards.length - 1;
+        let trigger: HTMLElement | null;
+        let start: string;
+        let end: string;
+        if (isLast) {
+          // Last card: recede as the whole stack container scrolls away
+          trigger = card.parentElement?.parentElement ?? null; // the <div class="mt-6 pb-..."> wrapper
+          start = 'bottom bottom';
+          end = 'bottom top+=140';
+        } else {
+          trigger = stackCards[i + 1].parentElement; // the sticky wrapper of the next card
+          start = 'top bottom';
+          end = 'top center';
+        }
+        if (!trigger) return;
         gsap.fromTo(
           card,
           { scale: 1, filter: 'brightness(1)' },
@@ -92,9 +104,9 @@
             filter: 'brightness(0.5)',
             ease: 'none',
             scrollTrigger: {
-              trigger: nextWrap,
-              start: 'top bottom',
-              end: 'top center',
+              trigger,
+              start,
+              end,
               scrub: true,
             },
           },

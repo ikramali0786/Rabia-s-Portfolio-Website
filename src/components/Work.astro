@@ -4,10 +4,10 @@ import { site } from '../data/site';
 ---
 <Section id="work" eyebrow="Selected work" title={site.workIntro}>
   <!-- Sticky stacking deck: each card pins and the next stacks over it on scroll (desktop). -->
-  <div class="mt-8 pb-[6vh] md:pb-[14vh]">
+  <div class="mt-6 pb-4 md:pb-[10vh]">
     {site.work.map((w, i) => (
       <div
-        class="static mb-8 md:sticky md:mb-12"
+        class="static mb-6 md:sticky md:mb-10"
         style={`top: calc(6rem + ${i} * 2rem); z-index: ${i + 1}`}
       >
         <article
