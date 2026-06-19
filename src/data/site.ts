@@ -29,14 +29,6 @@ export const site = {
     subtitle:
       'I design, build and optimize Shopify & Shopify Plus stores that load fast, convert better and scale with your brand.',
   },
-  logos: [
-    { name: 'Brand One', src: '/logos/logo-1.svg' },
-    { name: 'Brand Two', src: '/logos/logo-2.svg' },
-    { name: 'Brand Three', src: '/logos/logo-3.svg' },
-    { name: 'Brand Four', src: '/logos/logo-4.svg' },
-    { name: 'Brand Five', src: '/logos/logo-5.svg' },
-    { name: 'Brand Six', src: '/logos/logo-6.svg' },
-  ],
   marquee: [
     'Shopify Plus',
     'Theme Development',

@@ -236,6 +236,10 @@ html { scrollbar-width: thin; scrollbar-color: #8b5cf6 transparent; }
 .btn-primary { @apply bg-white text-black hover:bg-white/85; }
 .btn-secondary { @apply border border-white/20 text-white hover:border-white/60 hover:bg-white/5; }
 
+/* ---- WhatsApp button ---- */
+.btn-whatsapp { background-color: #25D366; color: #fff; }
+.btn-whatsapp:hover { background-color: #1da851; }
+
 /* ---- WhatsApp pulse ring ---- */
 @keyframes whatsapp-pulse {
   0% { transform: scale(1); opacity: 0.6; }
