@@ -11,6 +11,16 @@
       (el as HTMLElement).style.opacity = '1';
     });
   } else {
+    // ---- Motion constants — single source of truth for the whole reveal system ----
+    const EASE         = 'power3.out';   // default ease: smooth deceleration
+    const EASE_CARD    = 'expo.out';     // cards: snappier overshoot feel
+    const DUR          = 0.75;           // default reveal duration (s)
+    const DUR_CARD     = 0.9;            // card reveal duration (s)
+    const DUR_HEADING  = 0.95;           // heading reveal duration (s) — slightly more presence
+    const TRIGGER_START = 'top 85%';     // consistent scroll trigger point for all reveals
+    const STAGGER_STEP  = 0.08;          // per-sibling delay increment (s)
+    const STAGGER_MAX   = 6;             // cap stagger at the 6th sibling so long grids don't drag
+
     // ---- Smooth scrolling through GSAP's ticker so ScrollTrigger stays in sync ----
     const lenis = new Lenis({ duration: 1.05, smoothWheel: true });
     (window as any).__lenis = lenis;
@@ -34,6 +44,7 @@
     // Using fromTo (immediateRender) so elements are hidden only by JS; if JS fails
     // they stay visible. `once: true` + ScrollTrigger firing on already-passed
     // elements at load guarantees nothing stays stuck hidden after a mid-page reload.
+    // GPU-friendly transforms only (y / opacity / scale — no filter on reveals).
     const revealOne = (
       el: Element,
       opts: { y?: number; scale?: number; duration?: number; delay?: number; ease?: string } = {},
@@ -45,39 +56,45 @@
           y: 0,
           opacity: 1,
           scale: 1,
-          duration: opts.duration ?? 0.7,
-          ease: opts.ease ?? 'power3.out',
+          duration: opts.duration ?? DUR,
+          ease: opts.ease ?? EASE,
           delay: opts.delay ?? 0,
-          // Clear the inline transform once done so hover / md:scale on cards still work.
+          // Clear inline transform so hover styles and md:scale on cards still work.
           clearProps: 'transform,willChange',
-          scrollTrigger: { trigger: el, start: 'top 88%', once: true },
+          scrollTrigger: { trigger: el, start: TRIGGER_START, once: true },
         },
       );
     };
 
-    // Headings: a touch more travel + duration for emphasis (no scale — keeps type crisp).
+    // Headings: more travel + longer duration for emphasis (no scale — keeps type crisp).
     document.querySelectorAll<HTMLElement>('[data-reveal="heading"]').forEach((el) => {
-      revealOne(el, { y: 42, duration: 0.95 });
+      revealOne(el, { y: 40, duration: DUR_HEADING });
     });
 
-    // Generic .reveal elements (incl. cards): refined rise + subtle scale-in, with a
-    // smooth staggered cascade for siblings that share a parent (grids of cards).
+    // Generic .reveal elements (incl. cards): rise + subtle scale-in, with a natural
+    // staggered cascade for siblings in a shared parent (card grids).
     const items = gsap.utils.toArray<HTMLElement>('.reveal');
     items.forEach((el) => {
       const parent = el.parentElement;
-      const sibs = parent ? Array.from(parent.children).filter((c) => c.classList.contains('reveal')) : [el];
+      const sibs = parent
+        ? Array.from(parent.children).filter((c) => c.classList.contains('reveal'))
+        : [el];
       const idx = Math.max(0, sibs.indexOf(el));
-      const isCard = el.tagName === 'ARTICLE' || el.tagName === 'FIGURE' || el.classList.contains('reveal-card');
+      const isCard =
+        el.tagName === 'ARTICLE' ||
+        el.tagName === 'FIGURE' ||
+        el.tagName === 'A' ||
+        el.classList.contains('reveal-card');
       revealOne(el, {
-        y: isCard ? 44 : 30,
+        y: isCard ? 44 : 28,
         scale: isCard ? 0.94 : 0.985,
-        duration: isCard ? 0.9 : 0.75,
-        ease: isCard ? 'expo.out' : 'power3.out',
-        delay: Math.min(idx, 6) * 0.1,
+        duration: isCard ? DUR_CARD : DUR,
+        ease: isCard ? EASE_CARD : EASE,
+        delay: Math.min(idx, STAGGER_MAX) * STAGGER_STEP,
       });
     });
 
-    // ---- Case-study cards ----
+    // ---- Case-study cards (intentionally separate from .reveal) ----
     const stackCards = gsap.utils.toArray<HTMLElement>('#work [data-stack]');
     if (stackCards.length) {
       if (window.matchMedia('(min-width: 768px)').matches) {
@@ -87,7 +104,7 @@
           const isLast = i === stackCards.length - 1;
           const trigger = isLast
             ? card.parentElement?.parentElement // the stack container (mt-6 pb-...)
-            : stackCards[i + 1].parentElement; // the next card's sticky wrapper
+            : stackCards[i + 1].parentElement;  // the next card's sticky wrapper
           if (!trigger) return;
           gsap.fromTo(
             card,
@@ -106,19 +123,20 @@
           );
         });
       } else {
-        // Mobile: cards aren't sticky — give them a polished staggered entrance instead.
-        stackCards.forEach((card) => {
+        // Mobile: cards aren't sticky — polished staggered entrance instead.
+        stackCards.forEach((card, i) => {
           gsap.fromTo(
             card,
-            { y: 64, opacity: 0, scale: 0.9 },
+            { y: 60, opacity: 0, scale: 0.92 },
             {
               y: 0,
               opacity: 1,
               scale: 1,
-              duration: 0.85,
-              ease: 'expo.out',
+              duration: DUR_CARD,
+              ease: EASE_CARD,
+              delay: Math.min(i, STAGGER_MAX) * STAGGER_STEP,
               clearProps: 'transform,willChange',
-              scrollTrigger: { trigger: card, start: 'top 88%', once: true },
+              scrollTrigger: { trigger: card, start: TRIGGER_START, once: true },
             },
           );
         });
