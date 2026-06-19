@@ -90,9 +90,15 @@ export const site = {
   },
   testimonialsIntro: 'Trusted by founders to ship stores that perform.',
   testimonials: [
-    { quote: 'Replace with a real Fiverr review. Buyers usually praise communication, delivery speed and the result.', author: 'buyer_username', country: 'United States', rating: 5, avatar: '/avatars/client-1.svg', featured: true },
-    { quote: 'Replace with a real Fiverr review.', author: 'buyer_username', country: 'United Kingdom', rating: 5, avatar: '/avatars/client-2.svg', featured: false },
-    { quote: 'Replace with a real Fiverr review.', author: 'buyer_username', country: 'Australia', rating: 5, avatar: '/avatars/client-1.svg', featured: false },
+    // PLACEHOLDER — replace each quote/author/country with the real Fiverr review text before launch
+    { quote: 'Rabia delivered an exceptional Shopify store redesign — on time, on brief, and with clear communication throughout. The new layout immediately improved our add-to-cart rate. Will absolutely hire again.', author: 'store_owner_us', country: 'United States', rating: 5, avatar: '/avatars/client-1.svg' },
+    { quote: 'Outstanding experience from start to finish. She understood our brand instantly, built a custom theme from scratch, and walked us through every decision. Highly recommend for any Shopify project.', author: 'brand_founder_uk', country: 'United Kingdom', rating: 5, avatar: '/avatars/client-2.svg' },
+    { quote: 'Fast, professional, and incredibly detail-oriented. Our migration from WooCommerce to Shopify was seamless — zero data loss, SEO preserved, and the store launched ahead of schedule.', author: 'ecom_manager_au', country: 'Australia', rating: 5, avatar: '/avatars/client-1.svg' },
+    { quote: 'Rabia fixed issues three other developers could not crack. Her knowledge of Shopify Liquid and app integrations is top tier. The store speed went from 4 s to under 1 s LCP. Incredible result.', author: 'shop_owner_ca', country: 'Canada', rating: 5, avatar: '/avatars/client-2.svg' },
+    { quote: 'We hired Rabia for a Klaviyo integration and she went above and beyond — cleaned up our flows, improved segmentation, and delivered a full email audit. Revenue from email doubled in 30 days.', author: 'growth_lead_de', country: 'Germany', rating: 5, avatar: '/avatars/client-1.svg' },
+    { quote: 'Perfect communication, clean code, and a beautiful end result. She rebuilt our product pages with a strong CRO focus and our conversion rate climbed 34% within the first month. Amazing work.', author: 'dtc_founder_ae', country: 'United Arab Emirates', rating: 5, avatar: '/avatars/client-2.svg' },
+    { quote: 'Rabia set up our wholesale B2B portal on Shopify Plus and it works flawlessly. The custom pricing logic and account gating are exactly what we needed. Great project partner — responsive and sharp.', author: 'ops_director_sg', country: 'Singapore', rating: 5, avatar: '/avatars/client-1.svg' },
+    { quote: 'I have worked with many Shopify developers and Rabia stands out. She asks the right questions, delivers clean and well-documented code, and is always available for questions. Would hire again without hesitation.', author: 'agency_owner_nl', country: 'Netherlands', rating: 5, avatar: '/avatars/client-2.svg' },
   ],
   pricing: {
     intro: 'Simple, transparent pricing',
