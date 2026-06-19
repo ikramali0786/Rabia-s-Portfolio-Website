@@ -12,8 +12,11 @@
 h1, h2, h3, h4 { font-family: var(--font-display); }
 
 :root { color-scheme: dark; }
-html { scroll-behavior: smooth; overflow-x: hidden; max-width: 100%; }
-body { background: var(--color-ink); color: var(--color-paper); overflow-x: hidden; max-width: 100%; }
+html { scroll-behavior: smooth; }
+/* Clip horizontal overflow WITHOUT breaking position: sticky. overflow-x:hidden on
+   html/body would establish a scroll container and disable sticky descendants;
+   overflow-x:clip clips the same way but creates no scroll container. */
+body { background: var(--color-ink); color: var(--color-paper); overflow-x: clip; max-width: 100vw; }
 
 /* ---- Lenis smooth scroll (required) ---- */
 html.lenis, html.lenis body { height: auto; }
