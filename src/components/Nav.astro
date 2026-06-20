@@ -33,7 +33,7 @@ const anchor = (href: string) => (href.startsWith('#') && !onHome ? `/${href}` :
   <aside
     id="mobile-drawer"
     aria-hidden="true"
-    class="fixed right-0 top-0 z-[90] flex h-full w-72 max-w-[82vw] translate-x-full flex-col border-l border-white/10 bg-[#121218] p-6 shadow-2xl shadow-black/70 transition-transform duration-300 ease-out md:hidden"
+    class="fixed right-0 top-0 z-[90] flex h-full w-72 max-w-[82vw] translate-x-full flex-col border-l border-white/10 bg-[#121218] p-6 shadow-2xl shadow-black/70 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] md:hidden"
   >
     <div class="flex items-center justify-between">
       <span class="text-lg font-extrabold tracking-tight">{site.name}<span class="text-white/40">.</span></span>
@@ -50,13 +50,47 @@ const anchor = (href: string) => (href.startsWith('#') && !onHome ? `/${href}` :
 
     <a href={site.bookingUrl} class="mobile-link btn btn-primary mt-6 w-full px-5 py-3 text-center text-base">Book a call</a>
 
-    <div class="mt-auto flex flex-wrap gap-x-5 gap-y-2 pt-8 text-sm text-white/50">
+    <div class="mobile-socials mt-auto flex flex-wrap gap-x-5 gap-y-2 pt-8 text-sm text-white/50">
       {site.socials.map((s) => (
         <a href={s.href} target={s.href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer" class="transition hover:text-white">{s.label}</a>
       ))}
     </div>
   </aside>
 </header>
+
+<style>
+  /* Mobile drawer: staggered link reveal */
+  #mobile-drawer .mobile-link {
+    opacity: 0;
+    transform: translateX(16px);
+    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  #mobile-drawer.is-open .mobile-link {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  #mobile-drawer.is-open .mobile-link:nth-child(1) { transition-delay: 0.10s; }
+  #mobile-drawer.is-open .mobile-link:nth-child(2) { transition-delay: 0.16s; }
+  #mobile-drawer.is-open .mobile-link:nth-child(3) { transition-delay: 0.22s; }
+  #mobile-drawer.is-open .mobile-link:nth-child(4) { transition-delay: 0.28s; }
+  #mobile-drawer.is-open .mobile-link:nth-child(5) { transition-delay: 0.34s; }
+  #mobile-drawer.is-open .mobile-link:nth-child(6) { transition-delay: 0.40s; }
+  #mobile-drawer.is-open .mobile-link:nth-child(7) { transition-delay: 0.46s; }
+  #mobile-drawer.is-open .mobile-link:nth-child(8) { transition-delay: 0.52s; }
+
+  /* Socials block stagger (last item after the CTA) */
+  #mobile-drawer .mobile-socials {
+    opacity: 0;
+    transform: translateX(16px);
+    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: 0.58s;
+  }
+  #mobile-drawer.is-open .mobile-socials {
+    opacity: 1;
+    transform: translateX(0);
+  }
+</style>
+
 <script>
   const nav = document.getElementById('site-nav');
   const toggle = document.getElementById('nav-toggle');
@@ -66,8 +100,8 @@ const anchor = (href: string) => (href.startsWith('#') && !onHome ? `/${href}` :
 
   const onScroll = () => {
     const solid = window.scrollY > 24;
-    nav?.classList.toggle('bg-white/5', solid);
-    nav?.classList.toggle('backdrop-blur-xl', solid);
+    nav?.classList.toggle('bg-black/80', solid);
+    nav?.classList.toggle('backdrop-blur', solid);
     nav?.classList.toggle('border-b', solid);
     nav?.classList.toggle('border-white/10', solid);
   };
@@ -84,8 +118,13 @@ const anchor = (href: string) => (href.startsWith('#') && !onHome ? `/${href}` :
     toggle?.setAttribute('aria-expanded', String(open));
     toggle?.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
     document.body.style.overflow = open ? 'hidden' : '';
-    if (open) lenis()?.stop();
-    else lenis()?.start();
+    if (open) {
+      drawer?.classList.add('is-open');
+      lenis()?.stop();
+    } else {
+      drawer?.classList.remove('is-open');
+      lenis()?.start();
+    }
   };
 
   toggle?.addEventListener('click', () => setOpen(true));
