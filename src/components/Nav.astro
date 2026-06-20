@@ -24,47 +24,50 @@ const anchor = (href: string) => (href.startsWith('#') && !onHome ? `/${href}` :
       <span class="h-0.5 w-5 rounded-full bg-white"></span>
     </button>
   </nav>
-
-  <!-- Mobile drawer -->
-  <div
-    id="mobile-overlay"
-    class="pointer-events-none fixed inset-0 z-[80] bg-black/60 opacity-0 backdrop-blur-sm transition-opacity duration-300 md:hidden"
-  ></div>
-  <aside
-    id="mobile-drawer"
-    aria-hidden="true"
-    class="fixed right-0 top-0 z-[90] flex h-full w-72 max-w-[82vw] translate-x-full flex-col border-l border-white/10 bg-[#121218] p-6 shadow-2xl shadow-black/70 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] md:hidden"
-  >
-    <div class="flex items-center justify-between">
-      <span class="text-lg font-extrabold tracking-tight">{site.name}<span class="text-white/40">.</span></span>
-      <button id="nav-close" aria-label="Close menu" class="grid h-9 w-9 place-items-center rounded-full border border-white/10 text-white/70 transition hover:bg-white/10 hover:text-white">
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
-      </button>
-    </div>
-
-    <nav class="mt-8 flex flex-col">
-      {site.nav.map((n) => (
-        <a href={anchor(n.href)} class="mobile-link border-b border-white/5 py-3.5 text-lg font-medium text-white/80 transition hover:text-white">{n.label}</a>
-      ))}
-    </nav>
-
-    <a href={site.bookingUrl} class="mobile-link btn btn-primary mt-6 w-full px-5 py-3 text-center text-base">Book a call</a>
-
-    <div class="mobile-socials mt-auto flex gap-3 pt-8">
-      {site.socials.map((s) => (
-        <a
-          href={s.href}
-          target={s.href.startsWith('http') ? '_blank' : undefined}
-          rel="noopener noreferrer"
-          aria-label={s.label}
-          class="grid h-9 w-9 place-items-center rounded-full border border-white/15 text-white/70 transition hover:border-white/30 hover:text-white"
-        >
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d={s.icon}/></svg>
-        </a>
-      ))}
-    </div>
-  </aside>
 </header>
+
+<!-- Mobile drawer — rendered OUTSIDE <header> on purpose: the header gets a
+     backdrop-blur when scrolled, and a backdrop-filter ancestor becomes the
+     containing block for position:fixed descendants, which made the drawer render
+     relative to the short header bar (transparent/broken) when opened after scroll. -->
+<div
+  id="mobile-overlay"
+  class="pointer-events-none fixed inset-0 z-[80] bg-black/60 opacity-0 backdrop-blur-sm transition-opacity duration-300 md:hidden"
+></div>
+<aside
+  id="mobile-drawer"
+  aria-hidden="true"
+  class="fixed right-0 top-0 z-[90] flex h-full w-72 max-w-[82vw] translate-x-full flex-col border-l border-white/10 bg-[#121218] p-6 shadow-2xl shadow-black/70 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] md:hidden"
+>
+  <div class="flex items-center justify-between">
+    <span class="text-lg font-extrabold tracking-tight">{site.name}<span class="text-white/40">.</span></span>
+    <button id="nav-close" aria-label="Close menu" class="grid h-9 w-9 place-items-center rounded-full border border-white/10 text-white/70 transition hover:bg-white/10 hover:text-white">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+
+  <nav class="mt-8 flex flex-col">
+    {site.nav.map((n) => (
+      <a href={anchor(n.href)} class="mobile-link border-b border-white/5 py-3.5 text-lg font-medium text-white/80 transition hover:text-white">{n.label}</a>
+    ))}
+  </nav>
+
+  <a href={site.bookingUrl} class="mobile-link btn btn-primary mt-6 w-full px-5 py-3 text-center text-base">Book a call</a>
+
+  <div class="mobile-socials mt-auto flex gap-3 pt-8">
+    {site.socials.map((s) => (
+      <a
+        href={s.href}
+        target={s.href.startsWith('http') ? '_blank' : undefined}
+        rel="noopener noreferrer"
+        aria-label={s.label}
+        class="grid h-9 w-9 place-items-center rounded-full border border-white/15 text-white/70 transition hover:border-white/30 hover:text-white"
+      >
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d={s.icon}/></svg>
+      </a>
+    ))}
+  </div>
+</aside>
 
 <style>
   /* Mobile drawer: staggered link reveal */
