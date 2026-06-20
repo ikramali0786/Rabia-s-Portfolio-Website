@@ -1,5 +1,6 @@
 ---
 import Section from './Section.astro';
+import Reveal from './motion/Reveal';
 import { site } from '../data/site';
 ---
 <Section id="contact" eyebrow="Contact" title="Ready to grow your store?">
@@ -13,7 +14,7 @@ import { site } from '../data/site';
   <div class="grid gap-12 md:gap-16 md:grid-cols-2 items-start">
 
     {/* ── LEFT COLUMN ── */}
-    <div class="reveal flex flex-col gap-8">
+    <Reveal client:visible className="flex flex-col gap-8">
 
       {/* Pitch text */}
       <div>
@@ -101,10 +102,10 @@ import { site } from '../data/site';
         All inquiries are responded to within 24 hours.<br />No commitment required.
       </p>
 
-    </div>{/* /left */}
+    </Reveal>{/* /left */}
 
     {/* ── RIGHT COLUMN — glass form panel ── */}
-    <div class="reveal">
+    <Reveal client:visible delay={0.1}>
       <div class="glass-strong rounded-3xl p-6 md:p-8">
         <h3 class="text-lg font-semibold text-white/90 mb-6 tracking-tight">Send a message</h3>
         <form id="contact-form" class="space-y-4" novalidate>
@@ -174,7 +175,7 @@ import { site } from '../data/site';
           <p id="form-status" class="text-sm text-white/55 text-center min-h-[1.25rem]" role="status" aria-live="polite"></p>
         </form>
       </div>
-    </div>{/* /right */}
+    </Reveal>{/* /right */}
 
   </div>
 </Section>

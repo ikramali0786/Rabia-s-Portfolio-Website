@@ -1,25 +1,28 @@
 ---
 import Section from './Section.astro';
+import Reveal from './motion/Reveal';
 import { site } from '../data/site';
 ---
 <Section id="services" eyebrow="What I do" title="Services that scale your Shopify store">
   <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
     {site.services.map((s, i) => (
-      <article class="reveal group relative rounded-3xl glass p-8 transition duration-300 hover:-translate-y-1">
-        <span class="absolute right-6 top-6 font-mono text-xs font-semibold tracking-[0.2em] text-white/20">
-          {String(i + 1).padStart(2, '0')}
-        </span>
-        <img src={s.shape} alt="" width="96" height="96" loading="lazy" class="mb-6 h-20 w-20 object-contain" />
-        <h3 class="text-2xl font-bold leading-snug tracking-tight">{s.title}</h3>
-        <ul class="mt-5 space-y-2.5 text-white/65">
-          {s.points.map((p) => (
-            <li class="flex items-start gap-2.5">
-              <svg class="mt-0.5 h-4 w-4 flex-shrink-0 text-white/30" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8.5 6.5 12 13 5"/></svg>
-              <span>{p}</span>
-            </li>
-          ))}
-        </ul>
-      </article>
+      <Reveal client:visible y={44} duration={0.9} delay={Math.min(i, 5) * 0.08}>
+        <article class="group relative rounded-3xl glass p-8 transition duration-300 hover:-translate-y-1 h-full">
+          <span class="absolute right-6 top-6 font-mono text-xs font-semibold tracking-[0.2em] text-white/20">
+            {String(i + 1).padStart(2, '0')}
+          </span>
+          <img src={s.shape} alt="" width="96" height="96" loading="lazy" class="mb-6 h-20 w-20 object-contain" />
+          <h3 class="text-2xl font-bold leading-snug tracking-tight">{s.title}</h3>
+          <ul class="mt-5 space-y-2.5 text-white/65">
+            {s.points.map((p) => (
+              <li class="flex items-start gap-2.5">
+                <svg class="mt-0.5 h-4 w-4 flex-shrink-0 text-white/30" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8.5 6.5 12 13 5"/></svg>
+                <span>{p}</span>
+              </li>
+            ))}
+          </ul>
+        </article>
+      </Reveal>
     ))}
   </div>
 </Section>

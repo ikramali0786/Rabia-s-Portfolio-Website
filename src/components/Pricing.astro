@@ -1,5 +1,6 @@
 ---
 import Section from './Section.astro';
+import Reveal from './motion/Reveal';
 import { site } from '../data/site';
 
 const checkSvg =
@@ -8,69 +9,71 @@ const checkSvg =
 
 <Section id="pricing" eyebrow="Pricing" title={site.pricing.intro}>
   <div class="grid gap-6 md:grid-cols-3">
-    {site.pricing.tiers.map((tier) => (
-      <article
-        class:list={[
-          'reveal relative flex flex-col rounded-3xl p-8 transition-all duration-300 glass',
-          tier.featured
-            ? '!border-white/30 md:-mt-4 md:scale-[1.03] hover:!border-white/45'
-            : 'hover:-translate-y-1',
-        ]}
-      >
-        {/* "Most popular" badge */}
-        {tier.featured && (
-          <div class="mb-5 flex">
-            <span class="iridescent rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-widest text-white">
-              Most popular
+    {site.pricing.tiers.map((tier, i) => (
+      <Reveal client:visible y={44} duration={0.9} delay={i * 0.08}>
+        <article
+          class:list={[
+            'relative flex flex-col rounded-3xl p-8 transition-all duration-300 glass h-full',
+            tier.featured
+              ? '!border-white/30 md:-mt-4 md:scale-[1.03] hover:!border-white/45'
+              : 'hover:-translate-y-1',
+          ]}
+        >
+          {/* "Most popular" badge */}
+          {tier.featured && (
+            <div class="mb-5 flex">
+              <span class="iridescent rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-widest text-white">
+                Most popular
+              </span>
+            </div>
+          )}
+
+          {/* Tier name */}
+          <p class="text-sm font-semibold uppercase tracking-[0.18em] text-white/50">{tier.name}</p>
+
+          {/* Price */}
+          <div class="mt-3 flex items-end gap-2">
+            <span
+              class:list={[
+                'text-5xl font-extrabold leading-none tracking-tight',
+                tier.featured ? 'iridescent-text' : 'text-white',
+              ]}
+            >
+              {tier.price}
             </span>
+            <span class="mb-1 text-sm text-white/45">{tier.cadence}</span>
           </div>
-        )}
 
-        {/* Tier name */}
-        <p class="text-sm font-semibold uppercase tracking-[0.18em] text-white/50">{tier.name}</p>
+          {/* Description */}
+          <p class="mt-4 text-sm leading-relaxed text-white/60">{tier.description}</p>
 
-        {/* Price */}
-        <div class="mt-3 flex items-end gap-2">
-          <span
-            class:list={[
-              'text-5xl font-extrabold leading-none tracking-tight',
-              tier.featured ? 'iridescent-text' : 'text-white',
-            ]}
-          >
-            {tier.price}
-          </span>
-          <span class="mb-1 text-sm text-white/45">{tier.cadence}</span>
-        </div>
+          {/* Divider */}
+          <div class="my-6 h-px bg-white/10" />
 
-        {/* Description */}
-        <p class="mt-4 text-sm leading-relaxed text-white/60">{tier.description}</p>
+          {/* Features */}
+          <ul class="flex flex-col gap-3" role="list">
+            {tier.features.map((feature) => (
+              <li class="flex items-start gap-2.5 text-sm text-white/80">
+                <Fragment set:html={checkSvg} />
+                <span>{feature}</span>
+              </li>
+            ))}
+          </ul>
 
-        {/* Divider */}
-        <div class="my-6 h-px bg-white/10" />
-
-        {/* Features */}
-        <ul class="flex flex-col gap-3" role="list">
-          {tier.features.map((feature) => (
-            <li class="flex items-start gap-2.5 text-sm text-white/80">
-              <Fragment set:html={checkSvg} />
-              <span>{feature}</span>
-            </li>
-          ))}
-        </ul>
-
-        {/* CTA */}
-        <div class="mt-8">
-          <a
-            href="#contact"
-            class:list={[
-              'btn w-full px-6 py-3 text-center',
-              tier.featured ? 'btn-primary' : 'btn-secondary',
-            ]}
-          >
-            {tier.cta}
-          </a>
-        </div>
-      </article>
+          {/* CTA */}
+          <div class="mt-8">
+            <a
+              href="#contact"
+              class:list={[
+                'btn w-full px-6 py-3 text-center',
+                tier.featured ? 'btn-primary' : 'btn-secondary',
+              ]}
+            >
+              {tier.cta}
+            </a>
+          </div>
+        </article>
+      </Reveal>
     ))}
   </div>
 

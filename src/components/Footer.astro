@@ -1,4 +1,5 @@
 ---
+import Reveal from './motion/Reveal';
 import { site } from '../data/site';
 const year = new Date().getFullYear();
 ---
@@ -6,11 +7,15 @@ const year = new Date().getFullYear();
   <!-- Big CTA -->
   <div class="mx-auto max-w-7xl px-6 pb-12 pt-14 md:pb-20 md:pt-24">
     <a href="#contact" class="group block">
-      <p class="reveal text-sm uppercase tracking-[0.25em] text-white/40">{site.footer.availability}</p>
-      <h2 data-reveal="heading" class="mt-5 max-w-4xl text-3xl font-black leading-[1.05] tracking-tight sm:text-4xl md:text-7xl">
-        {site.footer.cta}
-        <span class="inline-block transition-transform duration-300 group-hover:translate-x-2">→</span>
-      </h2>
+      <Reveal client:visible>
+        <p class="text-sm uppercase tracking-[0.25em] text-white/40">{site.footer.availability}</p>
+      </Reveal>
+      <Reveal client:visible y={40} duration={0.95} delay={0.05}>
+        <h2 class="mt-5 max-w-4xl text-3xl font-black leading-[1.05] tracking-tight sm:text-4xl md:text-7xl">
+          {site.footer.cta}
+          <span class="inline-block transition-transform duration-300 group-hover:translate-x-2">→</span>
+        </h2>
+      </Reveal>
     </a>
   </div>
 

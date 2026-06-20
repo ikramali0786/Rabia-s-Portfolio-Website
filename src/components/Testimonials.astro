@@ -1,5 +1,6 @@
 ---
 import Section from './Section.astro';
+import Reveal from './motion/Reveal';
 import { site } from '../data/site';
 
 const testimonials = site.testimonials;
@@ -16,7 +17,7 @@ const checkSvg =
 
 <Section id="testimonials" eyebrow="Testimonials" title={site.testimonialsIntro}>
   <!-- Fiverr rating chip -->
-  <div class="reveal mb-10 flex">
+  <Reveal client:visible className="mb-10 flex">
     <a
       href={site.fiverr.profileUrl}
       target="_blank"
@@ -36,14 +37,11 @@ const checkSvg =
         <path d="M6.5 1H11v4.5M11 1 5 7M2 3H1v8h8V9"/>
       </svg>
     </a>
-  </div>
+  </Reveal>
 
   <!-- Scrolling marquee of review cards -->
   <!-- The outer wrapper clips overflow and applies edge-fade masks -->
-  <div
-    class="reveal testimonials-outer group relative overflow-x-auto"
-    style="-webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);"
-  >
+  <Reveal client:visible className="testimonials-outer group relative overflow-x-auto">
     <!-- Scrolling track: first copy is real content, second is aria-hidden duplicate for seamless loop -->
     <div class="testimonials-track flex w-max gap-5 py-2">
       <!-- First copy — real, accessible content -->
@@ -92,12 +90,17 @@ const checkSvg =
         ))}
       </div>
     </div>
-  </div>
+  </Reveal>
 </Section>
 
 <style>
   /* Hide scrollbar while keeping element scrollable (for reduced-motion manual scroll) */
-  .testimonials-outer { scrollbar-width: none; -ms-overflow-style: none; }
+  .testimonials-outer {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  }
   .testimonials-outer::-webkit-scrollbar { display: none; }
 
   @keyframes testimonial-scroll {

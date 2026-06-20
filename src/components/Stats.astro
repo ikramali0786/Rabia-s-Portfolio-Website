@@ -1,13 +1,14 @@
 ---
+import Reveal from './motion/Reveal';
 import { site } from '../data/site';
 ---
 <section aria-label="Key results" class="border-y border-white/10 bg-ink-soft">
   <div class="mx-auto grid max-w-7xl grid-cols-2 gap-px md:grid-cols-4">
-    {site.stats.map((s) => (
-      <div class="reveal px-6 py-14 text-center">
+    {site.stats.map((s, i) => (
+      <Reveal client:visible delay={i * 0.07} className="px-6 py-14 text-center">
         <div class="text-3xl font-black md:text-5xl"><span class="stat-value" data-value={s.value}>{s.value}</span></div>
         <div class="mt-2 text-sm uppercase tracking-wide text-white/50">{s.label}</div>
-      </div>
+      </Reveal>
     ))}
   </div>
 </section>
