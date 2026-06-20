@@ -96,6 +96,10 @@ const checkSvg =
 </Section>
 
 <style>
+  /* Hide scrollbar while keeping element scrollable (for reduced-motion manual scroll) */
+  .testimonials-outer { scrollbar-width: none; -ms-overflow-style: none; }
+  .testimonials-outer::-webkit-scrollbar { display: none; }
+
   @keyframes testimonial-scroll {
     from { transform: translate3d(0, 0, 0); }
     to   { transform: translate3d(-50%, 0, 0); }
