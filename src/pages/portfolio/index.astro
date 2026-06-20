@@ -1,0 +1,131 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { site } from '../../data/site';
+
+const portfolioLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Portfolio',
+  url: `${site.url}/portfolio`,
+  description: 'Selected Shopify & Shopify Plus projects — development, design, migration, integrations and growth.',
+  isPartOf: {
+    '@type': 'WebSite',
+    name: site.name,
+    url: site.url,
+  },
+  mainEntity: {
+    '@type': 'ItemList',
+    numberOfItems: site.work.length,
+    itemListElement: site.work.map((w, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: w.title,
+      description: w.summary,
+    })),
+  },
+};
+---
+<BaseLayout
+  title={`Portfolio — ${site.name}`}
+  description="Selected Shopify & Shopify Plus projects — development, design, migration, integrations and growth."
+  canonicalUrl={`${site.url}/portfolio`}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(portfolioLd)} />
+  </Fragment>
+
+  <main id="main-content" class="mx-auto max-w-7xl px-6 pb-24 pt-32">
+
+    <!-- Back link -->
+    <a
+      href="/"
+      class="reveal mb-12 inline-flex items-center gap-2 text-sm text-white/50 transition-colors hover:text-white"
+    >
+      ← Back to home
+    </a>
+
+    <!-- Header -->
+    <div class="mb-16">
+      <p class="reveal mb-3 text-sm font-medium uppercase tracking-[0.2em] text-white/50">Portfolio</p>
+      <h1 data-reveal="heading" class="max-w-3xl text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl md:text-6xl">
+        Selected work
+      </h1>
+      <p class="reveal mt-6 max-w-xl text-lg text-white/60">
+        Real Shopify & Shopify Plus projects — built to perform, designed to convert.
+      </p>
+    </div>
+
+    <!-- Projects grid -->
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {site.work.map((w, i) => (
+        <article class="reveal glass group flex flex-col overflow-hidden rounded-3xl transition-all duration-300 hover:border-white/25">
+          <!-- Image -->
+          <div class="relative overflow-hidden" style="aspect-ratio: 4/3;">
+            <img
+              src={w.image}
+              alt={`${w.title} — ${w.industry}`}
+              width="800"
+              height="600"
+              loading="lazy"
+              class="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+            />
+            <!-- Iridescent orb overlay -->
+            <div class="pointer-events-none absolute right-[-15%] top-[-15%] h-1/2 w-1/2 rounded-full opacity-20 blur-3xl iridescent"></div>
+            <!-- Case badge -->
+            <div class="absolute left-4 top-4 rounded-full border border-white/15 bg-black/50 px-3 py-1 text-xs font-medium uppercase tracking-wider text-white/70 backdrop-blur-sm">
+              Case 0{i + 1}
+            </div>
+            <!-- Industry badge -->
+            <div class="absolute right-4 top-4 rounded-full border border-white/15 bg-black/50 px-3 py-1 text-xs font-medium uppercase tracking-wider text-white/70 backdrop-blur-sm">
+              {w.industry}
+            </div>
+          </div>
+
+          <!-- Card body -->
+          <div class="flex flex-1 flex-col p-6">
+            <!-- Title + year -->
+            <div class="mb-3 flex items-start justify-between gap-3">
+              <h2 class="text-lg font-bold leading-snug tracking-tight sm:text-xl">{w.title}</h2>
+              <span class="mt-0.5 shrink-0 text-xs text-white/35">{w.year}</span>
+            </div>
+
+            <!-- Summary -->
+            <p class="mb-5 flex-1 text-sm leading-relaxed text-white/55">{w.summary}</p>
+
+            <!-- Service pills -->
+            <div class="mb-5 flex flex-wrap gap-2">
+              {w.services.map((s) => (
+                <span class="rounded-full border border-white/15 px-2.5 py-1 text-xs uppercase tracking-wide text-white/55">
+                  {s}
+                </span>
+              ))}
+            </div>
+
+            <!-- Result stat + CTA -->
+            <div class="flex items-center justify-between border-t border-white/10 pt-4">
+              <div>
+                <span class="block text-[10px] uppercase tracking-widest text-white/35">Result</span>
+                <span class="text-sm font-semibold text-white/85">{w.stat}</span>
+              </div>
+              <a
+                href="/#contact"
+                class="inline-flex items-center gap-1 rounded-full border border-white/15 px-4 py-1.5 text-xs font-medium text-white/60 transition-all duration-200 hover:border-white/40 hover:text-white"
+              >
+                Let&rsquo;s talk →
+              </a>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <!-- Bottom CTA -->
+    <div class="reveal mt-20 flex flex-col items-center gap-4 text-center">
+      <p class="text-white/50">Have a project in mind?</p>
+      <a href="/#contact" class="btn btn-primary px-8 py-3 text-sm font-semibold">
+        Start a conversation →
+      </a>
+    </div>
+
+  </main>
+</BaseLayout>
