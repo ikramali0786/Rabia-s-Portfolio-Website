@@ -5,7 +5,7 @@ import { site } from '../data/site';
 <Section id="services" eyebrow="What I do" title="Services that scale your Shopify store">
   <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
     {site.services.map((s, i) => (
-      <article class="reveal group relative rounded-3xl border border-white/10 bg-ink-soft p-8 transition duration-300 hover:-translate-y-1 hover:border-white/30">
+      <article class="reveal group relative rounded-3xl glass p-8 transition duration-300 hover:-translate-y-1">
         <span class="absolute right-6 top-6 font-mono text-xs font-semibold tracking-[0.2em] text-white/20">
           {String(i + 1).padStart(2, '0')}
         </span>

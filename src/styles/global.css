@@ -228,6 +228,24 @@ html { scrollbar-width: thin; scrollbar-color: #8b5cf6 transparent; }
 /* ---- Marquee text outline variant ---- */
 .text-outline { color: transparent; -webkit-text-stroke: 1px rgba(245,245,247,0.5); }
 
+/* ---- Glass surface — translucent, blurred, subtle top sheen. Use on cards over the dark bg. ---- */
+.glass {
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.10);
+}
+.glass:hover { border-color: rgba(255,255,255,0.18); }
+
+/* Stronger glass variant for form panels */
+.glass-strong {
+  background: linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,0.04));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.13);
+}
+.glass-strong:hover { border-color: rgba(255,255,255,0.22); }
+
 /* ---- Reusable button utilities ---- */
 .btn {
   @apply inline-flex items-center justify-center gap-2 rounded-full font-semibold transition duration-300 ease-out;

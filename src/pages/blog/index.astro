@@ -45,7 +45,7 @@ const blogLd = {
       {featured && (
         <a
           href={`/blog/${featured.id}`}
-          class="reveal group mb-16 flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-ink-soft transition-all duration-300 hover:border-white/25 hover:bg-white/5 lg:flex-row"
+          class="reveal group mb-16 flex flex-col overflow-hidden rounded-3xl glass transition-all duration-300 lg:flex-row"
         >
           <!-- Content side -->
           <div class="flex flex-1 flex-col justify-between p-8 md:p-12">
@@ -109,7 +109,7 @@ const blogLd = {
           {rest.map((post) => (
             <a
               href={`/blog/${post.id}`}
-              class="reveal group flex flex-col rounded-3xl border border-white/10 bg-ink-soft p-8 transition-all duration-300 hover:border-white/25 hover:bg-white/5"
+              class="reveal group flex flex-col rounded-3xl glass p-8 transition-all duration-300"
             >
               <div class="mb-4 flex flex-wrap gap-2">
                 {post.data.tags.slice(0, 3).map((tag: string) => (

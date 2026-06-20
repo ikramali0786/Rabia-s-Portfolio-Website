@@ -48,7 +48,7 @@ const checkSvg =
     <div class="testimonials-track flex w-max gap-5 py-2">
       <!-- First copy — real, accessible content -->
       {testimonials.map((t) => (
-        <figure class="w-[320px] sm:w-[360px] shrink-0 rounded-3xl border border-white/10 bg-ink-soft p-6 transition duration-300 hover:-translate-y-0.5 hover:border-white/25">
+        <figure class="w-[320px] sm:w-[360px] shrink-0 rounded-3xl glass p-6 transition duration-300 hover:-translate-y-0.5">
           <div class="flex gap-1 text-amber-300" aria-label={`${t.rating} out of 5`}>
             {Array.from({ length: t.rating }).map(() => <Fragment set:html={star} />)}
           </div>
@@ -71,7 +71,7 @@ const checkSvg =
       <!-- Second copy — aria-hidden, purely visual for the seamless loop -->
       <div aria-hidden="true" class="contents">
         {testimonials.map((t) => (
-          <figure class="w-[320px] sm:w-[360px] shrink-0 rounded-3xl border border-white/10 bg-ink-soft p-6 transition duration-300 hover:-translate-y-0.5 hover:border-white/25">
+          <figure class="w-[320px] sm:w-[360px] shrink-0 rounded-3xl glass p-6 transition duration-300 hover:-translate-y-0.5">
             <div class="flex gap-1 text-amber-300">
               {Array.from({ length: t.rating }).map(() => <Fragment set:html={star} />)}
             </div>

@@ -66,8 +66,10 @@ const anchor = (href: string) => (href.startsWith('#') && !onHome ? `/${href}` :
 
   const onScroll = () => {
     const solid = window.scrollY > 24;
-    nav?.classList.toggle('bg-black/80', solid);
-    nav?.classList.toggle('backdrop-blur', solid);
+    nav?.classList.toggle('bg-white/5', solid);
+    nav?.classList.toggle('backdrop-blur-xl', solid);
+    nav?.classList.toggle('border-b', solid);
+    nav?.classList.toggle('border-white/10', solid);
   };
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
