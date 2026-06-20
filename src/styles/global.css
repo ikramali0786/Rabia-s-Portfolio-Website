@@ -235,8 +235,6 @@ html { scrollbar-width: thin; scrollbar-color: #8b5cf6 transparent; }
   0%, 100% { transform: translate3d(0,0,0); }
   50% { transform: translate3d(0,-26px,0); }
 }
-.float-slow { animation: float-slow 9s ease-in-out infinite; }
-.float-slower { animation: float-slow 13s ease-in-out infinite; }
 
 /* ---- Marquee text outline variant ---- */
 .text-outline { color: transparent; -webkit-text-stroke: 1px rgba(245,245,247,0.5); }
