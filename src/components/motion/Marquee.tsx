@@ -7,9 +7,15 @@ type Props = {
   /** Total scroll duration for one full loop (seconds). Default 40s matches old CSS. */
   duration?: number;
   className?: string;
+  /** Scroll toward the right instead of the left. */
+  reverse?: boolean;
+  /** Flex gap between items. Default 1.25rem (testimonials); pass '0' for items with own padding. */
+  gap?: string;
+  /** Vertical padding on the track. Default '0.5rem 0'. */
+  trackPadding?: string;
 };
 
-export default function Marquee({ children, duration = 40, className }: Props) {
+export default function Marquee({ children, duration = 40, className, reverse = false, gap = '1.25rem', trackPadding = '0.5rem 0' }: Props) {
   const reduce = useReducedMotion();
 
   // Static / reduced-motion path: horizontally scrollable, no animation
@@ -23,18 +29,22 @@ export default function Marquee({ children, duration = 40, className }: Props) {
           msOverflowStyle: 'none',
         }}
       >
-        <div style={{ display: 'flex', width: 'max-content', gap: '1.25rem', padding: '0.5rem 0' }}>
+        <div style={{ display: 'flex', width: 'max-content', gap, padding: trackPadding }}>
           {children}
         </div>
       </div>
     );
   }
 
-  return <MarqueeInner duration={duration} className={className}>{children}</MarqueeInner>;
+  return (
+    <MarqueeInner duration={duration} className={className} reverse={reverse} gap={gap} trackPadding={trackPadding}>
+      {children}
+    </MarqueeInner>
+  );
 }
 
 /** Separated so hooks only run when motion is allowed */
-function MarqueeInner({ children, duration = 40, className }: Props) {
+function MarqueeInner({ children, duration = 40, className, reverse = false, gap = '1.25rem', trackPadding = '0.5rem 0' }: Props) {
   const trackRef = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
   const paused = useRef(false);
@@ -50,10 +60,16 @@ function MarqueeInner({ children, duration = 40, className }: Props) {
 
     // px/ms → px per frame
     const speed = halfWidth / (duration * 1000);
-    const next = x.get() - speed * delta;
-
-    // When we've scrolled a full copy-width, snap back seamlessly
-    x.set(next <= -halfWidth ? next + halfWidth : next);
+    let next: number;
+    if (reverse) {
+      // Move toward the right; wrap from 0 back to -halfWidth (seamless, copies identical)
+      next = x.get() + speed * delta;
+      if (next >= 0) next -= halfWidth;
+    } else {
+      next = x.get() - speed * delta;
+      if (next <= -halfWidth) next += halfWidth;
+    }
+    x.set(next);
   });
 
   return (
@@ -69,8 +85,8 @@ function MarqueeInner({ children, duration = 40, className }: Props) {
           x,
           display: 'flex',
           width: 'max-content',
-          gap: '1.25rem',
-          padding: '0.5rem 0',
+          gap,
+          padding: trackPadding,
           willChange: 'transform',
           backfaceVisibility: 'hidden',
         }}
