@@ -114,13 +114,18 @@ const jsonLd = {
 
         function finish() {
           html.style.overflow = '';
+          try { window.dispatchEvent(new Event('preloader:done')); } catch (e) {}
           pre.classList.add('is-done');
           setTimeout(function () { if (pre && pre.parentNode) pre.parentNode.removeChild(pre); }, 1000);
         }
 
         // Only show the loader on the first page of a session.
         try {
-          if (sessionStorage.getItem('pl-seen')) { pre.parentNode.removeChild(pre); return; }
+          if (sessionStorage.getItem('pl-seen')) {
+            pre.parentNode.removeChild(pre);
+            try { window.dispatchEvent(new Event('preloader:done')); } catch (e) {}
+            return;
+          }
           sessionStorage.setItem('pl-seen', '1');
         } catch (e) {}
 

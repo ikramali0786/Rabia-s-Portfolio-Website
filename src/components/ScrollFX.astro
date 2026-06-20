@@ -153,7 +153,14 @@
       });
     });
 
-    // Recalculate trigger positions after fonts + lazy images settle.
-    window.addEventListener('load', () => ScrollTrigger.refresh());
+    // Keep ScrollTrigger positions accurate as fonts/images settle AND right after the
+    // preloader unlocks scrolling (that's when above-the-fold reveals should fire).
+    const refresh = () => ScrollTrigger.refresh();
+    requestAnimationFrame(refresh);
+    if ((document as any).fonts && (document as any).fonts.ready) {
+      (document as any).fonts.ready.then(refresh);
+    }
+    window.addEventListener('load', refresh);
+    window.addEventListener('preloader:done', refresh);
   }
 </script>
