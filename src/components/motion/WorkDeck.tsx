@@ -60,33 +60,16 @@ function CardTransform({
   );
   const filterStr = useTransform(brightness, (b) => `brightness(${b})`);
 
-  if (!isDesktop || reduce) {
-    // Mobile: staggered entrance
-    const EASE_CARD = [0.16, 1, 0.3, 1] as const;
-    const DUR_CARD = 0.9;
-    const STAGGER_MAX = 6;
-    const STAGGER_STEP = 0.08;
-    return (
-      <motion.article
-        className="group grid origin-top overflow-hidden rounded-3xl border border-white/10 bg-ink-soft shadow-2xl shadow-black/60 transition-[border-color] duration-300 hover:border-white/25 md:grid-cols-2"
-        initial={reduce ? false : { y: 60, opacity: 0, scale: 0.92 }}
-        whileInView={reduce ? undefined : { y: 0, opacity: 1, scale: 1 }}
-        viewport={{ once: true, amount: 0.15 }}
-        transition={{
-          duration: DUR_CARD,
-          ease: EASE_CARD,
-          delay: Math.min(index, STAGGER_MAX) * STAGGER_STEP,
-        }}
-      >
-        {children}
-      </motion.article>
-    );
-  }
+  // Cards are ALWAYS visible (opacity 1) — never gate the case-study content behind
+  // an opacity entrance. Desktop gets the scroll-driven stacking recede (scale + dim);
+  // mobile renders the cards plainly in flow. `isDesktop` starts false on the server, so
+  // the SSR/first paint has no transform and is fully visible (SSR-safe, no-JS-safe).
+  const useDesktopRecede = isDesktop && !reduce;
 
   return (
     <motion.article
       className="group grid origin-top overflow-hidden rounded-3xl border border-white/10 bg-ink-soft shadow-2xl shadow-black/60 transition-[border-color] duration-300 hover:border-white/25 md:grid-cols-2"
-      style={{ scale, filter: filterStr }}
+      style={useDesktopRecede ? { scale, filter: filterStr } : undefined}
     >
       {children}
     </motion.article>
