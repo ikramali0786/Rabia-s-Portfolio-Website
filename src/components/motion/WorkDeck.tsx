@@ -95,7 +95,7 @@ export default function WorkDeck({ projects }: { projects: readonly WorkItem[] }
   }, []);
 
   return (
-    <div ref={containerRef} className="mt-6 pb-6 md:pb-[8vh]">
+    <div ref={containerRef} className="mt-6">
       {projects.map((w, i) => {
         const isLast = i === projects.length - 1;
         // Non-last: trigger = next card's sticky wrapper
