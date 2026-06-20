@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Section from './Section.astro';
+import Reveal from './motion/Reveal';
 
 const posts = (await getCollection('blog', ({ data }) => !data.draft))
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
@@ -14,27 +15,29 @@ const formatDate = (d: Date) =>
     <a href="/blog" class="btn btn-secondary w-full px-5 py-2.5 text-sm sm:w-auto">View all posts →</a>
   </div>
   <div class="grid gap-6 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3">
-    {posts.map((post) => (
-      <a
-        href={`/blog/${post.id}`}
-        class="reveal group flex flex-col rounded-3xl glass p-8 transition-all duration-300"
-      >
-        <time
-          datetime={post.data.date.toISOString()}
-          class="mb-3 text-xs uppercase tracking-widest text-white/40"
+    {posts.map((post, i) => (
+      <Reveal client:visible y={44} duration={0.9} delay={i * 0.08}>
+        <a
+          href={`/blog/${post.id}`}
+          class="group flex flex-col rounded-3xl glass p-8 transition-all duration-300 h-full"
         >
-          {formatDate(post.data.date)}
-        </time>
-        <h3 class="mb-3 text-lg font-bold leading-snug tracking-tight transition-colors group-hover:text-white/90">
-          {post.data.title}
-        </h3>
-        <p class="flex-1 text-sm leading-relaxed text-white/55">
-          {post.data.description}
-        </p>
-        <span class="mt-5 text-sm font-semibold text-white/60 transition group-hover:text-white">
-          Read →
-        </span>
-      </a>
+          <time
+            datetime={post.data.date.toISOString()}
+            class="mb-3 text-xs uppercase tracking-widest text-white/40"
+          >
+            {formatDate(post.data.date)}
+          </time>
+          <h3 class="mb-3 text-lg font-bold leading-snug tracking-tight transition-colors group-hover:text-white/90">
+            {post.data.title}
+          </h3>
+          <p class="flex-1 text-sm leading-relaxed text-white/55">
+            {post.data.description}
+          </p>
+          <span class="mt-5 text-sm font-semibold text-white/60 transition group-hover:text-white">
+            Read →
+          </span>
+        </a>
+      </Reveal>
     ))}
   </div>
 </Section>

@@ -1,51 +1,185 @@
 ---
 import Section from './Section.astro';
+import Reveal from './motion/Reveal';
 import { site } from '../data/site';
 ---
-<Section id="contact" eyebrow="Contact" title="Let's build your store">
-  <div class="grid gap-12 md:grid-cols-2">
-    <div class="reveal">
-      <p class="text-lg text-white/70">Tell me about your project and I'll get back to you within 24 hours.</p>
-      <div class="mt-8">
-        <div class="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          <a href={`mailto:${site.email}`} class="btn btn-secondary inline-flex items-center gap-2 px-5 py-2.5 w-full sm:w-auto">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
-            Email
-          </a>
-          <a href={`https://wa.me/${site.whatsapp}`} target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp inline-flex items-center gap-2 px-5 py-2.5 text-white w-full sm:w-auto">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.885-9.885 9.885M20.52 3.449C18.24 1.245 15.24 0 12.045 0 5.463 0 .104 5.334.101 11.892c0 2.096.549 4.142 1.595 5.945L0 24l6.335-1.652a12.062 12.062 0 0 0 5.71 1.448h.005c6.585 0 11.946-5.336 11.949-11.896 0-3.176-1.24-6.165-3.495-8.411"/></svg>
-            WhatsApp
-          </a>
-          <a href={site.bookingUrl} class="btn btn-secondary inline-flex items-center gap-2 px-5 py-2.5 w-full sm:w-auto">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
-            Book a call
-          </a>
-        </div>
+<Section id="contact" eyebrow="Contact" title="Ready to grow your store?">
+
+  {/* Subtle iridescent glow behind the section */}
+  <div class="pointer-events-none absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
+    <div class="absolute -left-32 top-1/4 h-96 w-96 rounded-full iridescent opacity-10 blur-[120px]"></div>
+    <div class="absolute -right-32 bottom-1/4 h-72 w-72 rounded-full iridescent opacity-8 blur-[100px]"></div>
+  </div>
+
+  <div class="grid gap-12 md:gap-16 md:grid-cols-2 items-start">
+
+    {/* ── LEFT COLUMN ── */}
+    <Reveal client:visible className="flex flex-col gap-8">
+
+      {/* Pitch text */}
+      <div>
+        <p class="text-xl leading-relaxed text-white/75 max-w-sm">
+          Let's turn your vision into a Shopify store that converts. I'll get back to you within 24 hours.
+        </p>
       </div>
-    </div>
-    <form id="contact-form" class="reveal glass rounded-3xl p-6 md:p-8 space-y-4">
-      <input type="hidden" name="access_key" value={site.web3formsKey} />
-      <input type="hidden" name="subject" value="New inquiry from portfolio" />
-      <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" autocomplete="off" />
-      <label for="field-name" class="sr-only">Your name</label>
-      <input id="field-name" name="name" required placeholder="Your name" autocomplete="name" class="w-full rounded-xl border border-white/15 bg-transparent px-4 py-3 transition focus:border-white/60" />
-      <label for="field-email" class="sr-only">Email address</label>
-      <input id="field-email" name="email" type="email" required placeholder="Email" autocomplete="email" class="w-full rounded-xl border border-white/15 bg-transparent px-4 py-3 transition focus:border-white/60" />
-      <label for="field-package" class="sr-only">Which package are you interested in?</label>
-      <select id="field-package" name="package" class="w-full rounded-xl border border-white/15 bg-transparent px-4 py-3 text-white transition focus:border-white/60">
-        <option value="" disabled selected style="background-color:#0d0d0f;color:#f5f5f7;">Which package are you interested in?</option>
-        {site.pricing.tiers.map((tier) => (
-          <option value={`${tier.name} (${tier.price})`} style="background-color:#0d0d0f;color:#f5f5f7;">{tier.name} — {tier.price}</option>
-        ))}
-        <option value="Not sure — need advice" style="background-color:#0d0d0f;color:#f5f5f7;">Not sure — need advice</option>
-      </select>
-      <label for="field-message" class="sr-only">Your message</label>
-      <textarea id="field-message" name="message" required rows="5" placeholder="Your message" class="w-full rounded-xl border border-white/15 bg-transparent px-4 py-3 transition focus:border-white/60"></textarea>
-      <button type="submit" class="btn btn-primary w-full px-6 py-3 disabled:cursor-not-allowed disabled:opacity-60">Send message</button>
-      <p id="form-status" class="text-sm text-white/60" role="status" aria-live="polite"></p>
-    </form>
+
+      {/* Availability indicator */}
+      <div class="inline-flex items-center gap-3">
+        <span class="relative flex h-2.5 w-2.5">
+          <span class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping"></span>
+          <span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400"></span>
+        </span>
+        <span class="text-sm font-medium text-emerald-400 tracking-wide">Available for new projects</span>
+      </div>
+
+      {/* Contact method rows */}
+      <div class="flex flex-col gap-3">
+
+        {/* Email */}
+        <a
+          href={`mailto:${site.email}`}
+          class="group flex items-center gap-4 glass rounded-2xl px-5 py-4 transition-all duration-300 hover:border-white/25 hover:-translate-y-0.5"
+        >
+          <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/8 ring-1 ring-white/12 transition-all duration-300 group-hover:bg-white/14 group-hover:ring-white/22">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="text-white/80">
+              <rect x="3" y="5" width="18" height="14" rx="2"/>
+              <path d="m3 7 9 6 9-6"/>
+            </svg>
+          </div>
+          <div class="min-w-0 flex-1">
+            <p class="text-sm font-semibold text-white/90 leading-tight">Email</p>
+            <p class="text-xs text-white/50 mt-0.5 truncate">{site.email}</p>
+          </div>
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="text-white/30 shrink-0 transition-all duration-300 group-hover:text-white/60 group-hover:translate-x-0.5">
+            <path d="M9 18l6-6-6-6"/>
+          </svg>
+        </a>
+
+        {/* WhatsApp */}
+        <a
+          href={`https://wa.me/${site.whatsapp}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group flex items-center gap-4 glass rounded-2xl px-5 py-4 transition-all duration-300 hover:border-white/25 hover:-translate-y-0.5"
+        >
+          <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#25D366]/15 ring-1 ring-[#25D366]/30 transition-all duration-300 group-hover:bg-[#25D366]/22 group-hover:ring-[#25D366]/45">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="#25D366" aria-hidden="true">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.885-9.885 9.885M20.52 3.449C18.24 1.245 15.24 0 12.045 0 5.463 0 .104 5.334.101 11.892c0 2.096.549 4.142 1.595 5.945L0 24l6.335-1.652a12.062 12.062 0 0 0 5.71 1.448h.005c6.585 0 11.946-5.336 11.949-11.896 0-3.176-1.24-6.165-3.495-8.411"/>
+            </svg>
+          </div>
+          <div class="min-w-0 flex-1">
+            <p class="text-sm font-semibold text-white/90 leading-tight">WhatsApp</p>
+            <p class="text-xs text-white/50 mt-0.5">Chat now · usually replies within 24h</p>
+          </div>
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="text-white/30 shrink-0 transition-all duration-300 group-hover:text-white/60 group-hover:translate-x-0.5">
+            <path d="M9 18l6-6-6-6"/>
+          </svg>
+        </a>
+
+        {/* Book a call */}
+        <a
+          href={site.bookingUrl}
+          class="group flex items-center gap-4 glass rounded-2xl px-5 py-4 transition-all duration-300 hover:border-white/25 hover:-translate-y-0.5"
+        >
+          <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/8 ring-1 ring-white/12 transition-all duration-300 group-hover:bg-white/14 group-hover:ring-white/22">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="text-white/80">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/>
+            </svg>
+          </div>
+          <div class="min-w-0 flex-1">
+            <p class="text-sm font-semibold text-white/90 leading-tight">Book a call</p>
+            <p class="text-xs text-white/50 mt-0.5">Free 20-min discovery call</p>
+          </div>
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="text-white/30 shrink-0 transition-all duration-300 group-hover:text-white/60 group-hover:translate-x-0.5">
+            <path d="M9 18l6-6-6-6"/>
+          </svg>
+        </a>
+
+      </div>{/* /contact rows */}
+
+      {/* Response time note */}
+      <p class="text-xs text-white/35 leading-relaxed">
+        All inquiries are responded to within 24 hours.<br />No commitment required.
+      </p>
+
+    </Reveal>{/* /left */}
+
+    {/* ── RIGHT COLUMN — glass form panel ── */}
+    <Reveal client:visible delay={0.1}>
+      <div class="glass-strong rounded-3xl p-6 md:p-8">
+        <h3 class="text-lg font-semibold text-white/90 mb-6 tracking-tight">Send a message</h3>
+        <form id="contact-form" class="space-y-4" novalidate>
+          <input type="hidden" name="access_key" value={site.web3formsKey} />
+          <input type="hidden" name="subject" value="New inquiry from portfolio" />
+          <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" autocomplete="off" />
+
+          <div class="space-y-1">
+            <label for="field-name" class="sr-only">Your name</label>
+            <input
+              id="field-name"
+              name="name"
+              required
+              placeholder="Your name"
+              autocomplete="name"
+              class="w-full rounded-xl border border-white/15 bg-transparent px-4 py-3 text-sm text-white placeholder:text-white/35 transition-all duration-200 focus:border-white/50 focus:outline-none focus:ring-1 focus:ring-white/20"
+            />
+          </div>
+
+          <div class="space-y-1">
+            <label for="field-email" class="sr-only">Email address</label>
+            <input
+              id="field-email"
+              name="email"
+              type="email"
+              required
+              placeholder="Email address"
+              autocomplete="email"
+              class="w-full rounded-xl border border-white/15 bg-transparent px-4 py-3 text-sm text-white placeholder:text-white/35 transition-all duration-200 focus:border-white/50 focus:outline-none focus:ring-1 focus:ring-white/20"
+            />
+          </div>
+
+          <div class="space-y-1">
+            <label for="field-package" class="sr-only">Which package are you interested in?</label>
+            <select
+              id="field-package"
+              name="package"
+              class="w-full rounded-xl border border-white/15 bg-transparent px-4 py-3 text-sm text-white transition-all duration-200 focus:border-white/50 focus:outline-none focus:ring-1 focus:ring-white/20"
+            >
+              <option value="" disabled selected style="background-color:#0d0d0f;color:rgba(245,245,247,0.35);">Which package are you interested in?</option>
+              {site.pricing.tiers.map((tier) => (
+                <option value={`${tier.name} (${tier.price})`} style="background-color:#0d0d0f;color:#f5f5f7;">{tier.name} — {tier.price}</option>
+              ))}
+              <option value="Not sure — need advice" style="background-color:#0d0d0f;color:#f5f5f7;">Not sure — need advice</option>
+            </select>
+          </div>
+
+          <div class="space-y-1">
+            <label for="field-message" class="sr-only">Your message</label>
+            <textarea
+              id="field-message"
+              name="message"
+              required
+              rows="5"
+              placeholder="Tell me about your project…"
+              class="w-full rounded-xl border border-white/15 bg-transparent px-4 py-3 text-sm text-white placeholder:text-white/35 transition-all duration-200 focus:border-white/50 focus:outline-none focus:ring-1 focus:ring-white/20 resize-none"
+            ></textarea>
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-primary w-full px-6 py-3.5 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            Send message
+          </button>
+
+          <p id="form-status" class="text-sm text-white/55 text-center min-h-[1.25rem]" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </Reveal>{/* /right */}
+
   </div>
 </Section>
+
 <script>
   const form = document.getElementById('contact-form') as HTMLFormElement | null;
   const status = document.getElementById('form-status');

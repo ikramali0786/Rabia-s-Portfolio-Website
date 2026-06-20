@@ -1,4 +1,5 @@
 ---
+import Reveal from './motion/Reveal';
 import { site } from '../data/site';
 const year = new Date().getFullYear();
 ---
@@ -6,11 +7,15 @@ const year = new Date().getFullYear();
   <!-- Big CTA -->
   <div class="mx-auto max-w-7xl px-6 pb-12 pt-14 md:pb-20 md:pt-24">
     <a href="#contact" class="group block">
-      <p class="reveal text-sm uppercase tracking-[0.25em] text-white/40">{site.footer.availability}</p>
-      <h2 data-reveal="heading" class="mt-5 max-w-4xl text-3xl font-black leading-[1.05] tracking-tight sm:text-4xl md:text-7xl">
-        {site.footer.cta}
-        <span class="inline-block transition-transform duration-300 group-hover:translate-x-2">→</span>
-      </h2>
+      <Reveal client:visible>
+        <p class="text-sm uppercase tracking-[0.25em] text-white/40">{site.footer.availability}</p>
+      </Reveal>
+      <Reveal client:visible y={40} duration={0.95} delay={0.05}>
+        <h2 class="mt-5 max-w-4xl text-3xl font-black leading-[1.05] tracking-tight sm:text-4xl md:text-7xl">
+          {site.footer.cta}
+          <span class="inline-block transition-transform duration-300 group-hover:translate-x-2">→</span>
+        </h2>
+      </Reveal>
     </a>
   </div>
 
@@ -34,10 +39,6 @@ const year = new Date().getFullYear();
       <h3 class="mb-4 text-xs uppercase tracking-[0.2em] text-white/40">Navigation</h3>
       <ul class="space-y-3 text-white/65">
         {site.nav.map((n) => <li><a href={n.href} class="transition hover:text-white">{n.label}</a></li>)}
-        <li class="pt-2 text-white/40">Social</li>
-        {site.socials.map((s) => (
-          <li><a href={s.href} target="_blank" rel="noopener noreferrer" class="transition hover:text-white">{s.label}</a></li>
-        ))}
       </ul>
     </nav>
 
@@ -49,6 +50,19 @@ const year = new Date().getFullYear();
         <li><a href={site.bookingUrl} class="transition hover:text-white">Book a call →</a></li>
         <li class="pt-2 text-white/40">{site.footer.hours}</li>
       </ul>
+      <div class="flex gap-3 pt-4">
+        {site.socials.map((s) => (
+          <a
+            href={s.href}
+            target={s.href.startsWith('http') ? '_blank' : undefined}
+            rel="noopener noreferrer"
+            aria-label={s.label}
+            class="grid h-9 w-9 place-items-center rounded-full border border-white/15 text-white/70 transition hover:border-white/30 hover:text-white"
+          >
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d={s.icon}/></svg>
+          </a>
+        ))}
+      </div>
     </div>
   </div>
 

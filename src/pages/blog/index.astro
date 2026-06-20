@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Reveal from '../../components/motion/Reveal';
 import { site } from '../../data/site';
 
 const posts = (await getCollection('blog', ({ data }) => !data.draft))
@@ -32,108 +33,118 @@ const blogLd = {
 
       <!-- Header -->
       <div class="mb-16">
-        <p class="reveal mb-3 text-sm font-medium uppercase tracking-[0.2em] text-white/50">Blog</p>
-        <h1 data-reveal="heading" class="max-w-3xl text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl md:text-6xl">
-          Insights on Shopify
-        </h1>
-        <p class="reveal mt-6 max-w-xl text-lg text-white/60">
-          Practical articles on Shopify development, performance, migration, and conversion — written from the trenches.
-        </p>
+        <Reveal client:visible>
+          <p class="mb-3 text-sm font-medium uppercase tracking-[0.2em] text-white/50">Blog</p>
+        </Reveal>
+        <Reveal client:visible y={40} duration={0.95} delay={0.05}>
+          <h1 class="max-w-3xl text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl md:text-6xl">
+            Insights on Shopify
+          </h1>
+        </Reveal>
+        <Reveal client:visible delay={0.1}>
+          <p class="mt-6 max-w-xl text-lg text-white/60">
+            Practical articles on Shopify development, performance, migration, and conversion — written from the trenches.
+          </p>
+        </Reveal>
       </div>
 
       <!-- Featured post -->
       {featured && (
-        <a
-          href={`/blog/${featured.id}`}
-          class="reveal group mb-16 flex flex-col overflow-hidden rounded-3xl glass transition-all duration-300 lg:flex-row"
-        >
-          <!-- Content side -->
-          <div class="flex flex-1 flex-col justify-between p-8 md:p-12">
-            <!-- Badge + date row -->
-            <div class="mb-6 flex flex-wrap items-center gap-3">
-              <span class="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-white/80">
-                Latest
-              </span>
-              <time
-                datetime={featured.data.date.toISOString()}
-                class="text-xs uppercase tracking-widest text-white/40"
-              >
-                {formatDate(featured.data.date)}
-              </time>
-            </div>
-
-            <!-- Title -->
-            <h2 class="mb-4 text-3xl font-extrabold leading-tight tracking-tight transition-colors group-hover:text-white/90 md:text-4xl">
-              {featured.data.title}
-            </h2>
-
-            <!-- Description -->
-            <p class="mb-8 max-w-xl text-base leading-relaxed text-white/60">
-              {featured.data.description}
-            </p>
-
-            <!-- Tags -->
-            {featured.data.tags?.length > 0 && (
-              <div class="mb-8 flex flex-wrap gap-2">
-                {featured.data.tags.slice(0, 3).map((tag: string) => (
-                  <span class="rounded-full border border-white/10 px-3 py-1 text-xs text-white/50">
-                    {tag}
-                  </span>
-                ))}
+        <Reveal client:visible y={44} duration={0.9} className="mb-16">
+          <a
+            href={`/blog/${featured.id}`}
+            class="group flex flex-col overflow-hidden rounded-3xl glass transition-all duration-300 lg:flex-row"
+          >
+            <!-- Content side -->
+            <div class="flex flex-1 flex-col justify-between p-8 md:p-12">
+              <!-- Badge + date row -->
+              <div class="mb-6 flex flex-wrap items-center gap-3">
+                <span class="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-white/80">
+                  Latest
+                </span>
+                <time
+                  datetime={featured.data.date.toISOString()}
+                  class="text-xs uppercase tracking-widest text-white/40"
+                >
+                  {formatDate(featured.data.date)}
+                </time>
               </div>
-            )}
 
-            <!-- CTA -->
-            <span class="inline-flex items-center gap-2 text-sm font-semibold text-white/70 transition group-hover:text-white">
-              Read article →
-            </span>
-          </div>
+              <!-- Title -->
+              <h2 class="mb-4 text-3xl font-extrabold leading-tight tracking-tight transition-colors group-hover:text-white/90 md:text-4xl">
+                {featured.data.title}
+              </h2>
 
-          <!-- Visual side: iridescent gradient panel -->
-          <div class="relative hidden h-64 w-full overflow-hidden lg:flex lg:h-auto lg:w-72 xl:w-96">
-            <div class="iridescent absolute inset-0 opacity-60"></div>
-            <div class="absolute inset-0 bg-gradient-to-br from-white/5 via-white/[0.02] to-transparent"></div>
-            <!-- Decorative grid lines -->
-            <div class="absolute inset-0 opacity-10"
-              style="background-image: linear-gradient(rgba(255,255,255,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.15) 1px, transparent 1px); background-size: 40px 40px;">
+              <!-- Description -->
+              <p class="mb-8 max-w-xl text-base leading-relaxed text-white/60">
+                {featured.data.description}
+              </p>
+
+              <!-- Tags -->
+              {featured.data.tags?.length > 0 && (
+                <div class="mb-8 flex flex-wrap gap-2">
+                  {featured.data.tags.slice(0, 3).map((tag: string) => (
+                    <span class="rounded-full border border-white/10 px-3 py-1 text-xs text-white/50">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
+
+              <!-- CTA -->
+              <span class="inline-flex items-center gap-2 text-sm font-semibold text-white/70 transition group-hover:text-white">
+                Read article →
+              </span>
             </div>
-            <!-- Decorative orb -->
-            <div class="absolute right-8 top-1/2 h-40 w-40 -translate-y-1/2 rounded-full bg-white/5 blur-3xl"></div>
-          </div>
-        </a>
+
+            <!-- Visual side: iridescent gradient panel -->
+            <div class="relative hidden h-64 w-full overflow-hidden lg:flex lg:h-auto lg:w-72 xl:w-96">
+              <div class="iridescent absolute inset-0 opacity-60"></div>
+              <div class="absolute inset-0 bg-gradient-to-br from-white/5 via-white/[0.02] to-transparent"></div>
+              <!-- Decorative grid lines -->
+              <div class="absolute inset-0 opacity-10"
+                style="background-image: linear-gradient(rgba(255,255,255,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.15) 1px, transparent 1px); background-size: 40px 40px;">
+              </div>
+              <!-- Decorative orb -->
+              <div class="absolute right-8 top-1/2 h-40 w-40 -translate-y-1/2 rounded-full bg-white/5 blur-3xl"></div>
+            </div>
+          </a>
+        </Reveal>
       )}
 
       <!-- Rest of posts grid -->
       {rest.length > 0 && (
         <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {rest.map((post) => (
-            <a
-              href={`/blog/${post.id}`}
-              class="reveal group flex flex-col rounded-3xl glass p-8 transition-all duration-300"
-            >
-              <div class="mb-4 flex flex-wrap gap-2">
-                {post.data.tags.slice(0, 3).map((tag: string) => (
-                  <span class="rounded-full border border-white/10 px-3 py-1 text-xs text-white/50">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-              <time
-                datetime={post.data.date.toISOString()}
-                class="mb-3 text-xs uppercase tracking-widest text-white/40"
+          {rest.map((post, i) => (
+            <Reveal client:visible y={44} duration={0.9} delay={i * 0.08}>
+              <a
+                href={`/blog/${post.id}`}
+                class="group flex flex-col rounded-3xl glass p-8 transition-all duration-300 h-full"
               >
-                {formatDate(post.data.date)}
-              </time>
-              <h2 class="mb-3 text-xl font-bold leading-snug tracking-tight transition-colors group-hover:text-white/90">
-                {post.data.title}
-              </h2>
-              <p class="flex-1 text-sm leading-relaxed text-white/55">
-                {post.data.description}
-              </p>
-              <span class="mt-6 text-sm font-semibold text-white/70 transition group-hover:text-white">
-                Read →
-              </span>
-            </a>
+                <div class="mb-4 flex flex-wrap gap-2">
+                  {post.data.tags.slice(0, 3).map((tag: string) => (
+                    <span class="rounded-full border border-white/10 px-3 py-1 text-xs text-white/50">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <time
+                  datetime={post.data.date.toISOString()}
+                  class="mb-3 text-xs uppercase tracking-widest text-white/40"
+                >
+                  {formatDate(post.data.date)}
+                </time>
+                <h2 class="mb-3 text-xl font-bold leading-snug tracking-tight transition-colors group-hover:text-white/90">
+                  {post.data.title}
+                </h2>
+                <p class="flex-1 text-sm leading-relaxed text-white/55">
+                  {post.data.description}
+                </p>
+                <span class="mt-6 text-sm font-semibold text-white/70 transition group-hover:text-white">
+                  Read →
+                </span>
+              </a>
+            </Reveal>
           ))}
         </div>
       )}

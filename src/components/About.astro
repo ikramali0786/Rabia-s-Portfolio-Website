@@ -2,25 +2,30 @@
 // Brand logos sourced from the Simple Icons CDN (https://cdn.simpleicons.org/).
 // Free & open-source under CC0; no API key required.
 import Section from './Section.astro';
+import Reveal from './motion/Reveal';
 import { site } from '../data/site';
 ---
 <Section id="about" eyebrow="About">
-  <h2 data-reveal="heading" class="max-w-3xl text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl md:text-6xl">Hi, I'm <span class="iridescent-text">Rabia</span></h2>
-  <div class="reveal mt-8 grid items-center gap-12 md:grid-cols-[2fr_3fr]">
-    <img src={site.about.photo} alt={`${site.name}, ${site.role}`} width="480" height="600" loading="lazy" class="aspect-[4/5] w-full rounded-3xl border border-white/10 object-cover" />
-    <div>
-      <p class="text-lg text-white/75">{site.about.bio}</p>
-      <div class="mt-8 flex flex-wrap gap-3">
-        {site.about.skills.map((s) => (
-          <span class="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm text-white/70">
-            {s.icon
-              ? <img src={`https://cdn.simpleicons.org/${s.icon}`} alt="" width="16" height="16" loading="lazy" class="h-4 w-4" onerror="this.remove()" />
-              : <span class="h-1.5 w-1.5 rounded-full bg-white/40" aria-hidden="true"></span>
-            }
-            {s.name}
-          </span>
-        ))}
+  <Reveal client:visible y={40} duration={0.95}>
+    <h2 class="max-w-3xl text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl md:text-6xl">Hi, I'm <span class="iridescent-text">Rabia</span></h2>
+  </Reveal>
+  <Reveal client:visible delay={0.08}>
+    <div class="mt-8 grid items-center gap-12 md:grid-cols-[2fr_3fr]">
+      <img src={site.about.photo} alt={`${site.name}, ${site.role}`} width="480" height="600" loading="lazy" class="aspect-[4/5] w-full rounded-3xl border border-white/10 object-cover" />
+      <div>
+        <p class="text-lg text-white/75">{site.about.bio}</p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          {site.about.skills.map((s) => (
+            <span class="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm text-white/70">
+              {s.icon
+                ? <img src={`https://cdn.simpleicons.org/${s.icon}`} alt="" width="16" height="16" loading="lazy" class="h-4 w-4" onerror="this.remove()" />
+                : <span class="h-1.5 w-1.5 rounded-full bg-white/40" aria-hidden="true"></span>
+              }
+              {s.name}
+            </span>
+          ))}
+        </div>
       </div>
     </div>
-  </div>
+  </Reveal>
 </Section>

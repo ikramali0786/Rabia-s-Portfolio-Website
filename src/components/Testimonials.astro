@@ -1,10 +1,10 @@
 ---
 import Section from './Section.astro';
+import Reveal from './motion/Reveal';
+import Marquee from './motion/Marquee';
 import { site } from '../data/site';
 
 const testimonials = site.testimonials;
-// Duplicate the list for a seamless loop: translate3d(0) → translate3d(-50%)
-const looped = [...testimonials, ...testimonials];
 
 const star =
   '<svg viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4" aria-hidden="true"><path d="M10 1.5l2.6 5.27 5.82.85-4.21 4.1.99 5.78L10 14.77l-5.2 2.73.99-5.78L1.58 7.62l5.82-.85L10 1.5z"/></svg>';
@@ -16,7 +16,7 @@ const checkSvg =
 
 <Section id="testimonials" eyebrow="Testimonials" title={site.testimonialsIntro}>
   <!-- Fiverr rating chip -->
-  <div class="reveal mb-10 flex">
+  <Reveal client:visible className="mb-10 flex">
     <a
       href={site.fiverr.profileUrl}
       target="_blank"
@@ -36,17 +36,12 @@ const checkSvg =
         <path d="M6.5 1H11v4.5M11 1 5 7M2 3H1v8h8V9"/>
       </svg>
     </a>
-  </div>
+  </Reveal>
 
-  <!-- Scrolling marquee of review cards -->
-  <!-- The outer wrapper clips overflow and applies edge-fade masks -->
-  <div
-    class="reveal testimonials-outer group relative overflow-x-auto"
-    style="-webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);"
-  >
-    <!-- Scrolling track: first copy is real content, second is aria-hidden duplicate for seamless loop -->
-    <div class="testimonials-track flex w-max gap-5 py-2">
-      <!-- First copy — real, accessible content -->
+  <!-- Scrolling marquee of review cards (Framer Motion island) -->
+  <!-- The outer wrapper applies edge-fade masks; Marquee handles the animation -->
+  <Reveal client:visible>
+    <Marquee client:visible duration={40} className="testimonials-outer">
       {testimonials.map((t) => (
         <figure class="w-[320px] sm:w-[360px] shrink-0 rounded-3xl glass p-6 transition duration-300 hover:-translate-y-0.5">
           <div class="flex gap-1 text-amber-300" aria-label={`${t.rating} out of 5`}>
@@ -67,61 +62,17 @@ const checkSvg =
           </figcaption>
         </figure>
       ))}
-
-      <!-- Second copy — aria-hidden, purely visual for the seamless loop -->
-      <div aria-hidden="true" class="contents">
-        {testimonials.map((t) => (
-          <figure class="w-[320px] sm:w-[360px] shrink-0 rounded-3xl glass p-6 transition duration-300 hover:-translate-y-0.5">
-            <div class="flex gap-1 text-amber-300">
-              {Array.from({ length: t.rating }).map(() => <Fragment set:html={star} />)}
-            </div>
-            <blockquote class="mt-4 line-clamp-4 text-base leading-relaxed text-white/85">{t.quote}</blockquote>
-            <figcaption class="mt-5 flex items-center gap-3">
-              <img src={t.avatar} alt="" width="44" height="44" loading="lazy" class="h-11 w-11 rounded-full object-cover ring-1 ring-white/15" />
-              <div>
-                <div class="text-sm font-semibold">{t.author}</div>
-                <div class="mt-0.5 flex items-center gap-1 text-xs text-white/50">
-                  <Fragment set:html={globeSvg} />{t.country}
-                </div>
-                <div class="mt-1 flex items-center gap-1 text-xs font-medium" style="color:#1DBF73;">
-                  <Fragment set:html={checkSvg} />Verified Fiverr review
-                </div>
-              </div>
-            </figcaption>
-          </figure>
-        ))}
-      </div>
-    </div>
-  </div>
+    </Marquee>
+  </Reveal>
 </Section>
 
 <style>
-  /* Hide scrollbar while keeping element scrollable (for reduced-motion manual scroll) */
-  .testimonials-outer { scrollbar-width: none; -ms-overflow-style: none; }
-  .testimonials-outer::-webkit-scrollbar { display: none; }
-
-  @keyframes testimonial-scroll {
-    from { transform: translate3d(0, 0, 0); }
-    to   { transform: translate3d(-50%, 0, 0); }
+  /* Edge-fade masks + scrollbar hiding (used by the Marquee outer wrapper) */
+  :global(.testimonials-outer) {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
   }
-
-  .testimonials-track {
-    will-change: transform;
-    backface-visibility: hidden;
-    transform: translateZ(0);
-    animation: testimonial-scroll 40s linear infinite;
-  }
-
-  /* Pause on hover (group on the outer div) */
-  .testimonials-outer:hover .testimonials-track {
-    animation-play-state: paused;
-  }
-
-  /* Reduced motion: disable auto-scroll, let users scroll manually */
-  @media (prefers-reduced-motion: reduce) {
-    .testimonials-track {
-      animation: none !important;
-      transform: translateX(0) !important;
-    }
-  }
+  :global(.testimonials-outer::-webkit-scrollbar) { display: none; }
 </style>

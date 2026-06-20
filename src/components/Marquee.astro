@@ -1,61 +1,33 @@
 ---
 import { site } from '../data/site';
+import Marquee from './motion/Marquee';
 const items = site.marquee;
-const row1 = [...items, ...items];
-const row2 = [...items, ...items];
 ---
 
 <section aria-label="Expertise" class="border-y border-white/10 py-14 overflow-hidden">
   <h2 class="sr-only">Expertise</h2>
 
-  <!-- Row 1 — scrolls LEFT -->
-  <div class="group relative mb-6 overflow-hidden">
-    <div class="marquee-track flex w-max animate-[marquee-ltr_34s_linear_infinite] group-hover:[animation-play-state:paused]">
-      {row1.map((item, i) => (
-        <span class="flex items-center shrink-0">
-          <span class={`text-3xl sm:text-4xl md:text-6xl font-black uppercase tracking-tight leading-none px-4 sm:px-6 select-none ${i % 2 === 0 ? 'text-white' : 'text-outline'}`}>
-            {item}
-          </span>
-          <span class="iridescent-text-static text-2xl sm:text-3xl md:text-5xl shrink-0 select-none" aria-hidden="true">✦</span>
+  <!-- Row 1 — scrolls LEFT (Framer Motion) -->
+  <Marquee client:visible duration={34} gap="0" trackPadding="0" className="mb-6">
+    {items.map((item, i) => (
+      <span class="flex items-center shrink-0">
+        <span class={`text-3xl sm:text-4xl md:text-6xl font-black uppercase tracking-tight leading-none px-4 sm:px-6 select-none ${i % 2 === 0 ? 'text-white' : 'text-outline'}`}>
+          {item}
         </span>
-      ))}
-    </div>
-  </div>
+        <span class="iridescent-text-static text-2xl sm:text-3xl md:text-5xl shrink-0 select-none" aria-hidden="true">✦</span>
+      </span>
+    ))}
+  </Marquee>
 
-  <!-- Row 2 — scrolls RIGHT -->
-  <div class="group relative overflow-hidden">
-    <div class="marquee-track flex w-max animate-[marquee-rtl_40s_linear_infinite] group-hover:[animation-play-state:paused]">
-      {row2.map((item, i) => (
-        <span class="flex items-center shrink-0">
-          <span class={`text-4xl md:text-6xl font-black uppercase tracking-tight leading-none px-6 select-none ${i % 2 === 0 ? 'text-outline' : 'text-white'}`}>
-            {item}
-          </span>
-          <span class="iridescent-text-static text-2xl sm:text-3xl md:text-5xl shrink-0 select-none" aria-hidden="true">✦</span>
+  <!-- Row 2 — scrolls RIGHT (Framer Motion) -->
+  <Marquee client:visible duration={40} reverse gap="0" trackPadding="0">
+    {items.map((item, i) => (
+      <span class="flex items-center shrink-0">
+        <span class={`text-4xl md:text-6xl font-black uppercase tracking-tight leading-none px-6 select-none ${i % 2 === 0 ? 'text-outline' : 'text-white'}`}>
+          {item}
         </span>
-      ))}
-    </div>
-  </div>
+        <span class="iridescent-text-static text-2xl sm:text-3xl md:text-5xl shrink-0 select-none" aria-hidden="true">✦</span>
+      </span>
+    ))}
+  </Marquee>
 </section>
-
-<style>
-  @keyframes marquee-ltr {
-    from { transform: translate3d(0, 0, 0); }
-    to   { transform: translate3d(-50%, 0, 0); }
-  }
-  @keyframes marquee-rtl {
-    from { transform: translate3d(-50%, 0, 0); }
-    to   { transform: translate3d(0, 0, 0); }
-  }
-  .marquee-track {
-    will-change: transform;
-    backface-visibility: hidden;
-    transform: translateZ(0);
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .animate-\[marquee-ltr_34s_linear_infinite\],
-    .animate-\[marquee-rtl_40s_linear_infinite\] {
-      animation: none !important;
-      transform: translateX(0) !important;
-    }
-  }
-</style>

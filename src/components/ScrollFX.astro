@@ -1,32 +1,18 @@
 <script>
   import Lenis from 'lenis';
-  import { gsap } from 'gsap';
-  import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  gsap.registerPlugin(ScrollTrigger);
 
-  if (reduce) {
-    document.querySelectorAll('.reveal, [data-reveal]').forEach((el) => {
-      (el as HTMLElement).style.opacity = '1';
-    });
-  } else {
-    // ---- Motion constants — single source of truth for the whole reveal system ----
-    const EASE         = 'power3.out';   // default ease: smooth deceleration
-    const EASE_CARD    = 'expo.out';     // cards: snappier overshoot feel
-    const DUR          = 0.75;           // default reveal duration (s)
-    const DUR_CARD     = 0.9;            // card reveal duration (s)
-    const DUR_HEADING  = 0.95;           // heading reveal duration (s) — slightly more presence
-    const TRIGGER_START = 'top 85%';     // consistent scroll trigger point for all reveals
-    const STAGGER_STEP  = 0.08;          // per-sibling delay increment (s)
-    const STAGGER_MAX   = 6;             // cap stagger at the 6th sibling so long grids don't drag
-
-    // ---- Smooth scrolling through GSAP's ticker so ScrollTrigger stays in sync ----
+  if (!reduce) {
+    // ---- Smooth scrolling via Lenis ----
     const lenis = new Lenis({ duration: 1.05, smoothWheel: true });
     (window as any).__lenis = lenis;
-    lenis.on('scroll', ScrollTrigger.update);
-    gsap.ticker.add((time) => lenis.raf(time * 1000));
-    gsap.ticker.lagSmoothing(0);
+
+    function raf(time: number) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
 
     // ---- Smooth in-page anchor navigation ----
     document.querySelectorAll('a[href^="#"]').forEach((a) => {
@@ -39,128 +25,5 @@
         lenis.scrollTo(target as HTMLElement, { offset: -72 });
       });
     });
-
-    // ---- Reveal helper: smooth fade + rise, plays once, never gets stuck ----
-    // Using fromTo (immediateRender) so elements are hidden only by JS; if JS fails
-    // they stay visible. `once: true` + ScrollTrigger firing on already-passed
-    // elements at load guarantees nothing stays stuck hidden after a mid-page reload.
-    // GPU-friendly transforms only (y / opacity / scale — no filter on reveals).
-    const revealOne = (
-      el: Element,
-      opts: { y?: number; scale?: number; duration?: number; delay?: number; ease?: string } = {},
-    ) => {
-      gsap.fromTo(
-        el,
-        { y: opts.y ?? 28, opacity: 0, scale: opts.scale ?? 1 },
-        {
-          y: 0,
-          opacity: 1,
-          scale: 1,
-          duration: opts.duration ?? DUR,
-          ease: opts.ease ?? EASE,
-          delay: opts.delay ?? 0,
-          // Clear inline transform so hover styles and md:scale on cards still work.
-          clearProps: 'transform,willChange',
-          scrollTrigger: { trigger: el, start: TRIGGER_START, once: true },
-        },
-      );
-    };
-
-    // Headings: more travel + longer duration for emphasis (no scale — keeps type crisp).
-    document.querySelectorAll<HTMLElement>('[data-reveal="heading"]').forEach((el) => {
-      revealOne(el, { y: 40, duration: DUR_HEADING });
-    });
-
-    // Generic .reveal elements (incl. cards): rise + subtle scale-in, with a natural
-    // staggered cascade for siblings in a shared parent (card grids).
-    const items = gsap.utils.toArray<HTMLElement>('.reveal');
-    items.forEach((el) => {
-      const parent = el.parentElement;
-      const sibs = parent
-        ? Array.from(parent.children).filter((c) => c.classList.contains('reveal'))
-        : [el];
-      const idx = Math.max(0, sibs.indexOf(el));
-      const isCard =
-        el.tagName === 'ARTICLE' ||
-        el.tagName === 'FIGURE' ||
-        el.tagName === 'A' ||
-        el.classList.contains('reveal-card');
-      revealOne(el, {
-        y: isCard ? 44 : 28,
-        scale: isCard ? 0.94 : 0.985,
-        duration: isCard ? DUR_CARD : DUR,
-        ease: isCard ? EASE_CARD : EASE,
-        delay: Math.min(idx, STAGGER_MAX) * STAGGER_STEP,
-      });
-    });
-
-    // ---- Case-study cards (intentionally separate from .reveal) ----
-    const stackCards = gsap.utils.toArray<HTMLElement>('#work [data-stack]');
-    if (stackCards.length) {
-      if (window.matchMedia('(min-width: 768px)').matches) {
-        // Desktop: sticky stacking deck. Each pinned card recedes (scale + dim) as the
-        // next stacks over it; the last card recedes gently as the section scrolls away.
-        stackCards.forEach((card, i) => {
-          const isLast = i === stackCards.length - 1;
-          const trigger = isLast
-            ? card.parentElement?.parentElement // the stack container (mt-6 pb-...)
-            : stackCards[i + 1].parentElement;  // the next card's sticky wrapper
-          if (!trigger) return;
-          gsap.fromTo(
-            card,
-            { scale: 1, filter: 'brightness(1)' },
-            {
-              scale: isLast ? 0.96 : 0.9,
-              filter: isLast ? 'brightness(0.78)' : 'brightness(0.5)',
-              ease: 'none',
-              scrollTrigger: {
-                trigger,
-                start: isLast ? 'bottom bottom-=15%' : 'top bottom',
-                end: isLast ? 'bottom top' : 'top center',
-                scrub: true,
-              },
-            },
-          );
-        });
-      } else {
-        // Mobile: cards aren't sticky — polished staggered entrance instead.
-        stackCards.forEach((card, i) => {
-          gsap.fromTo(
-            card,
-            { y: 60, opacity: 0, scale: 0.92 },
-            {
-              y: 0,
-              opacity: 1,
-              scale: 1,
-              duration: DUR_CARD,
-              ease: EASE_CARD,
-              delay: Math.min(i, STAGGER_MAX) * STAGGER_STEP,
-              clearProps: 'transform,willChange',
-              scrollTrigger: { trigger: card, start: TRIGGER_START, once: true },
-            },
-          );
-        });
-      }
-    }
-
-    // ---- Subtle, smoothed parallax for decorative elements ----
-    document.querySelectorAll<HTMLElement>('[data-parallax]').forEach((el) => {
-      const depth = parseFloat(el.dataset.parallax || '0.15');
-      gsap.to(el, {
-        yPercent: -depth * 100,
-        ease: 'none',
-        scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: 0.6 },
-      });
-    });
-
-    // Keep ScrollTrigger positions accurate as fonts/images settle AND right after the
-    // preloader unlocks scrolling (that's when above-the-fold reveals should fire).
-    const refresh = () => ScrollTrigger.refresh();
-    requestAnimationFrame(refresh);
-    if ((document as any).fonts && (document as any).fonts.ready) {
-      (document as any).fonts.ready.then(refresh);
-    }
-    window.addEventListener('load', refresh);
-    window.addEventListener('preloader:done', refresh);
   }
 </script>
