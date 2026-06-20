@@ -3,6 +3,7 @@ import {
   useScroll,
   useTransform,
   useReducedMotion,
+  type MotionValue,
 } from 'framer-motion';
 import { useRef, useEffect, useState, type ReactNode } from 'react';
 
@@ -26,42 +27,31 @@ const CARD_ACCENTS = [
   { glow: 'rgba(245,158,11,0.14)', border: 'rgba(245,158,11,0.28)', label: 'amber' },
 ];
 
-// ---- Single card that applies scroll-driven scale + brightness ----
+// ---- Single card that applies scroll-driven scale + brightness recede ----
+// The recede is driven by ONE shared container scroll progress (passed in), mapped to a
+// per-card window — robust, with no fragile inter-card ref wiring. As you scroll deeper
+// into the deck, each card (except the last) recedes (scale down + dim) while the next
+// card stacks over it; the last card stays full-size and only recedes gently at the very end.
 type CardTransformProps = {
   children: ReactNode;
-  triggerRef: React.RefObject<HTMLElement | null>;
-  isLast: boolean;
-  containerRef: React.RefObject<HTMLElement | null>;
+  progress: MotionValue<number>;
   index: number;
+  total: number;
   isDesktop: boolean;
 };
 
-function CardTransform({
-  children,
-  triggerRef,
-  isLast,
-  containerRef,
-  index,
-  isDesktop,
-}: CardTransformProps) {
+function CardTransform({ children, progress, index, total, isDesktop }: CardTransformProps) {
   const reduce = useReducedMotion();
+  const isLast = index === total - 1;
 
-  // Desktop: scroll-driven recede via the next card wrapper (or container for last)
-  const { scrollYProgress: progressFromNext } = useScroll({
-    target: triggerRef as React.RefObject<HTMLElement>,
-    offset: isLast ? ['end 85%', 'end start'] : ['start end', 'start center'],
-  });
+  // Recede window for this card within the container's [0,1] scroll progress.
+  // Non-last: dims across its slice as the next card rises to cover it.
+  // Last: stays full until ~85% then a slight, gentle recede as the section scrolls away.
+  const start = isLast ? 0.85 : index / total;
+  const end = isLast ? 1 : (index + 1) / total;
 
-  const scale = useTransform(
-    progressFromNext,
-    [0, 1],
-    [1, isLast ? 0.96 : 0.9],
-  );
-  const brightness = useTransform(
-    progressFromNext,
-    [0, 1],
-    [1, isLast ? 0.78 : 0.5],
-  );
+  const scale = useTransform(progress, [start, end], [1, isLast ? 0.96 : 0.9]);
+  const brightness = useTransform(progress, [start, end], [1, isLast ? 0.78 : 0.5]);
   const filterStr = useTransform(brightness, (b) => `brightness(${b})`);
 
   // Cards are ALWAYS visible (opacity 1) — never gate the case-study content behind
@@ -72,7 +62,7 @@ function CardTransform({
 
   return (
     <motion.article
-      className="group relative overflow-hidden rounded-3xl border border-white/10 bg-ink-soft shadow-2xl shadow-black/60 transition-[border-color,box-shadow] duration-500 hover:border-white/20 md:grid md:grid-cols-[1fr_1fr]"
+      className="group relative origin-top overflow-hidden rounded-3xl border border-white/10 bg-ink-soft shadow-2xl shadow-black/60 transition-[border-color,box-shadow] duration-500 hover:border-white/20 md:grid md:grid-cols-[1fr_1fr]"
       style={useDesktopRecede ? { scale, filter: filterStr } : undefined}
     >
       {children}
@@ -84,11 +74,14 @@ function CardTransform({
 export default function WorkDeck({ projects }: { projects: readonly WorkItem[] }) {
   const [isDesktop, setIsDesktop] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const total = projects.length;
 
-  // Refs for each sticky wrapper (one per card) — drives "next card" trigger
-  const wrapperRefs = useRef<Array<React.RefObject<HTMLDivElement | null>>>(
-    projects.map(() => ({ current: null })),
-  );
+  // One scroll tracker for the whole deck: progress 0 when the container's top reaches the
+  // top of the viewport, 1 when its bottom does — i.e. across the full sticky-deck scroll.
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start start', 'end start'],
+  });
 
   useEffect(() => {
     const mq = window.matchMedia('(min-width: 768px)');
@@ -101,33 +94,19 @@ export default function WorkDeck({ projects }: { projects: readonly WorkItem[] }
   return (
     <div ref={containerRef} className="mt-8">
       {projects.map((w, i) => {
-        const isLast = i === projects.length - 1;
-        // Non-last: trigger = next card's sticky wrapper
-        // Last: trigger = the container itself
-        const triggerRef = isLast
-          ? (containerRef as React.RefObject<HTMLElement | null>)
-          : (wrapperRefs.current[i + 1] as React.RefObject<HTMLElement | null>);
-
         const accent = CARD_ACCENTS[i % CARD_ACCENTS.length];
         const caseNum = String(i + 1).padStart(2, '0');
 
         return (
           <div
             key={w.slug}
-            ref={wrapperRefs.current[i] as React.Ref<HTMLDivElement>}
             className="static mb-6 md:sticky md:mb-10"
             style={{
               top: `calc(6rem + ${i} * 2rem)`,
               zIndex: i + 1,
             }}
           >
-            <CardTransform
-              triggerRef={triggerRef}
-              isLast={isLast}
-              containerRef={containerRef as React.RefObject<HTMLElement | null>}
-              index={i}
-              isDesktop={isDesktop}
-            >
+            <CardTransform progress={scrollYProgress} index={i} total={total} isDesktop={isDesktop}>
               {/* Accent glow behind entire card */}
               <div
                 className="pointer-events-none absolute inset-0 rounded-3xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
@@ -165,9 +144,7 @@ export default function WorkDeck({ projects }: { projects: readonly WorkItem[] }
 
                 {/* Stat hero — bottom of image, large and prominent */}
                 <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6">
-                  <p
-                    className="iridescent-text font-display text-4xl font-extrabold leading-none tracking-tight sm:text-5xl md:text-5xl"
-                  >
+                  <p className="iridescent-text font-display text-4xl font-extrabold leading-none tracking-tight sm:text-5xl md:text-5xl">
                     {w.stat}
                   </p>
                   <p className="mt-1 text-xs font-medium uppercase tracking-widest text-white/50">
