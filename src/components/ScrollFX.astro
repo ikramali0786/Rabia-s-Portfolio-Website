@@ -1,25 +1,18 @@
 <script>
   import Lenis from 'lenis';
-  import { gsap } from 'gsap';
-  import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  gsap.registerPlugin(ScrollTrigger);
 
   if (!reduce) {
-    // ---- Motion constants ----
-    const EASE_CARD    = 'expo.out';     // cards: snappier overshoot feel
-    const DUR_CARD     = 0.9;            // card reveal duration (s)
-    const TRIGGER_START = 'top 85%';     // consistent scroll trigger point
-    const STAGGER_STEP  = 0.08;          // per-sibling delay increment (s)
-    const STAGGER_MAX   = 6;             // cap stagger at the 6th sibling
-
-    // ---- Smooth scrolling through GSAP's ticker so ScrollTrigger stays in sync ----
+    // ---- Smooth scrolling via Lenis ----
     const lenis = new Lenis({ duration: 1.05, smoothWheel: true });
     (window as any).__lenis = lenis;
-    lenis.on('scroll', ScrollTrigger.update);
-    gsap.ticker.add((time) => lenis.raf(time * 1000));
-    gsap.ticker.lagSmoothing(0);
+
+    function raf(time: number) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
 
     // ---- Smooth in-page anchor navigation ----
     document.querySelectorAll('a[href^="#"]').forEach((a) => {
@@ -32,74 +25,5 @@
         lenis.scrollTo(target as HTMLElement, { offset: -72 });
       });
     });
-
-    // ---- Case-study cards (intentionally separate from .reveal) ----
-    const stackCards = gsap.utils.toArray<HTMLElement>('#work [data-stack]');
-    if (stackCards.length) {
-      if (window.matchMedia('(min-width: 768px)').matches) {
-        // Desktop: sticky stacking deck. Each pinned card recedes (scale + dim) as the
-        // next stacks over it; the last card recedes gently as the section scrolls away.
-        stackCards.forEach((card, i) => {
-          const isLast = i === stackCards.length - 1;
-          const trigger = isLast
-            ? card.parentElement?.parentElement // the stack container (mt-6 pb-...)
-            : stackCards[i + 1].parentElement;  // the next card's sticky wrapper
-          if (!trigger) return;
-          gsap.fromTo(
-            card,
-            { scale: 1, filter: 'brightness(1)' },
-            {
-              scale: isLast ? 0.96 : 0.9,
-              filter: isLast ? 'brightness(0.78)' : 'brightness(0.5)',
-              ease: 'none',
-              scrollTrigger: {
-                trigger,
-                start: isLast ? 'bottom bottom-=15%' : 'top bottom',
-                end: isLast ? 'bottom top' : 'top center',
-                scrub: true,
-              },
-            },
-          );
-        });
-      } else {
-        // Mobile: cards aren't sticky — polished staggered entrance instead.
-        stackCards.forEach((card, i) => {
-          gsap.fromTo(
-            card,
-            { y: 60, opacity: 0, scale: 0.92 },
-            {
-              y: 0,
-              opacity: 1,
-              scale: 1,
-              duration: DUR_CARD,
-              ease: EASE_CARD,
-              delay: Math.min(i, STAGGER_MAX) * STAGGER_STEP,
-              clearProps: 'transform,willChange',
-              scrollTrigger: { trigger: card, start: TRIGGER_START, once: true },
-            },
-          );
-        });
-      }
-    }
-
-    // ---- Subtle, smoothed parallax for decorative elements ----
-    document.querySelectorAll<HTMLElement>('[data-parallax]').forEach((el) => {
-      const depth = parseFloat(el.dataset.parallax || '0.15');
-      gsap.to(el, {
-        yPercent: -depth * 100,
-        ease: 'none',
-        scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: 0.6 },
-      });
-    });
-
-    // Keep ScrollTrigger positions accurate as fonts/images settle AND right after the
-    // preloader unlocks scrolling (that's when above-the-fold reveals should fire).
-    const refresh = () => ScrollTrigger.refresh();
-    requestAnimationFrame(refresh);
-    if ((document as any).fonts && (document as any).fonts.ready) {
-      (document as any).fonts.ready.then(refresh);
-    }
-    window.addEventListener('load', refresh);
-    window.addEventListener('preloader:done', refresh);
   }
 </script>
