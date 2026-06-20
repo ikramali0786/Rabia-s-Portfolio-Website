@@ -50,9 +50,17 @@ const anchor = (href: string) => (href.startsWith('#') && !onHome ? `/${href}` :
 
     <a href={site.bookingUrl} class="mobile-link btn btn-primary mt-6 w-full px-5 py-3 text-center text-base">Book a call</a>
 
-    <div class="mobile-socials mt-auto flex flex-wrap gap-x-5 gap-y-2 pt-8 text-sm text-white/50">
+    <div class="mobile-socials mt-auto flex gap-3 pt-8">
       {site.socials.map((s) => (
-        <a href={s.href} target={s.href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer" class="transition hover:text-white">{s.label}</a>
+        <a
+          href={s.href}
+          target={s.href.startsWith('http') ? '_blank' : undefined}
+          rel="noopener noreferrer"
+          aria-label={s.label}
+          class="grid h-9 w-9 place-items-center rounded-full border border-white/15 text-white/70 transition hover:border-white/30 hover:text-white"
+        >
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d={s.icon}/></svg>
+        </a>
       ))}
     </div>
   </aside>

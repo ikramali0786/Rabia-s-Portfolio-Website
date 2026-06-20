@@ -269,10 +269,14 @@ html { scrollbar-width: thin; scrollbar-color: #8b5cf6 transparent; }
 }
 
 /* ---- Footer reveal: content scrolls up and uncovers the sticky footer beneath it. ---- */
+/* Desktop-only: on mobile the footer is in normal flow (no reveal/sticky). */
 /* NOTE: .page-content must NOT have overflow set — that would create a scroll container
    and break the position:sticky stacking deck inside the case-study section. */
-.page-content { position: relative; z-index: 1; background: var(--color-ink); }
-footer { position: sticky; bottom: 0; z-index: 0; background: var(--color-ink); }
+footer { background: var(--color-ink); }
+@media (min-width: 768px) {
+  .page-content { position: relative; z-index: 1; background: var(--color-ink); }
+  footer { position: sticky; bottom: 0; z-index: 0; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
