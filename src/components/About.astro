@@ -1,6 +1,6 @@
 ---
-// Brand logos sourced from the Simple Icons CDN (https://cdn.simpleicons.org/).
-// Free & open-source under CC0; no API key required.
+// Brand logos: self-hosted Simple Icons SVGs in /public/icons (CC0). Self-hosted so they
+// always render — the previous CDN hotlink could fail and onerror would strip the icon.
 import Section from './Section.astro';
 import Reveal from './motion/Reveal';
 import { site } from '../data/site';
@@ -18,7 +18,7 @@ import { site } from '../data/site';
           {site.about.skills.map((s) => (
             <span class="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm text-white/70">
               {s.icon
-                ? <img src={`https://cdn.simpleicons.org/${s.icon}`} alt="" width="16" height="16" loading="lazy" class="h-4 w-4" onerror="this.remove()" />
+                ? <img src={`/icons/${s.icon}.svg`} alt="" width="16" height="16" loading="lazy" class="h-4 w-4" onerror="this.remove()" />
                 : <span class="h-1.5 w-1.5 rounded-full bg-white/40" aria-hidden="true"></span>
               }
               {s.name}
