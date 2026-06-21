@@ -7,6 +7,7 @@ import {
   type MotionValue,
 } from 'framer-motion';
 import { useRef, useEffect, useState, type ReactNode } from 'react';
+import Reveal from './Reveal';
 
 // ---- types matching site data shape ----
 type WorkItem = {
@@ -57,14 +58,28 @@ function CardTransform({ children, progress, index, total, isDesktop }: CardTran
   const scale = useTransform(progress, [start, end], [1, 0.93], { ease });
   const dim = useTransform(progress, [start, end], [0, 0.55], { ease });
 
-  // Cards are ALWAYS visible (opacity 1). Desktop non-last cards get the scroll recede; the
-  // last card and mobile render plain & sharp. `isDesktop` starts false on the server, so
-  // SSR/first paint has no transform and is fully visible (SSR-safe, no-JS-safe).
-  const recede = isDesktop && !reduce && !isLast;
+  const cardClass =
+    'group relative origin-top overflow-hidden rounded-3xl border border-white/10 bg-ink-soft shadow-2xl shadow-black/60 transition-[border-color] duration-500 hover:border-white/20 md:grid md:grid-cols-[1fr_1fr]';
+
+  // MOBILE (cards are NOT sticky): scroll-reveal fade-up, exactly like every other section —
+  // reuses the shared <Reveal> component so the behaviour/timing matches the rest of the site.
+  // `isDesktop` starts false on the server, so SSR renders this branch and the desktop deck
+  // swaps in on mount. (<Reveal> carries data-framer-reveal, so it's no-JS safe too.)
+  if (!isDesktop) {
+    return (
+      <Reveal y={44} duration={0.75} delay={Math.min(index, 4) * 0.06}>
+        <article className={cardClass}>{children}</article>
+      </Reveal>
+    );
+  }
+
+  // DESKTOP: sticky stacking-deck recede. Non-last cards recede (compositor-only scale +
+  // overlay opacity); the last card stays sharp/full as the hero that dwells.
+  const recede = !reduce && !isLast;
 
   return (
     <motion.article
-      className="group relative origin-top overflow-hidden rounded-3xl border border-white/10 bg-ink-soft shadow-2xl shadow-black/60 transition-[border-color] duration-500 hover:border-white/20 md:grid md:grid-cols-[1fr_1fr]"
+      className={cardClass}
       style={recede ? { scale, willChange: 'transform' } : undefined}
     >
       {children}
