@@ -2,7 +2,9 @@ import {
   motion,
   useScroll,
   useTransform,
+  useMotionTemplate,
   useReducedMotion,
+  cubicBezier,
   type MotionValue,
 } from 'framer-motion';
 import { useRef, useEffect, useState, type ReactNode } from 'react';
@@ -50,9 +52,13 @@ function CardTransform({ children, progress, index, total, isDesktop }: CardTran
   const start = isLast ? 0.85 : index / total;
   const end = isLast ? 1 : (index + 1) / total;
 
-  const scale = useTransform(progress, [start, end], [1, isLast ? 0.96 : 0.9]);
-  const brightness = useTransform(progress, [start, end], [1, isLast ? 0.78 : 0.5]);
-  const filterStr = useTransform(brightness, (b) => `brightness(${b})`);
+  // Eased recede (gentle ease-out) so cards settle smoothly rather than scrubbing linearly.
+  const ease = cubicBezier(0.33, 1, 0.68, 1);
+  const scale = useTransform(progress, [start, end], [1, isLast ? 0.97 : 0.92], { ease });
+  const brightness = useTransform(progress, [start, end], [1, isLast ? 0.82 : 0.62], { ease });
+  // Receding cards blur softly into the background for depth (last card stays sharp).
+  const blur = useTransform(progress, [start, end], [0, isLast ? 0 : 5], { ease });
+  const filterStr = useMotionTemplate`brightness(${brightness}) blur(${blur}px)`;
 
   // Cards are ALWAYS visible (opacity 1) — never gate the case-study content behind
   // an opacity entrance. Desktop gets the scroll-driven stacking recede (scale + dim);
