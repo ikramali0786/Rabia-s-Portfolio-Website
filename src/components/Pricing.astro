@@ -8,7 +8,7 @@ const checkSvg =
 ---
 
 <Section id="pricing" eyebrow="Pricing" title={site.pricing.intro}>
-  <div class="grid gap-6 md:grid-cols-3">
+  <div class="grid gap-6 md:mx-auto md:max-w-5xl md:grid-cols-3 md:gap-7">
     {site.pricing.tiers.map((tier, i) => (
       <Reveal client:visible y={44} duration={0.9} delay={i * 0.08}>
         <article
