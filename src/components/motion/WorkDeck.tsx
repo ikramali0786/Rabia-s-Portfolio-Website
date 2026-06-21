@@ -2,7 +2,6 @@ import {
   motion,
   useScroll,
   useTransform,
-  useMotionTemplate,
   useReducedMotion,
   cubicBezier,
   type MotionValue,
@@ -46,32 +45,36 @@ function CardTransform({ children, progress, index, total, isDesktop }: CardTran
   const reduce = useReducedMotion();
   const isLast = index === total - 1;
 
-  // Recede window for this card within the container's [0,1] scroll progress.
-  // Non-last: dims across its slice as the next card rises to cover it.
-  // Last: stays full until ~85% then a slight, gentle recede as the section scrolls away.
-  const start = isLast ? 0.85 : index / total;
-  const end = isLast ? 1 : (index + 1) / total;
-
-  // Eased recede (gentle ease-out) so cards settle smoothly rather than scrubbing linearly.
+  // Recede window: each non-last card recedes across its slice as the next card stacks over
+  // it. The last card stays sharp and full — it's the hero that dwells at the end.
+  const start = index / total;
+  const end = (index + 1) / total;
   const ease = cubicBezier(0.33, 1, 0.68, 1);
-  const scale = useTransform(progress, [start, end], [1, isLast ? 0.97 : 0.92], { ease });
-  const brightness = useTransform(progress, [start, end], [1, isLast ? 0.82 : 0.62], { ease });
-  // Receding cards blur softly into the background for depth (last card stays sharp).
-  const blur = useTransform(progress, [start, end], [0, isLast ? 0 : 5], { ease });
-  const filterStr = useMotionTemplate`brightness(${brightness}) blur(${blur}px)`;
 
-  // Cards are ALWAYS visible (opacity 1) — never gate the case-study content behind
-  // an opacity entrance. Desktop gets the scroll-driven stacking recede (scale + dim);
-  // mobile renders the cards plainly in flow. `isDesktop` starts false on the server, so
-  // the SSR/first paint has no transform and is fully visible (SSR-safe, no-JS-safe).
-  const useDesktopRecede = isDesktop && !reduce;
+  // SMOOTH BY DESIGN: drive the recede with compositor-only properties — transform `scale`
+  // and a dark overlay's `opacity`. No `filter` blur/brightness (those repaint every frame
+  // and are the usual cause of janky scroll-linked stacking).
+  const scale = useTransform(progress, [start, end], [1, 0.93], { ease });
+  const dim = useTransform(progress, [start, end], [0, 0.55], { ease });
+
+  // Cards are ALWAYS visible (opacity 1). Desktop non-last cards get the scroll recede; the
+  // last card and mobile render plain & sharp. `isDesktop` starts false on the server, so
+  // SSR/first paint has no transform and is fully visible (SSR-safe, no-JS-safe).
+  const recede = isDesktop && !reduce && !isLast;
 
   return (
     <motion.article
-      className="group relative origin-top overflow-hidden rounded-3xl border border-white/10 bg-ink-soft shadow-2xl shadow-black/60 transition-[border-color,box-shadow] duration-500 hover:border-white/20 md:grid md:grid-cols-[1fr_1fr]"
-      style={useDesktopRecede ? { scale, filter: filterStr } : undefined}
+      className="group relative origin-top overflow-hidden rounded-3xl border border-white/10 bg-ink-soft shadow-2xl shadow-black/60 transition-[border-color] duration-500 hover:border-white/20 md:grid md:grid-cols-[1fr_1fr]"
+      style={recede ? { scale, willChange: 'transform' } : undefined}
     >
       {children}
+      {recede && (
+        <motion.div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 z-20 rounded-3xl bg-[#05050a]"
+          style={{ opacity: dim }}
+        />
+      )}
     </motion.article>
   );
 }
