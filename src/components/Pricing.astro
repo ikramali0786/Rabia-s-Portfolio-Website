@@ -182,23 +182,16 @@ const checkSvg =
     position: relative;
     z-index: 1;
     padding: 2.25rem;
-    /* Override the glass border so the iridescent ring shows through */
     border: none !important;
     border-radius: 1.5rem;
+    /* OPAQUE dark surface so the iridescent wrapper only shows as a 1.5px border edge
+       (a transparent glass bg let the gradient bleed through the whole card). */
+    background: rgba(16, 16, 21, 0.97) !important;
+    backdrop-filter: blur(12px);
     /* Ambient glow beneath */
     box-shadow:
       0 0 64px -16px rgba(139, 92, 246, 0.35),
       0 0 40px -12px rgba(236, 72, 153, 0.20),
       0 32px 64px -24px rgba(0, 0, 0, 0.6);
-  }
-
-  /* Ensure the glass-strong background sits on top of the glow ring */
-  .pricing-card--featured::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: inherit;
-    z-index: -1;
   }
 </style>
