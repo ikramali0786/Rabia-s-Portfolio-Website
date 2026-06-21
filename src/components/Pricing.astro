@@ -4,79 +4,201 @@ import Reveal from './motion/Reveal';
 import { site } from '../data/site';
 
 const checkSvg =
-  '<svg viewBox="0 0 12 12" fill="currentColor" class="h-3.5 w-3.5 shrink-0 mt-0.5 text-amber-300" aria-hidden="true"><path d="M10.28 2.28 4.5 8.06 1.72 5.28.28 6.72l4.22 4.22 7.22-7.22-1.44-1.44Z"/></svg>';
+  '<svg viewBox="0 0 12 12" fill="currentColor" class="h-3.5 w-3.5 shrink-0 mt-0.5 text-amber-300/80" aria-hidden="true"><path d="M10.28 2.28 4.5 8.06 1.72 5.28.28 6.72l4.22 4.22 7.22-7.22-1.44-1.44Z"/></svg>';
 ---
 
 <Section id="pricing" eyebrow="Pricing" title={site.pricing.intro}>
-  <div class="grid gap-6 md:mx-auto md:max-w-5xl md:grid-cols-3 md:gap-7">
+  {/* 3-column grid: featured card is visually dominant in the center */}
+  <div class="pricing-grid">
     {site.pricing.tiers.map((tier, i) => (
-      <Reveal client:visible y={44} duration={0.9} delay={i * 0.08}>
-        <article
-          class:list={[
-            'relative flex flex-col rounded-3xl p-8 transition-all duration-300 glass h-full',
-            tier.featured
-              ? '!border-white/30 md:-mt-4 md:scale-[1.03] hover:!border-white/45'
-              : 'hover:-translate-y-1',
-          ]}
-        >
-          {/* "Most popular" badge */}
-          {tier.featured && (
-            <div class="mb-5 flex">
-              <span class="iridescent rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-widest text-white">
-                Most popular
+      <Reveal client:visible y={50} duration={0.9} delay={i * 0.1} className={tier.featured ? 'pricing-featured-slot' : ''}>
+
+        {tier.featured ? (
+          /* ── Featured tier: iridescent-border wrapper + elevated glass card ── */
+          <div class="pricing-featured-wrap">
+            {/* Gradient border ring */}
+            <div class="iridescent pricing-glow-ring" aria-hidden="true" />
+
+            <article class="pricing-card pricing-card--featured glass-strong" aria-label={`${tier.name} plan`}>
+              {/* Badge */}
+              <div class="mb-6">
+                <span class="iridescent rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-white">
+                  Most popular
+                </span>
+              </div>
+
+              {/* Tier name */}
+              <p class="text-xs font-bold uppercase tracking-[0.22em] text-white/40">{tier.name}</p>
+
+              {/* Price */}
+              <div class="mt-3 flex items-end gap-2.5">
+                <span class="iridescent-text text-6xl font-extrabold leading-none tracking-tight">
+                  {tier.price}
+                </span>
+                <span class="mb-1.5 text-sm font-medium text-white/40">{tier.cadence}</span>
+              </div>
+
+              {/* Description */}
+              <p class="mt-4 text-sm leading-relaxed text-white/60">{tier.description}</p>
+
+              {/* Divider */}
+              <div class="my-6 h-px bg-white/10" />
+
+              {/* Features */}
+              <ul class="flex flex-col gap-3.5" role="list">
+                {tier.features.map((feature) => (
+                  <li class="flex items-start gap-2.5 text-sm text-white/85">
+                    <Fragment set:html={checkSvg} />
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+
+              {/* CTA */}
+              <div class="mt-8">
+                <a href="#contact" class="btn btn-primary w-full px-6 py-3.5 text-center text-sm font-bold">
+                  {tier.cta}
+                </a>
+              </div>
+            </article>
+          </div>
+
+        ) : (
+          /* ── Non-featured tiers: elegant but clearly secondary ── */
+          <article class="pricing-card pricing-card--side glass" aria-label={`${tier.name} plan`}>
+            {/* Tier name */}
+            <p class="text-xs font-bold uppercase tracking-[0.22em] text-white/35">{tier.name}</p>
+
+            {/* Price */}
+            <div class="mt-3 flex items-end gap-2">
+              <span class="text-5xl font-extrabold leading-none tracking-tight text-white/90">
+                {tier.price}
               </span>
+              <span class="mb-1 text-sm font-medium text-white/35">{tier.cadence}</span>
             </div>
-          )}
 
-          {/* Tier name */}
-          <p class="text-sm font-semibold uppercase tracking-[0.18em] text-white/50">{tier.name}</p>
+            {/* Description */}
+            <p class="mt-4 text-sm leading-relaxed text-white/50">{tier.description}</p>
 
-          {/* Price */}
-          <div class="mt-3 flex items-end gap-2">
-            <span
-              class:list={[
-                'text-5xl font-extrabold leading-none tracking-tight',
-                tier.featured ? 'iridescent-text' : 'text-white',
-              ]}
-            >
-              {tier.price}
-            </span>
-            <span class="mb-1 text-sm text-white/45">{tier.cadence}</span>
-          </div>
+            {/* Divider */}
+            <div class="my-5 h-px bg-white/8" />
 
-          {/* Description */}
-          <p class="mt-4 text-sm leading-relaxed text-white/60">{tier.description}</p>
+            {/* Features */}
+            <ul class="flex flex-col gap-3" role="list">
+              {tier.features.map((feature) => (
+                <li class="flex items-start gap-2.5 text-sm text-white/70">
+                  <Fragment set:html={checkSvg} />
+                  <span>{feature}</span>
+                </li>
+              ))}
+            </ul>
 
-          {/* Divider */}
-          <div class="my-6 h-px bg-white/10" />
+            {/* CTA */}
+            <div class="mt-auto pt-8">
+              <a href="#contact" class="btn btn-secondary w-full px-6 py-3 text-center text-sm">
+                {tier.cta}
+              </a>
+            </div>
+          </article>
+        )}
 
-          {/* Features */}
-          <ul class="flex flex-col gap-3" role="list">
-            {tier.features.map((feature) => (
-              <li class="flex items-start gap-2.5 text-sm text-white/80">
-                <Fragment set:html={checkSvg} />
-                <span>{feature}</span>
-              </li>
-            ))}
-          </ul>
-
-          {/* CTA */}
-          <div class="mt-8">
-            <a
-              href="#contact"
-              class:list={[
-                'btn w-full px-6 py-3 text-center',
-                tier.featured ? 'btn-primary' : 'btn-secondary',
-              ]}
-            >
-              {tier.cta}
-            </a>
-          </div>
-        </article>
       </Reveal>
     ))}
   </div>
 
-  {/* Disclaimer note */}
-  <p class="mt-10 text-center text-sm text-white/40">{site.pricing.note}</p>
+  {/* Disclaimer */}
+  <p class="mt-12 text-center text-xs text-white/35">{site.pricing.note}</p>
 </Section>
+
+<style>
+  /* ── Grid ── */
+  .pricing-grid {
+    display: grid;
+    gap: 1.5rem;
+    /* Mobile: single column, featured slot becomes first via order */
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 768px) {
+    .pricing-grid {
+      grid-template-columns: repeat(3, 1fr);
+      align-items: center;
+      max-width: 64rem; /* ~1024px — tighter than 7xl to keep cards from sprawling */
+      margin-inline: auto;
+      gap: 1.25rem;
+    }
+  }
+
+  /* On mobile: make the featured slot render first (it's index 1 in the array) */
+  .pricing-featured-slot {
+    order: -1;
+  }
+  @media (min-width: 768px) {
+    .pricing-featured-slot {
+      order: 0; /* back to natural order on desktop */
+    }
+  }
+
+  /* ── Base card ── */
+  .pricing-card {
+    display: flex;
+    flex-direction: column;
+    border-radius: 1.5rem;
+    padding: 2rem;
+    height: 100%;
+    transition: border-color 0.3s ease;
+  }
+
+  /* ── Side cards ── */
+  .pricing-card--side {
+    padding: 1.75rem;
+  }
+  @media (min-width: 768px) {
+    .pricing-card--side {
+      /* Slightly reduced vertical scale to let featured dominate */
+      margin-block: 1.5rem;
+    }
+  }
+
+  /* ── Featured wrapper (provides the gradient border) ── */
+  .pricing-featured-wrap {
+    position: relative;
+    border-radius: 1.625rem; /* card radius + border thickness */
+    padding: 1.5px; /* border thickness */
+    background: transparent;
+  }
+
+  /* Glow ring: fills the wrapper, sits behind the card */
+  .pricing-glow-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    /* The .iridescent class provides the animated gradient */
+    opacity: 0.85;
+  }
+
+  /* ── Featured card ── */
+  .pricing-card--featured {
+    position: relative;
+    z-index: 1;
+    padding: 2.25rem;
+    /* Override the glass border so the iridescent ring shows through */
+    border: none !important;
+    border-radius: 1.5rem;
+    /* Ambient glow beneath */
+    box-shadow:
+      0 0 64px -16px rgba(139, 92, 246, 0.35),
+      0 0 40px -12px rgba(236, 72, 153, 0.20),
+      0 32px 64px -24px rgba(0, 0, 0, 0.6);
+  }
+
+  /* Ensure the glass-strong background sits on top of the glow ring */
+  .pricing-card--featured::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: inherit;
+    z-index: -1;
+  }
+</style>
