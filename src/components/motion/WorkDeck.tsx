@@ -244,6 +244,10 @@ export default function WorkDeck({ projects }: { projects: readonly WorkItem[] }
           </div>
         );
       })}
+      {/* Desktop-only spacer: gives the LAST sticky card room to dwell/frame as the others.
+          position:sticky is constrained to the parent's content box, so padding-bottom gives
+          no stick room — real trailing content is required. Hidden on mobile (cards aren't sticky). */}
+      <div aria-hidden="true" className="hidden md:block md:h-[72vh]" />
     </div>
   );
 }
