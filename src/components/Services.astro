@@ -2,16 +2,39 @@
 import Section from './Section.astro';
 import Reveal from './motion/Reveal';
 import { site } from '../data/site';
+
+// Service icons (Lucide-style line icons) + an iridescent accent per card, matched to the
+// services in order. Accent colors cycle the site's violet→pink→cyan→amber palette so the
+// "What I do" cards tie into the same design system as the rest of the site.
+const serviceIcons = [
+  // Development — code chevrons </>
+  { accent: '#a78bfa', svg: '<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>' },
+  // Design — pen / edit
+  { accent: '#f472b6', svg: '<path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/>' },
+  // Migration — transfer / swap arrows
+  { accent: '#22d3ee', svg: '<polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/>' },
+  // Integrations — connected nodes
+  { accent: '#fbbf24', svg: '<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>' },
+  // Growth / CRO — trending up
+  { accent: '#34d399', svg: '<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>' },
+];
 ---
 <Section id="services" eyebrow="What I do" title="Services that scale your Shopify store">
   <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-    {site.services.map((s, i) => (
+    {site.services.map((s, i) => {
+      const ic = serviceIcons[i % serviceIcons.length];
+      return (
       <Reveal client:visible y={44} duration={0.9} delay={Math.min(i, 5) * 0.08}>
         <article class="group relative rounded-3xl glass p-8 transition duration-300 hover:-translate-y-1 h-full">
           <span class="absolute right-6 top-6 font-mono text-xs font-semibold tracking-[0.2em] text-white/20">
             {String(i + 1).padStart(2, '0')}
           </span>
-          <img src={s.shape} alt="" width="96" height="96" loading="lazy" class="mb-6 h-20 w-20 object-contain" />
+          <div
+            class="mb-6 grid h-14 w-14 place-items-center rounded-2xl border border-white/10 bg-white/[0.04] transition duration-300 group-hover:bg-white/[0.07]"
+            style={`border-color:${ic.accent}40; box-shadow:0 0 30px -12px ${ic.accent}`}
+          >
+            <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke={ic.accent} stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={ic.svg}></svg>
+          </div>
           <h3 class="text-2xl font-bold leading-snug tracking-tight">{s.title}</h3>
           <ul class="mt-5 space-y-2.5 text-white/65">
             {s.points.map((p) => (
@@ -23,6 +46,7 @@ import { site } from '../data/site';
           </ul>
         </article>
       </Reveal>
-    ))}
+      );
+    })}
   </div>
 </Section>
