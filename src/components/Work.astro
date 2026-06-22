@@ -5,6 +5,6 @@ import { site } from '../data/site';
 ---
 <Section id="work" eyebrow="Selected work" title={site.workIntro}>
   <!-- Sticky stacking deck: React island handles scroll-driven scale/brightness recede -->
-  <WorkDeck client:load projects={site.work} />
+  <WorkDeck client:visible projects={site.work} />
 
 </Section>
