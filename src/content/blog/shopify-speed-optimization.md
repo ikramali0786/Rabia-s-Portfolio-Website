@@ -8,7 +8,7 @@ draft: false
 
 A one-second delay in page load time can reduce conversions by up to 7%. For a store doing $10,000 a month, that's $700 left on the table every single month. Speed isn't a nice-to-have — it's a revenue lever.
 
-After auditing and optimising dozens of Shopify stores, I've found the same culprits coming up time and again. Here are seven things you can do right now to make your store meaningfully faster.
+After auditing dozens of Shopify stores, I keep finding the same culprits. Here are seven things you can do right now to make your store meaningfully faster.
 
 ## 1. Audit Your Apps — Then Delete Half of Them
 

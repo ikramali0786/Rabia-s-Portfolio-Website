@@ -10,7 +10,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
 const formatDate = (d: Date) =>
   d.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: 'numeric' });
 ---
-<Section id="blog" eyebrow="Blog" title="Latest insights">
+<Section id="blog" eyebrow="Blog" title="From the blog">
   <div class="mb-8 flex justify-start sm:justify-end">
     <a href="/blog" class="btn btn-secondary w-full px-5 py-2.5 text-sm sm:w-auto">View all posts →</a>
   </div>

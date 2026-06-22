@@ -1,14 +1,14 @@
 ---
-title: "Shopify Conversion Rate Optimization: A Practical CRO Checklist"
-description: "Boost your Shopify store's conversion rate with this practical CRO checklist — covering product pages, cart, checkout, trust signals, mobile, page speed, and A/B testing."
+title: "Shopify CRO Checklist: How to Improve Your Store's Conversion Rate"
+description: "A practical CRO checklist for Shopify stores — covering product pages, cart and checkout, trust signals, mobile UX, page speed, and A/B testing."
 date: "2026-05-10"
 tags: ["CRO", "Conversion", "Shopify", "Analytics"]
 draft: false
 ---
 
-Getting traffic to your Shopify store is only half the job. If your conversion rate is weak, every pound you spend on ads or SEO is fighting against a leaky funnel. Shopify conversion rate optimization — CRO — is the discipline of finding and fixing those leaks.
+Getting traffic to your Shopify store is only half the job. If your conversion rate is weak, every dollar you spend on ads or SEO is fighting against a leaky funnel. Shopify conversion rate optimization — CRO — is the discipline of finding and fixing those leaks.
 
-The average ecommerce conversion rate hovers between 1% and 3%. Top-performing Shopify stores consistently hit 4–6%. That gap represents a massive difference in revenue from the same amount of traffic. Here's how to close it.
+The average ecommerce conversion rate sits between 1% and 3%. Top-performing Shopify stores consistently hit 4–6%. That gap is a significant amount of revenue from the same traffic. Here's how to close it.
 
 ## What "Good" Looks Like
 
@@ -94,7 +94,7 @@ Slow pages kill conversions. A 1-second delay reduces conversion rate by around 
 
 ## A/B Testing
 
-Don't guess what will improve conversions — test it. Shopify doesn't have native A/B testing, but tools like Google Optimize (while it was live), Intelligems, or Convert integrate well.
+Don't guess what will improve conversions — test it. Shopify has no native A/B testing, but tools like Intelligems or Convert integrate well.
 
 What to test:
 1. Product page CTA copy and colour
@@ -114,7 +114,7 @@ CRO is a continuous process, not a one-time project. Set up the following and re
 - Session recordings for pages with high exit rates
 - Shopify Analytics for top landing pages, traffic sources, and product performance
 
-The stores that compound their conversion rate over time are the ones with a structured CRO process — not just the ones who made a few changes and moved on.
+Stores that compound their conversion rate are the ones with a structured process — not just the ones who made a few tweaks and moved on.
 
 ---
 
