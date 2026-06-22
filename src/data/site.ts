@@ -67,11 +67,11 @@ export const site = {
     bio: "Placeholder bio — replace with Rabia’s story: years of Shopify experience, specialties, the kinds of brands she works with, and what makes her approach different.",
     skills: [
       { name: 'Shopify Plus', icon: 'shopify' },
-      { name: 'Liquid', icon: null },
+      { name: 'Liquid', icon: 'liquid' },
       { name: 'Hydrogen', icon: 'shopify' },
       { name: 'Tailwind', icon: 'tailwindcss' },
       { name: 'JavaScript', icon: 'javascript' },
-      { name: 'Klaviyo', icon: null },
+      { name: 'Klaviyo', icon: 'klaviyo' },
       { name: 'GA4', icon: 'googleanalytics' },
       { name: 'CRO', icon: null },
     ],
