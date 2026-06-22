@@ -10,7 +10,7 @@ const anchor = (href: string) => (href.startsWith('#') && !onHome ? `/${href}` :
     <a href={onHome ? '#top' : '/'} class="text-lg font-extrabold tracking-tight">{site.name}<span class="text-white/40">.</span></a>
     <div class="hidden items-center gap-8 md:flex">
       {site.nav.map((n) => <a href={anchor(n.href)} class="text-sm text-white/70 transition hover:text-white">{n.label}</a>)}
-      <a href={site.bookingUrl} class="btn btn-primary px-5 py-2 text-sm">Book a call</a>
+      <a href={site.bookingUrl} class="btn btn-accent px-5 py-2 text-sm">Book a call</a>
     </div>
     <button
       id="nav-toggle"
@@ -52,7 +52,7 @@ const anchor = (href: string) => (href.startsWith('#') && !onHome ? `/${href}` :
     ))}
   </nav>
 
-  <a href={site.bookingUrl} class="mobile-link btn btn-primary mt-6 w-full px-5 py-3 text-center text-base">Book a call</a>
+  <a href={site.bookingUrl} class="mobile-link btn btn-accent mt-6 w-full px-5 py-3 text-center text-base">Book a call</a>
 
   <div class="mobile-socials mt-auto flex gap-3 pt-8">
     {site.socials.map((s) => (
