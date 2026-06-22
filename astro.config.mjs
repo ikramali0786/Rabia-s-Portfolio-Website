@@ -7,5 +7,6 @@ import react from '@astrojs/react';
 export default defineConfig({
   site: 'https://rabia-gul.com',
   integrations: [sitemap(), react()],
+  prefetch: { prefetchAll: true, defaultStrategy: 'viewport' },
   vite: { plugins: [tailwindcss()] },
 });

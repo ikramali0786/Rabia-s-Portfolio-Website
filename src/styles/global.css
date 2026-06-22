@@ -285,6 +285,19 @@ html { scrollbar-width: thin; scrollbar-color: #8b5cf6 transparent; }
   box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08), 0 0 12px -4px rgba(255,255,255,0.10);
 }
 
+/* Violet accent CTA — violet gradient pill with a bright violet glow, matching the site's primary
+   iridescent accent. Used for the primary "Book a call" call-to-action. */
+.btn-accent {
+  color: #fff;
+  background-image: linear-gradient(120deg, #8b5cf6, #7c3aed 60%, #6d28d9);
+  box-shadow: 0 0 22px 0 rgba(167, 139, 250, 0.45), 0 0 10px 0 rgba(139, 92, 246, 0.4);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+.btn-accent:hover {
+  filter: brightness(1.08) saturate(1.05);
+  box-shadow: 0 0 34px 2px rgba(167, 139, 250, 0.6), 0 0 16px 0 rgba(139, 92, 246, 0.5);
+}
+
 /* ---- WhatsApp button ---- */
 .btn-whatsapp { background-color: #25D366; color: #fff; }
 .btn-whatsapp:hover {

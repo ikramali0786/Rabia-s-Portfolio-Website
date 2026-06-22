@@ -6,7 +6,7 @@ tags: ["Migration", "WooCommerce", "Magento", "SEO", "Shopify"]
 draft: false
 ---
 
-Migrating an ecommerce store is one of the highest-risk projects in digital commerce. Done well, you land on a faster, more scalable platform with zero data loss and preserved search rankings. Done badly, you lose months of SEO momentum and spend weeks chasing down missing orders and broken redirects.
+Migrating an ecommerce store is one of the highest-risk projects in digital commerce. Done well, you land on a faster platform with zero data loss and preserved search rankings. Done badly, you lose months of SEO momentum and spend weeks chasing missing orders and broken redirects.
 
 I've managed migrations from WooCommerce, Magento, BigCommerce, Wix, and custom platforms. Here's the checklist I use every time.
 

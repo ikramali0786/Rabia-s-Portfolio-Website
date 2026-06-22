@@ -7,7 +7,7 @@ interface Props {
 }
 const { id, eyebrow, title } = Astro.props;
 ---
-<section id={id} aria-label={title ?? eyebrow} class="relative mx-auto max-w-7xl px-6 py-16 sm:py-20 md:py-24">
+<section id={id} aria-label={title ?? eyebrow} class="relative mx-auto max-w-7xl px-6 py-20">
   {eyebrow && (
     <Reveal client:visible className="mb-3">
       <p class="text-xs font-medium uppercase tracking-[0.2em] text-white/50 sm:text-sm">{eyebrow}</p>

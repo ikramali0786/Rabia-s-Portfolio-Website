@@ -4,7 +4,10 @@ import WorkDeck from './motion/WorkDeck';
 import { site } from '../data/site';
 ---
 <Section id="work" eyebrow="Selected work" title={site.workIntro}>
-  <!-- Sticky stacking deck: React island handles scroll-driven scale/brightness recede -->
+  <!-- Sticky stacking deck: React island handles scroll-driven scale/brightness recede.
+       client:load (not visible) so it hydrates off-screen at page load — avoids a flash of the
+       SSR'd hidden state when the deck scrolls in. framer-motion already loads early for the
+       hero reveals, so deferring this island would save almost nothing anyway. -->
   <WorkDeck client:load projects={site.work} />
 
 </Section>

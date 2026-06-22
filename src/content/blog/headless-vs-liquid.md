@@ -6,7 +6,7 @@ tags: ["Headless", "Hydrogen", "Liquid", "Architecture", "Shopify"]
 draft: false
 ---
 
-Every week I speak to a merchant who's been told by an agency that they *need* to go headless. Sometimes that's true. Often it isn't. Making the wrong choice here costs tens of thousands of pounds in development time and ongoing maintenance — so let's cut through the noise.
+Every week I speak to a merchant who's been told by an agency that they *need* to go headless. Sometimes that's true. Often it isn't. Making the wrong call here costs tens of thousands in development time and ongoing maintenance — so let's look at this clearly.
 
 ## What "Headless" Actually Means
 

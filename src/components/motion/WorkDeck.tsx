@@ -147,6 +147,7 @@ export default function WorkDeck({ projects }: { projects: readonly WorkItem[] }
                   width={800}
                   height={600}
                   loading="lazy"
+                  decoding="async"
                   className="h-full min-h-[220px] w-full object-cover transition duration-700 group-hover:scale-105"
                 />
 
