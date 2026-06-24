@@ -1,0 +1,53 @@
+---
+import Section from './Section.astro';
+import Reveal from './motion/Reveal';
+import { site } from '../data/site';
+
+// Accent colours for the step number badges — cycles violet → pink → cyan → amber
+const accents = ['#a78bfa', '#f472b6', '#22d3ee', '#fbbf24'] as const;
+---
+
+<Section id="process" eyebrow="How I work" title="A Simple Process, Exceptional Results">
+  <div class="relative mt-4">
+    {/* Connecting line — visible on md+ only, sits behind the cards */}
+    <div
+      class="absolute left-0 right-0 top-10 hidden h-px md:block"
+      style="background: linear-gradient(90deg, transparent, rgba(167,139,250,0.25) 20%, rgba(244,114,182,0.25) 50%, rgba(34,211,238,0.25) 80%, transparent);"
+      aria-hidden="true"
+    ></div>
+
+    <div class="grid gap-6 md:grid-cols-4">
+      {site.process.steps.map((step, i) => {
+        const accent = accents[i % accents.length];
+        const num = String(i + 1).padStart(2, '0');
+        return (
+          <Reveal client:visible y={44} duration={0.9} delay={i * 0.1}>
+            <article class="group relative glass rounded-3xl p-8 transition duration-300 hover:-translate-y-1 h-full flex flex-col gap-4">
+              {/* Large faded background number */}
+              <span
+                class="absolute right-5 bottom-4 font-mono text-6xl font-black leading-none select-none pointer-events-none"
+                style={`color:${accent}12;`}
+                aria-hidden="true"
+              >
+                {num}
+              </span>
+
+              {/* Prominent step number badge */}
+              <div
+                class="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04] font-mono text-sm font-bold transition duration-300 group-hover:bg-white/[0.07] shrink-0"
+                style={`color:${accent}; border-color:${accent}40; box-shadow:0 0 28px -10px ${accent};`}
+              >
+                {num}
+              </div>
+
+              <div class="flex flex-col gap-2 relative z-10">
+                <h3 class="text-xl font-bold leading-snug tracking-tight">{step.title}</h3>
+                <p class="text-sm leading-relaxed text-white/60">{step.description}</p>
+              </div>
+            </article>
+          </Reveal>
+        );
+      })}
+    </div>
+  </div>
+</Section>
