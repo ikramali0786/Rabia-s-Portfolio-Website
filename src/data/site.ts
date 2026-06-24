@@ -43,11 +43,11 @@ export const site = {
     'UX / UI Design',
   ],
   services: [
-    { title: 'Development', shape: '/shapes/shape-1.svg', points: ['Custom Liquid themes', 'App & API integrations', 'Core Web Vitals optimization', 'Headless (Hydrogen) & B2B'] },
-    { title: 'Design', shape: '/shapes/shape-2.svg', points: ['UX / UI design', 'Conversion-focused layouts', 'Usability audits'] },
-    { title: 'Migration', shape: '/shapes/shape-3.svg', points: ['WooCommerce → Shopify', 'Magento → Shopify', 'Data & SEO preserved'] },
-    { title: 'Integrations', shape: '/shapes/shape-4.svg', points: ['ERP / PIM / CRM', 'Payments & shipping', 'Marketplaces & third-party apps'] },
-    { title: 'Growth / CRO', shape: '/shapes/shape-5.svg', points: ['Conversion rate optimization', 'Klaviyo & email flows', 'GA4 analytics & consulting'] },
+    { title: 'Development', subtitle: 'Custom Shopify Development That Performs', shape: '/shapes/shape-1.svg', points: ['Custom Shopify Liquid theme development', 'App & third-party API integrations', 'Core Web Vitals & speed optimization', 'Shopify B2B & scalable store builds'] },
+    { title: 'Design', subtitle: 'UX/UI Design That Drives Sales', shape: '/shapes/shape-2.svg', points: ['Conversion-focused Shopify layouts', 'Modern, clean UX/UI design', 'Product page & funnel optimization', 'Mobile-first shopping experience'] },
+    { title: 'Migration', subtitle: 'Seamless Shopify Migration Services', shape: '/shapes/shape-3.svg', points: ['WooCommerce to Shopify migration', 'Magento to Shopify migration', 'Safe data transfer (products, orders, customers)', 'SEO structure preserved & optimized'] },
+    { title: 'Integrations', subtitle: 'Connect Your Store to Everything', shape: '/shapes/shape-4.svg', points: ['ERP / PIM / CRM sync', 'Payments & shipping setup', 'Marketplace & sales-channel integrations'] },
+    { title: 'Growth / CRO', subtitle: 'Optimization That Grows Revenue', shape: '/shapes/shape-5.svg', points: ['Conversion-rate optimization (CRO)', 'Email (Klaviyo) & SEO', 'Analytics & growth consulting'] },
   ],
   workIntro: "A selection of stores I've built, migrated, and optimized — with the results to show for it.",
   work: [
@@ -64,7 +64,7 @@ export const site = {
   ],
   about: {
     photo: '/avatars/rabia.svg',
-    bio: "Placeholder bio — replace with Rabia's story: years of Shopify experience, specialties, the kinds of brands she works with, and what makes her approach different.",
+    bio: "I'm a Shopify developer and eCommerce specialist helping brands build high-performing online stores that are fast, conversion-focused, and visually engaging. From custom store development and redesigns to performance optimization, I create Shopify solutions designed to increase sales and improve user experience. Whether you're starting a new store or scaling an existing one, I deliver tailored solutions that help your business grow.",
     skills: [
       { name: 'Shopify Plus', icon: 'shopify' },
       { name: 'Liquid', icon: 'liquid' },
@@ -83,15 +83,17 @@ export const site = {
   },
   testimonialsIntro: 'What clients say after working with me.',
   testimonials: [
-    // PLACEHOLDER — replace each quote/author/country with the real Fiverr review text before launch
-    { quote: 'Rabia delivered an exceptional Shopify store redesign — on time, on brief, and with clear communication throughout. The new layout immediately improved our add-to-cart rate. Will absolutely hire again.', author: 'store_owner_us', country: 'United States', rating: 5, avatar: '/avatars/client-1.svg' },
-    { quote: 'Outstanding experience from start to finish. She understood our brand instantly, built a custom theme from scratch, and walked us through every decision. Highly recommend for any Shopify project.', author: 'brand_founder_uk', country: 'United Kingdom', rating: 5, avatar: '/avatars/client-2.svg' },
-    { quote: 'Fast, professional, and incredibly detail-oriented. Our migration from WooCommerce to Shopify was seamless — zero data loss, SEO preserved, and the store launched ahead of schedule.', author: 'ecom_manager_au', country: 'Australia', rating: 5, avatar: '/avatars/client-1.svg' },
-    { quote: 'Rabia fixed issues three other developers could not crack. Her knowledge of Shopify Liquid and app integrations is top tier. The store speed went from 4 s to under 1 s LCP. Incredible result.', author: 'shop_owner_ca', country: 'Canada', rating: 5, avatar: '/avatars/client-2.svg' },
-    { quote: 'We hired Rabia for a Klaviyo integration and she went above and beyond — cleaned up our flows, improved segmentation, and delivered a full email audit. Revenue from email doubled in 30 days.', author: 'growth_lead_de', country: 'Germany', rating: 5, avatar: '/avatars/client-1.svg' },
-    { quote: 'Perfect communication, clean code, and a beautiful end result. She rebuilt our product pages with a strong CRO focus and our conversion rate climbed 34% within the first month. Amazing work.', author: 'dtc_founder_ae', country: 'United Arab Emirates', rating: 5, avatar: '/avatars/client-2.svg' },
-    { quote: 'Rabia set up our wholesale B2B portal on Shopify Plus and it works flawlessly. The custom pricing logic and account gating are exactly what we needed. Great project partner — responsive and sharp.', author: 'ops_director_sg', country: 'Singapore', rating: 5, avatar: '/avatars/client-1.svg' },
-    { quote: 'I have worked with many Shopify developers and Rabia stands out. She asks the right questions, delivers clean and well-documented code, and is always available for questions. Would hire again without hesitation.', author: 'agency_owner_nl', country: 'Netherlands', rating: 5, avatar: '/avatars/client-2.svg' },
+    { quote: "Rabia always goes above and beyond! She has an incredible eye for detail and always makes sure you understand. Her communication is excellent — A++++. You will not be disappointed!", author: 'otnatty1', country: 'New Zealand', rating: 5, avatar: '/avatars/client-1.svg', repeat: true },
+    { quote: "Rabia did an amazing job fixing a critical issue on my Shopify store. Communication was clear, fast, and professional. She understood the problem and resolved it efficiently, with great attention to detail and a willingness to go the extra mile. Highly recommend.", author: 'hernandocaldern', country: 'Colombia', rating: 5, avatar: '/avatars/client-2.svg', repeat: true },
+    { quote: "Rabia was fantastic to work with! She set up our bundle discounts and Monster Cart upsell exactly how we needed it. Fast, professional, and really understood what we were trying to achieve. Highly recommend for any Shopify work!", author: 'leah_nz2025', country: 'New Zealand', rating: 5, avatar: '/avatars/client-1.svg', repeat: true },
+    { quote: "Rabia did an amazing job fixing my Shopify theme. Fast, professional, and understood exactly what I needed without a lot of back and forth. The result looks clean and exactly how I wanted it. Will definitely work with her again!", author: 'appieecom', country: 'Netherlands', rating: 5, avatar: '/avatars/client-2.svg', repeat: false },
+    { quote: "Rabia built my site as promised and was very accommodating. She is professional, timely, and has a good design eye. She'll work with you to get the job done right. Thanks Rabia!", author: 'amarr_a', country: 'United States', rating: 5, avatar: '/avatars/client-1.svg', repeat: false },
+    { quote: "Rabia did an amazing job with my website and handled all of my requests really well. Will definitely work with her again!", author: 'elourashop', country: 'United States', rating: 5, avatar: '/avatars/client-2.svg', repeat: false },
+    { quote: "Rabia did a very good job — I'm really impressed! The work was completed professionally and with great attention to detail. Everything was delivered as expected and the quality exceeded my expectations. Highly recommended.", author: 'teszky', country: 'United Kingdom', rating: 5, avatar: '/avatars/client-1.svg', repeat: false },
+    { quote: "Rabia was great to work with. We discussed the requirements at length and she worked her magic. I asked for some changes and she was very proactive and happy to accommodate. I'd definitely use her again — I love my new Shopify site!", author: 'sarah_jane2025', country: 'United Arab Emirates', rating: 5, avatar: '/avatars/client-2.svg', repeat: false },
+    { quote: "The seller did an outstanding job building my Shopify store. Communication was fast, clear, and professional. She delivered a clean, modern, premium store, met all deadlines, and handled revisions quickly. The final result exceeded my expectations!", author: 'ropamfitness', country: 'United States', rating: 5, avatar: '/avatars/client-1.svg', repeat: false },
+    { quote: "Working with Rabia was an absolute pleasure. She went above and beyond my expectations and delivered a website that feels thoughtful, intentional, and beautifully done. Her communication, creativity, and dedication stood out from start to finish. A true gem!", author: 'luluandmoss', country: 'Canada', rating: 5, avatar: '/avatars/client-2.svg', repeat: false },
+    { quote: "Rabia rebuilt our Shopify website. Her attention to detail and understanding are exceptional — beyond what I expected. Really happy with her delivery and will use her service again. Thank you, Rabia!", author: 'soonmaternity', country: 'Australia', rating: 5, avatar: '/avatars/client-1.svg', repeat: true },
   ],
   pricing: {
     intro: 'Straightforward pricing',
@@ -126,11 +128,36 @@ export const site = {
       },
     ],
   },
+  trust: [
+    { label: 'Fast & Optimized Stores' },
+    { label: 'Conversion-Focused Design' },
+    { label: 'Shopify Expert' },
+    { label: 'Remote Freelancer' },
+  ],
+  process: {
+    steps: [
+      { title: 'Discovery', description: 'Understanding your business, goals, and target audience.' },
+      { title: 'Strategy', description: 'Creating a roadmap focused on performance and growth.' },
+      { title: 'Design & Development', description: 'Building a beautiful, fast, and conversion-focused Shopify store.' },
+      { title: 'Launch & Support', description: 'Ensuring your store performs successfully after launch.' },
+    ],
+  },
+  whyChooseMe: [
+    'Shopify-focused expertise',
+    'Mobile-first development',
+    'Conversion-driven design',
+    'Fast project delivery',
+    'Clear communication',
+    'Long-term support',
+    'Attention to detail',
+    'Business-focused solutions',
+  ],
   footer: {
     cta: "Got a project? Let's talk.",
     availability: 'Open to new projects',
     hours: 'Mon–Fri · 9 am–6 pm PKT (GMT+5)',
     serviceLinks: ['Development', 'Design', 'Migration', 'Integrations', 'Growth / CRO'],
+    tagline: 'Crafting high-converting Shopify experiences for ambitious brands worldwide.',
   },
 } as const;
 

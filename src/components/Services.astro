@@ -35,7 +35,8 @@ const serviceIcons = [
           >
             <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke={ic.accent} stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={ic.svg}></svg>
           </div>
-          <h3 class="text-2xl font-bold leading-snug tracking-tight">{s.title}</h3>
+          <p class="text-xs uppercase tracking-wider text-white/40 mb-1">{s.title}</p>
+          <h3 class="text-2xl font-bold leading-snug tracking-tight">{s.subtitle}</h3>
           <ul class="mt-5 space-y-2.5 text-white/65">
             {s.points.map((p) => (
               <li class="flex items-start gap-2.5">

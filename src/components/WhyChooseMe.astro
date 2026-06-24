@@ -1,0 +1,36 @@
+---
+import Section from './Section.astro';
+import Reveal from './motion/Reveal';
+import { site } from '../data/site';
+---
+
+<Section id="why-choose-me" eyebrow="Why me" title="Why Brands Choose to Work With Me">
+  <ul class="grid gap-3 sm:grid-cols-2" role="list">
+    {site.whyChooseMe.map((item, i) => (
+      <Reveal client:visible y={28} duration={0.75} delay={Math.min(i, 7) * 0.06}>
+        <li class="group flex items-center gap-4 glass rounded-2xl px-6 py-4 transition duration-300 hover:-translate-y-0.5">
+          {/* Emerald check icon — matches site check style in Services bullet lists */}
+          <span
+            class="grid h-8 w-8 shrink-0 place-items-center rounded-xl border border-white/10 bg-white/[0.04] transition duration-300 group-hover:bg-white/[0.07]"
+            style="border-color:#34d39940; box-shadow:0 0 20px -8px #34d399;"
+            aria-hidden="true"
+          >
+            <svg
+              viewBox="0 0 16 16"
+              width="16"
+              height="16"
+              fill="none"
+              stroke="#34d399"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M3 8.5 6.5 12 13 5"/>
+            </svg>
+          </span>
+          <span class="text-sm font-semibold leading-snug text-white/85">{item}</span>
+        </li>
+      </Reveal>
+    ))}
+  </ul>
+</Section>

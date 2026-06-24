@@ -51,7 +51,12 @@ const checkSvg =
           <figcaption class="mt-5 flex items-center gap-3">
             <img src={t.avatar} alt={t.author} width="44" height="44" loading="lazy" decoding="async" class="h-11 w-11 rounded-full object-cover ring-1 ring-white/15" />
             <div>
-              <div class="text-sm font-semibold">{t.author}</div>
+              <div class="flex items-center gap-2">
+                <div class="text-sm font-semibold">{t.author}</div>
+                {t.repeat && (
+                  <span class="rounded-full border border-white/15 px-2 py-0.5 text-[10px] uppercase tracking-wide text-white/50">Repeat client</span>
+                )}
+              </div>
               <div class="mt-0.5 flex items-center gap-1 text-xs text-white/50">
                 <Fragment set:html={globeSvg} />{t.country}
               </div>
