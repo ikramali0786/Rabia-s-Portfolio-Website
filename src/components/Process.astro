@@ -9,10 +9,12 @@ const accents = ['#a78bfa', '#f472b6', '#22d3ee', '#fbbf24'] as const;
 
 <Section id="process" eyebrow="How I work" title="A Simple Process, Exceptional Results">
   <div class="relative mt-4">
-    {/* Connecting line — visible on md+ only, sits behind the cards */}
+    {/* Connecting line — md+ only. Anchored from the FIRST badge centre to the LAST badge
+       centre (left = p-8 + half badge = 3.375rem; width spans the 3 column pitches), at the
+       badge vertical centre. The opaque number badges sit on top and interrupt it cleanly. */}
     <div
-      class="absolute left-0 right-0 top-10 hidden h-px md:block"
-      style="background: linear-gradient(90deg, transparent, rgba(167,139,250,0.25) 20%, rgba(244,114,182,0.25) 50%, rgba(34,211,238,0.25) 80%, transparent);"
+      class="absolute top-[3.375rem] hidden h-px md:block"
+      style="left:3.375rem; width:calc(75% + 1.125rem); background: linear-gradient(90deg, rgba(167,139,250,0.5), rgba(244,114,182,0.5), rgba(34,211,238,0.5), rgba(251,191,36,0.5));"
       aria-hidden="true"
     ></div>
 
@@ -34,8 +36,8 @@ const accents = ['#a78bfa', '#f472b6', '#22d3ee', '#fbbf24'] as const;
 
               {/* Prominent step number badge */}
               <div
-                class="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04] font-mono text-sm font-bold transition duration-300 group-hover:bg-white/[0.07] shrink-0"
-                style={`color:${accent}; border-color:${accent}40; box-shadow:0 0 28px -10px ${accent};`}
+                class="relative z-10 inline-flex h-11 w-11 items-center justify-center rounded-2xl border bg-ink-soft font-mono text-sm font-bold shrink-0"
+                style={`color:${accent}; border-color:${accent}55; box-shadow:0 0 28px -10px ${accent};`}
               >
                 {num}
               </div>
