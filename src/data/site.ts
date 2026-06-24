@@ -128,12 +128,6 @@ export const site = {
       },
     ],
   },
-  trust: [
-    { label: 'Fast & Optimized Stores' },
-    { label: 'Conversion-Focused Design' },
-    { label: 'Shopify Expert' },
-    { label: 'Remote Freelancer' },
-  ],
   process: {
     steps: [
       { title: 'Discovery', description: 'Understanding your business, goals, and target audience.' },
@@ -142,16 +136,6 @@ export const site = {
       { title: 'Launch & Support', description: 'Ensuring your store performs successfully after launch.' },
     ],
   },
-  whyChooseMe: [
-    'Shopify-focused expertise',
-    'Mobile-first development',
-    'Conversion-driven design',
-    'Fast project delivery',
-    'Clear communication',
-    'Long-term support',
-    'Attention to detail',
-    'Business-focused solutions',
-  ],
   footer: {
     cta: "Got a project? Let's talk.",
     availability: 'Open to new projects',
