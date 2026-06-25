@@ -4,8 +4,7 @@ import Reveal from './motion/Reveal';
 import { site } from '../data/site';
 
 // Service icons (Lucide-style line icons) + an iridescent accent per card, matched to the
-// services in order. Accent colors cycle the site's violet→pink→cyan→amber palette so the
-// "What I do" cards tie into the same design system as the rest of the site.
+// services in order. Accents cycle the site's violet→pink→cyan→amber palette.
 const serviceIcons = [
   // Development — code chevrons </>
   { accent: '#a78bfa', svg: '<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>' },
@@ -18,36 +17,68 @@ const serviceIcons = [
   // Growth / CRO — trending up
   { accent: '#34d399', svg: '<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>' },
 ];
+
+// Bento layout: a 6-col grid from md up. The first two services are featured (wider, 3 cols
+// each on the top row); the remaining three sit below (2 cols each). No empty cells.
 ---
 <Section id="services" eyebrow="What I do" title="Shopify services, start to finish">
-  <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+  <div class="grid grid-cols-1 gap-5 md:grid-cols-6">
     {site.services.map((s, i) => {
       const ic = serviceIcons[i % serviceIcons.length];
+      const wide = i < 2; // Development & Design = featured cards
+      const num = String(i + 1).padStart(2, '0');
       return (
-      <Reveal client:visible y={44} duration={0.9} delay={Math.min(i, 5) * 0.08}>
-        <article class="group relative rounded-3xl glass p-8 transition duration-300 hover:-translate-y-1 h-full">
-          <span class="absolute right-6 top-6 font-mono text-xs font-semibold tracking-[0.2em] text-white/20">
-            {String(i + 1).padStart(2, '0')}
-          </span>
-          <div
-            class="mb-6 grid h-14 w-14 place-items-center rounded-2xl border border-white/10 bg-white/[0.04] transition duration-300 group-hover:bg-white/[0.07]"
-            style={`border-color:${ic.accent}40; box-shadow:0 0 30px -12px ${ic.accent}`}
+        <Reveal client:visible y={40} duration={0.85} delay={Math.min(i, 5) * 0.07} className={wide ? 'md:col-span-3' : 'md:col-span-2'}>
+          <article
+            class="svc-card group relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-ink-soft/70 p-7 backdrop-blur-sm sm:p-8"
+            style={`--accent:${ic.accent}`}
           >
-            <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke={ic.accent} stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={ic.svg}></svg>
-          </div>
-          <p class="text-xs uppercase tracking-wider text-white/40 mb-1">{s.title}</p>
-          <h3 class="text-2xl font-bold leading-snug tracking-tight">{s.subtitle}</h3>
-          <ul class="mt-5 space-y-2.5 text-white/65">
-            {s.points.map((p) => (
-              <li class="flex items-start gap-2.5">
-                <svg class="mt-0.5 h-4 w-4 flex-shrink-0 text-white/30" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8.5 6.5 12 13 5"/></svg>
-                <span>{p}</span>
-              </li>
-            ))}
-          </ul>
-        </article>
-      </Reveal>
+            {/* accent top edge */}
+            <span class="pointer-events-none absolute inset-x-6 top-0 h-px opacity-60" style={`background:linear-gradient(90deg, transparent, ${ic.accent} 50%, transparent);`} aria-hidden="true"></span>
+            {/* accent glow on hover */}
+            <span class="pointer-events-none absolute -right-12 -top-12 h-44 w-44 rounded-full opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-20" style={`background:${ic.accent};`} aria-hidden="true"></span>
+
+            <div class="relative z-10 flex h-full flex-col">
+              <div class="mb-6 flex items-center justify-between">
+                <span
+                  class="grid h-14 w-14 place-items-center rounded-2xl border bg-white/[0.04]"
+                  style={`border-color:${ic.accent}40; box-shadow:0 0 30px -12px ${ic.accent};`}
+                >
+                  <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke={ic.accent} stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={ic.svg}></svg>
+                </span>
+                <span class="font-mono text-sm font-semibold tracking-[0.25em] text-white/15">{num}</span>
+              </div>
+
+              <p class="text-xs font-medium uppercase tracking-[0.18em] text-white/40">{s.title}</p>
+              <h3 class="mt-1.5 text-xl font-bold leading-snug tracking-tight sm:text-2xl">{s.subtitle}</h3>
+
+              <ul class:list={['mt-6 gap-x-8 gap-y-3 text-sm text-white/70', wide ? 'grid sm:grid-cols-2' : 'flex flex-col']}>
+                {s.points.map((p) => (
+                  <li class="flex items-start gap-2.5">
+                    <svg class="mt-0.5 h-4 w-4 flex-shrink-0" viewBox="0 0 16 16" fill="none" stroke={ic.accent} stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8.5 6.5 12 13 5"/></svg>
+                    <span>{p}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </article>
+        </Reveal>
       );
     })}
   </div>
 </Section>
+
+<style>
+  /* Per-card accent hover: border + soft glow (the --accent CSS var is set inline per card). */
+  .svc-card {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  .svc-card:hover {
+    transform: translateY(-4px);
+    border-color: color-mix(in srgb, var(--accent) 50%, transparent);
+    box-shadow: 0 20px 55px -28px var(--accent);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .svc-card:hover { transform: none; }
+  }
+</style>
