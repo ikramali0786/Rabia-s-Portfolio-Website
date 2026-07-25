@@ -259,10 +259,11 @@ html { scrollbar-width: thin; scrollbar-color: #8b5cf6 transparent; }
 /* ---- Reusable button utilities ---- */
 .btn {
   @apply inline-flex items-center justify-center gap-2 rounded-full font-semibold;
-  transition: transform 0.2s ease, background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  /* Snappy ease-out on interaction (Emil Kowalski-style): fast, responsive, no ease-in lag. */
+  transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease;
 }
 .btn:hover { transform: translateY(-1px); }
-.btn:active { transform: scale(0.97); }
+.btn:active { transform: scale(0.96); }
 
 /* White pill — primary CTA */
 .btn-primary {
