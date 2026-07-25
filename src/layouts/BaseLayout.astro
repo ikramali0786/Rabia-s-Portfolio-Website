@@ -92,7 +92,7 @@ const jsonLd = {
     <!-- Without JS the preloader can't remove itself, so never show it. -->
     <noscript><style>#preloader{display:none!important}</style></noscript>
     <!-- Without JS Framer Motion SSRs opacity:0 — make reveals visible. -->
-    <noscript><style>[data-framer-reveal]{opacity:1!important;transform:none!important}</style></noscript>
+    <noscript><style>[data-framer-reveal]{opacity:1!important;transform:none!important;filter:none!important}</style></noscript>
     <!-- Site preloader: shows once per session, wipes up to reveal the page -->
     <div id="preloader" aria-hidden="true">
       <div class="pl-fx" aria-hidden="true">
